@@ -7,8 +7,9 @@ import 'package:stacked/stacked.dart';
 import 'package:organic_market/ui/views/cart/cart_viewmodel.dart';
 
 class CartViewCard extends ViewModelWidget<CartViewModel> {
-  int index;
-  CartViewCard({
+  final int index;
+  const CartViewCard({
+    super.key,
     required this.index,
   });
 

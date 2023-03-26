@@ -8,6 +8,7 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return Container(
+        color: Theme.of(context).scaffoldBackgroundColor,
         padding: const EdgeInsets.all(5.0),
         margin: const EdgeInsets.only(top: 8),
         height: MediaQuery.of(context).size.height * 0.26,

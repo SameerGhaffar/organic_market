@@ -7,6 +7,7 @@ import 'package:organic_market/app/app.locator.dart';
 
 import 'package:organic_market/ui/common/app_colors.dart';
 import 'package:organic_market/ui/common/app_strings.dart';
+import 'package:organic_market/ui/common/app_theme.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app/app.router.dart';
@@ -38,6 +39,15 @@ class MyApp extends StatelessWidget {
       title: ksAppTitle,
       debugShowCheckedModeBanner: false,
       theme: Theme.of(context).copyWith(
+        appBarTheme: MyAppbartheme.lightTheme(context),
+        primaryColor: kcBackgroundColor,
+        focusColor: kcPrimaryColor,
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: Colors.black,
+            ),
+      ),
+      darkTheme: Theme.of(context).copyWith(
+        appBarTheme: MyAppbartheme.darkTheme(context),
         primaryColor: kcBackgroundColor,
         focusColor: kcPrimaryColor,
         textTheme: Theme.of(context).textTheme.apply(

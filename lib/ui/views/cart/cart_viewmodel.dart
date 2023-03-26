@@ -76,7 +76,7 @@ class CartViewModel extends BaseViewModel {
 
   int totalprice() {
     int total = 0;
-    if (itemsInCart.length >= 1) {
+    if (itemsInCart.isNotEmpty) {
       for (int i = 0; i < itemsInCart.length; i++) {
         int price = itemsInCart[i]["price"];
         int quantity = itemsInCart[i]["quantity"];

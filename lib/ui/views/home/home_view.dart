@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:organic_market/ui/common/app_colors.dart';
-import 'package:organic_market/ui/common/ui_helpers.dart';
-
 import 'home_viewmodel.dart';
 import 'widgets/category_widget.dart';
 import 'widgets/promotion_widget.dart';

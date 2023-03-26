@@ -1,10 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:organic_market/app/app.bottomsheets.dart';
-import 'package:organic_market/app/app.dialogs.dart';
-import 'package:organic_market/app/app.locator.dart';
-import 'package:organic_market/ui/common/app_strings.dart';
+
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final CarouselController carouselController = CarouselController();

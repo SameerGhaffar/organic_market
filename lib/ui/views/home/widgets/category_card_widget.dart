@@ -18,7 +18,7 @@ class Categorycard extends ViewModelWidget<HomeViewModel> {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25), topRight: Radius.circular(25))),
-        elevation: 4,
+        elevation: 2,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
