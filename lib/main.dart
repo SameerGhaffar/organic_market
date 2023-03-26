@@ -6,6 +6,7 @@ import 'package:organic_market/app/app.dialogs.dart';
 import 'package:organic_market/app/app.locator.dart';
 
 import 'package:organic_market/ui/common/app_colors.dart';
+import 'package:organic_market/ui/common/app_strings.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app/app.router.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: ksAppTitle,
       debugShowCheckedModeBanner: false,
       theme: Theme.of(context).copyWith(
         primaryColor: kcBackgroundColor,
