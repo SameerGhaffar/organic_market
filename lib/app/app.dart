@@ -6,13 +6,16 @@ import 'package:organic_market/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../ui/views/login/login_view.dart';
+
 // @stacked-import
 
 @StackedApp(
   routes: [
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
-    MaterialRoute(page: DrawerView)
+    MaterialRoute(page: DrawerView),
+    MaterialRoute(page: LoginView)
 
     // @stacked-route
   ],

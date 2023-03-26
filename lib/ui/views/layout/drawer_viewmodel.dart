@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 
 import '../cart/cart_view.dart';
 import '../home/home_view.dart';
+import '../login/login_view.dart';
 
 class DrawerViewModel extends BaseViewModel {
   final ZoomDrawerController _drawerControl = ZoomDrawerController();
@@ -30,6 +31,6 @@ class DrawerViewModel extends BaseViewModel {
     const HomeView(),
     const HomeView(),
     const CartView(),
-    const HomeView(),
+    const LoginView(),
   ];
 }
