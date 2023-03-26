@@ -1,6 +1,6 @@
 import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:organic_market/ui/dialogs/info_alert/info_alert_dialog.dart';
-import 'package:organic_market/ui/views/drawer/drawer_view.dart';
+import 'package:organic_market/ui/views/layout/drawer_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
