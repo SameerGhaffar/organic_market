@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:organic_market/ui/views/cart/cart_view.dart';
+import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/layout/drawer_viewmodel.dart';
+import 'package:organic_market/ui/views/login/login_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'appbar_widget.dart';
@@ -15,8 +18,15 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
       backgroundColor: Colors.white,
       appBar: const DrawerViewMyAppBar(),
       body: Center(
-        child: viewModel.bottomBarPages.elementAt(viewModel.selctedindex),
-      ),
+          child: IndexedStack(
+        children: const [
+          HomeView(),
+          HomeView(),
+          CartView(),
+          LoginView(),
+        ],
+        index: viewModel.selctedindex,
+      )),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(

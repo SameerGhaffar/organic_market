@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:organic_market/ui/views/login/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-import 'widgets/logintext_widget.dart';
+import 'widgets/text_widget.dart';
 
 class LoginView extends StackedView<LoginViewModel> {
   const LoginView({super.key});
@@ -112,7 +112,7 @@ class LoginView extends StackedView<LoginViewModel> {
                               letterSpacing: 1),
                         ),
                         TextButton(
-                          onPressed: () => viewModel.navigationTosignup(),
+                          onPressed: () => viewModel.toSignUp(),
                           child: const Text(
                             "Sign Up",
                             style: TextStyle(

@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
+import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:stacked/stacked.dart';
-
-import '../cart/cart_view.dart';
-import '../home/home_view.dart';
-import '../login/login_view.dart';
 
 class DrawerViewModel extends BaseViewModel {
   final ZoomDrawerController _drawerControl = ZoomDrawerController();
+  final _indexservice = locator<NavDrawerindexService>();
 
   ZoomDrawerController get drawerControl => _drawerControl;
 
@@ -16,21 +14,15 @@ class DrawerViewModel extends BaseViewModel {
     rebuildUi();
   }
 
-// using this as navbar controller
-// 0 mean first page 3 mean last page
-  int _selctedindex = 0;
-
-  int get selctedindex => _selctedindex;
-
-  void updateindex(int index) {
-    _selctedindex = index;
-    rebuildUi();
+  int getindex() {
+    int _selctedindex = _indexservice.selctedindex;
+    return _selctedindex;
   }
 
-  final List<Widget> bottomBarPages = [
-    const HomeView(),
-    const HomeView(),
-    const CartView(),
-    const LoginView(),
-  ];
+  int get selctedindex => getindex();
+
+  void updateindex(int index) {
+    _indexservice.setIndex = index;
+    rebuildUi();
+  }
 }

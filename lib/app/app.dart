@@ -1,12 +1,13 @@
+import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:organic_market/ui/dialogs/info_alert/info_alert_dialog.dart';
 import 'package:organic_market/ui/views/layout/drawer_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
+import 'package:organic_market/ui/views/login/login_view.dart';
+import 'package:organic_market/ui/views/signup/signup_view.dart';
 import 'package:organic_market/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-import '../ui/views/login/login_view.dart';
 
 // @stacked-import
 
@@ -15,7 +16,8 @@ import '../ui/views/login/login_view.dart';
     MaterialRoute(page: HomeView),
     MaterialRoute(page: StartupView),
     MaterialRoute(page: DrawerView),
-    MaterialRoute(page: LoginView)
+    MaterialRoute(page: LoginView),
+    MaterialRoute(page: SignupView)
 
     // @stacked-route
   ],
@@ -23,6 +25,8 @@ import '../ui/views/login/login_view.dart';
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: DialogService),
     LazySingleton(classType: NavigationService),
+    LazySingleton(classType: NavDrawerindexService),
+
     // @stacked-service
   ],
   bottomsheets: [

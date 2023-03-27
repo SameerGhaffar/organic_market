@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/app/app.router.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends BaseViewModel {
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
+  final _navigationService = locator<NavigationService>();
   bool _obscureText = true;
   bool get obscureText => _obscureText;
 
@@ -26,8 +30,10 @@ class LoginViewModel extends BaseViewModel {
     print("Forget Pass Button");
   }
 
-  void navigationTosignup() {
-    print("Signup clicked");
+  void toSignUp() {
+    _navigationService.navigateToSignupView();
+
+    print("clicked on signup");
   }
 
   @override

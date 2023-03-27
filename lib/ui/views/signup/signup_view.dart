@@ -87,7 +87,7 @@ class SignupView extends StackedView<SignupViewModel> {
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.black),
                         ),
-                        onPressed: () {},
+                        onPressed: () => viewModel.signupPressed(),
                         child: Text(
                           "Signup",
                           style:
@@ -116,7 +116,7 @@ class SignupView extends StackedView<SignupViewModel> {
                           letterSpacing: 1),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => viewModel.tologinPage(),
                       child: const Text(
                         "click here",
                         style: TextStyle(

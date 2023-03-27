@@ -18,11 +18,23 @@ class SignupViewModel extends BaseViewModel {
     rebuildUi();
   }
 
-  void tologinPage() {}
+  void signupPressed() {
+    String email = emailController.text.toString();
+    String pass = passController.text.toString();
+    String name = nameController.text.toString();
+
+    print("Email = $email");
+
+    print("Pass = $pass");
+    print("name = $name");
+  }
+
+  void tologinPage() {
+    _navigationService.back(result: 3);
+  }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     passController.dispose();
     emailController.dispose();
