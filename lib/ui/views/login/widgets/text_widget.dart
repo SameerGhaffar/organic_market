@@ -6,7 +6,7 @@ import 'package:organic_market/ui/views/login/login_viewmodel.dart';
 
 class LoginViewTextWidget extends ViewModelWidget<LoginViewModel> {
   final String labeltext;
-
+  final String? Function(String? value) validator;
   final IconData prefixicon;
   final bool eyepass;
   final bool obscureText;
@@ -15,6 +15,7 @@ class LoginViewTextWidget extends ViewModelWidget<LoginViewModel> {
   const LoginViewTextWidget({
     super.key,
     required this.labeltext,
+    required this.validator,
     required this.prefixicon,
     required this.eyepass,
     required this.obscureText,
@@ -26,7 +27,7 @@ class LoginViewTextWidget extends ViewModelWidget<LoginViewModel> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        //validator: validator,
+        validator: validator,
         obscureText: obscureText,
         showCursor: true,
         controller: controller,

@@ -10,6 +10,8 @@ class SignupViewModel extends BaseViewModel {
 
   final _navigationService = locator<NavigationService>();
 
+  final signupFormKey = GlobalKey<FormState>();
+
   bool _obscureText = true;
   bool get obscureText => _obscureText;
 
@@ -18,19 +20,46 @@ class SignupViewModel extends BaseViewModel {
     rebuildUi();
   }
 
+  void checkValidation() {
+    signupFormKey.currentState!.validate();
+  }
+
   void signupPressed() {
-    String email = emailController.text.toString();
-    String pass = passController.text.toString();
-    String name = nameController.text.toString();
+    if (signupFormKey.currentState!.validate()) {
+      String email = emailController.text.toString();
+      String pass = passController.text.toString();
+      String name = nameController.text.toString();
 
-    print("Email = $email");
+      print("Email = $email");
 
-    print("Pass = $pass");
-    print("name = $name");
+      print("Pass = $pass");
+      print("name = $name");
+    }
   }
 
   void tologinPage() {
     _navigationService.back(result: 3);
+  }
+
+  String? nameValidator(String? value) {
+    if (value!.length < 5) {
+      return "Name is too short ";
+    }
+    return null;
+  }
+
+  String? passValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Enter pass";
+    }
+    return null;
+  }
+
+  String? emailValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Enter pass";
+    }
+    return null;
   }
 
   @override

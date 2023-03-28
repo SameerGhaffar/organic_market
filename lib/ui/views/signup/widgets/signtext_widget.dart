@@ -7,6 +7,7 @@ import '../signup_viewmodel.dart';
 
 class SignupViewTextWidget extends ViewModelWidget<SignupViewModel> {
   final String labeltext;
+  final String? Function(String? value) validator;
   final IconData prefixicon;
   final bool eyepass;
   final bool obscureText;
@@ -15,6 +16,7 @@ class SignupViewTextWidget extends ViewModelWidget<SignupViewModel> {
   const SignupViewTextWidget({
     super.key,
     required this.labeltext,
+    required this.validator,
     required this.prefixicon,
     required this.eyepass,
     required this.obscureText,
@@ -26,7 +28,7 @@ class SignupViewTextWidget extends ViewModelWidget<SignupViewModel> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        //validator: validator,
+        validator: validator,
         obscureText: obscureText,
         showCursor: true,
         controller: controller,
