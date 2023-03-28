@@ -11,17 +11,28 @@ import 'package:organic_market/ui/common/app_theme.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app/app.router.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  // stacked locator and dialog // botttom sheet
   setupLocator();
   setupDialogUi();
   setupBottomSheetUi();
 
+// firebase
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+// google font license
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
-  WidgetsFlutterBinding.ensureInitialized();
+
+  // orientation
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

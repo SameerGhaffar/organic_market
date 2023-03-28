@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "560060554313",
+    "project_id": "organic-market-pakistan",
+    "storage_bucket": "organic-market-pakistan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560060554313:android:2b807a7d7754e387413398",
+        "android_client_info": {
+          "package_name": "com.example.organic_market"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "560060554313-0dihrm44htv6ur4nkhqmslr5ur4iblmp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4sMYj5hjRccV292pk0gc__AMT971O494"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "560060554313-0dihrm44htv6ur4nkhqmslr5ur4iblmp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
