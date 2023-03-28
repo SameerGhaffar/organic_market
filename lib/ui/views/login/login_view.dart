@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:organic_market/ui/common/app_strings.dart';
 import 'package:organic_market/ui/views/login/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -14,6 +15,8 @@ class LoginView extends StackedView<LoginViewModel> {
     return Scaffold(
       appBar: AppBar(),
       body: Form(
+        onChanged: viewModel.checkValidation,
+        key: viewModel.formkey,
         child: Builder(builder: (context) {
           return SingleChildScrollView(
             child: Container(
@@ -42,8 +45,9 @@ class LoginView extends StackedView<LoginViewModel> {
                             )),
                         //Email text input field
                         LoginViewTextWidget(
+                          validator: viewModel.validateEmail,
                           obscureText: false,
-                          labeltext: 'Email',
+                          labeltext: ksEmail,
                           prefixicon: Icons.email,
                           eyepass: false,
                           controller: viewModel.emailController,
@@ -51,8 +55,9 @@ class LoginView extends StackedView<LoginViewModel> {
 
                         // password text input
                         LoginViewTextWidget(
+                            validator: viewModel.validatePassword,
                             obscureText: viewModel.obscureText,
-                            labeltext: 'Password',
+                            labeltext: ksPassword,
                             prefixicon: Icons.lock,
                             eyepass: true,
                             controller: viewModel.passController),
@@ -64,7 +69,7 @@ class LoginView extends StackedView<LoginViewModel> {
                           child: TextButton(
                             onPressed: () => viewModel.forgetPass(),
                             child: Text(
-                              "Forgot your password?",
+                              ksforgetPassword,
                               style: GoogleFonts.lato(
                                   textStyle: const TextStyle(
                                     color: Colors.blue,
@@ -85,7 +90,7 @@ class LoginView extends StackedView<LoginViewModel> {
                             ),
                             onPressed: () => viewModel.loginPressed(),
                             child: Text(
-                              "LOGIN",
+                              ksLOGIN,
                               style: GoogleFonts.lato(
                                   fontSize: 17, letterSpacing: 1),
                             )),
@@ -102,7 +107,7 @@ class LoginView extends StackedView<LoginViewModel> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Don't have an account? ",
+                          ksdonthaveaccount,
                           style: GoogleFonts.lato(
                               textStyle: const TextStyle(
                                 color: Color(0xFF666666),
@@ -114,7 +119,7 @@ class LoginView extends StackedView<LoginViewModel> {
                         TextButton(
                           onPressed: () => viewModel.toSignUp(),
                           child: const Text(
-                            "Sign Up",
+                            ksSignup,
                             style: TextStyle(
                               color: Color(0xFFf7418c),
                               fontStyle: FontStyle.normal,
