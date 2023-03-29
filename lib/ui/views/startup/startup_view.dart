@@ -20,7 +20,7 @@ class StartupView extends StackedView<StartupViewModel> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              'STACKED',
+              'Organic Market',
               style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.w900,
@@ -32,7 +32,7 @@ class StartupView extends StackedView<StartupViewModel> {
                 Text(
                   'Loading ...',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 12,
                   ),
                 ),
                 horizontalSpaceSmall,

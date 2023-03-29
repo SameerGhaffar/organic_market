@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:organic_market/ui/views/account/account_view.dart';
 import 'package:organic_market/ui/views/cart/cart_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/layout/drawer_viewmodel.dart';
@@ -23,7 +24,7 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
           HomeView(),
           HomeView(),
           CartView(),
-          LoginView(),
+          AccountView(),
         ],
         index: viewModel.selctedindex,
       )),

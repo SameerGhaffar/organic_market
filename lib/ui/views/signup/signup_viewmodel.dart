@@ -1,17 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/app/app.router.dart';
+import 'package:organic_market/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class SignupViewModel extends BaseViewModel {
+  // navigation service
+  final _navigationService = locator<NavigationService>();
+  // auth service
+  final _authService = locator<AuthService>();
+  final _dialog = locator<DialogService>();
+
+  // circular progress indicator
+  bool _loading = false;
+  bool get loading => _loading;
+
+// controllers for email, passwrod , name
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController nameController = TextEditingController();
 
-  final _navigationService = locator<NavigationService>();
-
+// global form key
   final signupFormKey = GlobalKey<FormState>();
-
+// for password field text eye button
   bool _obscureText = true;
   bool get obscureText => _obscureText;
 
@@ -20,25 +32,46 @@ class SignupViewModel extends BaseViewModel {
     rebuildUi();
   }
 
+// on changed function that is call when change in form occure
   void checkValidation() {
     signupFormKey.currentState!.validate();
-  }
-
-  void signupPressed() {
-    if (signupFormKey.currentState!.validate()) {
-      String email = emailController.text.toString();
-      String pass = passController.text.toString();
-      String name = nameController.text.toString();
-
-      print("Email = $email");
-
-      print("Pass = $pass");
-      print("name = $name");
+    if (!(signupFormKey.currentState!.validate())) {
+      _loading = false;
+      rebuildUi();
     }
   }
 
-  void tologinPage() {
-    _navigationService.back(result: 3);
+// when sign up button is pressed it is called
+  Future<void> signupPressed() async {
+    _loading = true;
+    rebuildUi();
+
+    if (signupFormKey.currentState!.validate()) {
+      String email = emailController.text.toString();
+      String password = passController.text.toString();
+      String name = nameController.text.toString();
+      print("Email = $email");
+      print("Pass = $password");
+      print("name = $name");
+      if (await _authService.signup(email, password)) {
+        _loading = false;
+
+        _navigationService.replaceWithDrawerView();
+      } else {
+        _loading = false;
+
+        String? error = _authService.error;
+        // String e = error.substring(34);
+        // print(error);
+        _dialog.showDialog(
+          buttonTitle: "OK",
+          title: "Opps",
+          buttonTitleColor: Colors.black,
+          description: error,
+        );
+      }
+    }
+    rebuildUi();
   }
 
   String? nameValidator(String? value) {
@@ -60,6 +93,11 @@ class SignupViewModel extends BaseViewModel {
       return "Enter pass";
     }
     return null;
+  }
+
+// navigator service use
+  void tologinPage() {
+    _navigationService.back();
   }
 
   @override

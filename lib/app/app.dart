@@ -1,3 +1,4 @@
+import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:organic_market/ui/dialogs/info_alert/info_alert_dialog.dart';
@@ -26,6 +27,7 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: DialogService),
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: NavDrawerindexService),
+    LazySingleton(classType: AuthService),
 
     // @stacked-service
   ],

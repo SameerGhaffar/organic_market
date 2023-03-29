@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/app/app.router.dart';
+import 'package:organic_market/services/auth_service.dart';
+
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
+  final _dialog = locator<DialogService>();
+  // auth service
+  final _authService = locator<AuthService>();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -20,15 +25,38 @@ class LoginViewModel extends FormViewModel {
     rebuildUi();
   }
 
-  void loginPressed() {
+  // circular progress indicator k liye
+  bool _loading = false;
+  bool get loading => _loading;
+
+  void loginPressed() async {
+    _loading = true;
+    rebuildUi();
     if (formkey.currentState!.validate()) {
       String email = emailController.text.toString();
-      String pass = passController.text.toString();
+      String password = passController.text.toString();
 
       print("Email = $email");
 
-      print("Pass = $pass");
+      print("Pass = $password");
+      if (await _authService.signin(email, password)) {
+        _loading = false;
+
+        _navigationService.replaceWithDrawerView();
+      } else {
+        _loading = false;
+
+        String? error = _authService.error;
+
+        _dialog.showDialog(
+          buttonTitle: "OK",
+          title: "Opps",
+          buttonTitleColor: Colors.black,
+          description: error?.toUpperCase().replaceAll("-", " "),
+        );
+      }
     }
+    rebuildUi();
   }
 
   String? validateEmail(String? value) {
@@ -51,7 +79,7 @@ class LoginViewModel extends FormViewModel {
 
   // navigation to SignUp Page
   void toSignUp() {
-    _navigationService.navigateToSignupView();
+    _navigationService.replaceWithSignupView();
     print("clicked on signup");
   }
 

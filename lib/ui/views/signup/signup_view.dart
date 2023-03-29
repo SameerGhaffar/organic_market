@@ -46,6 +46,7 @@ class SignupView extends StackedView<SignupViewModel> {
                             )),
                         //Name text input field
                         SignupViewTextWidget(
+                          keyboardtype: TextInputType.name,
                           validator: viewModel.nameValidator,
                           obscureText: false,
                           labeltext: ksFirstname,
@@ -55,6 +56,7 @@ class SignupView extends StackedView<SignupViewModel> {
                         ),
                         //Email text input field
                         SignupViewTextWidget(
+                          keyboardtype: TextInputType.emailAddress,
                           validator: viewModel.emailValidator,
                           obscureText: false,
                           labeltext: ksEmail,
@@ -65,6 +67,7 @@ class SignupView extends StackedView<SignupViewModel> {
 
                         // password text input
                         SignupViewTextWidget(
+                            keyboardtype: TextInputType.visiblePassword,
                             validator: viewModel.passValidator,
                             obscureText: viewModel.obscureText,
                             labeltext: ksPassword,
@@ -96,11 +99,19 @@ class SignupView extends StackedView<SignupViewModel> {
                                   Colors.black),
                             ),
                             onPressed: () => viewModel.signupPressed(),
-                            child: Text(
-                              ksSignup,
-                              style: GoogleFonts.lato(
-                                  fontSize: 17, letterSpacing: 1),
-                            )),
+                            child: viewModel.loading
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 4,
+                                    ))
+                                : Text(
+                                    ksSignup,
+                                    style: GoogleFonts.lato(
+                                        fontSize: 17, letterSpacing: 1),
+                                  )),
                         //size box i will implement google auth
 
                         //google auth

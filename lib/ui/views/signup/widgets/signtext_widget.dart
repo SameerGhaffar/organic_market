@@ -11,10 +11,12 @@ class SignupViewTextWidget extends ViewModelWidget<SignupViewModel> {
   final IconData prefixicon;
   final bool eyepass;
   final bool obscureText;
+  final TextInputType keyboardtype;
   final TextEditingController controller;
 
   const SignupViewTextWidget({
     super.key,
+    required this.keyboardtype,
     required this.labeltext,
     required this.validator,
     required this.prefixicon,
@@ -28,6 +30,7 @@ class SignupViewTextWidget extends ViewModelWidget<SignupViewModel> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        keyboardType: keyboardtype,
         validator: validator,
         obscureText: obscureText,
         showCursor: true,

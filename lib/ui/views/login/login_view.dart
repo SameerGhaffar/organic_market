@@ -13,7 +13,10 @@ class LoginView extends StackedView<LoginViewModel> {
   Widget builder(
       BuildContext context, LoginViewModel viewModel, Widget? child) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text(ksAppTitle),
+        centerTitle: true,
+      ),
       body: Form(
         onChanged: viewModel.checkValidation,
         key: viewModel.formkey,
@@ -89,11 +92,19 @@ class LoginView extends StackedView<LoginViewModel> {
                                   Colors.black),
                             ),
                             onPressed: () => viewModel.loginPressed(),
-                            child: Text(
-                              ksLOGIN,
-                              style: GoogleFonts.lato(
-                                  fontSize: 17, letterSpacing: 1),
-                            )),
+                            child: viewModel.loading
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 4,
+                                    ))
+                                : Text(
+                                    ksLOGIN,
+                                    style: GoogleFonts.lato(
+                                        fontSize: 17, letterSpacing: 1),
+                                  )),
                         //size box i will implement google auth
 
                         //google auth
