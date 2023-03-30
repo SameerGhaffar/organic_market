@@ -12,7 +12,7 @@ class AccountViewModel extends BaseViewModel {
   }
 
   void logout() async {
-    await _authService.auth.signOut();
+    await _authService.signOut();
     _indexservice.setIndex = 0;
   }
 }

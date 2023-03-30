@@ -5,7 +5,7 @@ import 'package:organic_market/ui/views/account/account_view.dart';
 import 'package:organic_market/ui/views/cart/cart_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/layout/drawer_viewmodel.dart';
-import 'package:organic_market/ui/views/login/login_view.dart';
+
 import 'package:stacked/stacked.dart';
 
 import 'appbar_widget.dart';

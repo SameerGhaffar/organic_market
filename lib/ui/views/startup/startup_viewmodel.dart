@@ -8,6 +8,18 @@ import 'package:stacked_services/stacked_services.dart';
 class StartupViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
+  Future<void> checkEmailVerified() async {
+    User? user;
+    user = _authService.auth.currentUser;
+    await user!.reload();
+    try {
+      if (user.emailVerified) {
+        user.reload();
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
@@ -17,13 +29,16 @@ class StartupViewModel extends BaseViewModel {
     // you have custom startup logic
 
     // _navigationService.replaceWithDrawerView();
+
     _authService.auth.userChanges().listen((User? user) {
       if (user == null) {
-        print('User is currently signed out!');
         _navigationService.replaceWithLoginView();
       } else {
-        print('User is signed in!');
-        _navigationService.replaceWithDrawerView();
+        if (user.emailVerified) {
+          _navigationService.replaceWithDrawerView();
+        } else {
+          checkEmailVerified();
+        }
       }
     });
   }

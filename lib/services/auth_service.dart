@@ -38,4 +38,29 @@ class AuthService {
       return false;
     }
   }
+
+  Future<bool> isUserLoggedIn() async {
+    var user = _auth.currentUser;
+    return user != null;
+  }
+
+  // Stream<bool> get emailVerifiedChanges =>
+  //     _auth.authStateChanges().map((user) => user?.emailVerified ?? false);
+
+  Future<void> sendEmailVerification() async {
+    User? user = _auth.currentUser;
+    await user?.sendEmailVerification();
+  }
+
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> resetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
 }

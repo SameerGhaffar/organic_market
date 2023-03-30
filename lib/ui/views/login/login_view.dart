@@ -88,10 +88,14 @@ class LoginView extends StackedView<LoginViewModel> {
                         // Login button
                         ElevatedButton(
                             style: ButtonStyle(
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white70),
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   Colors.black),
                             ),
-                            onPressed: () => viewModel.loginPressed(),
+                            onPressed: viewModel.disabled
+                                ? null
+                                : () => viewModel.loginPressed(),
                             child: viewModel.loading
                                 ? const SizedBox(
                                     width: 16,
@@ -103,7 +107,11 @@ class LoginView extends StackedView<LoginViewModel> {
                                 : Text(
                                     ksLOGIN,
                                     style: GoogleFonts.lato(
-                                        fontSize: 17, letterSpacing: 1),
+                                        color: viewModel.disabled
+                                            ? Colors.white54
+                                            : Colors.white,
+                                        fontSize: 17,
+                                        letterSpacing: 1),
                                   )),
                         //size box i will implement google auth
 

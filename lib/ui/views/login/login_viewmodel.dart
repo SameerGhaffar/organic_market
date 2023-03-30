@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/app/app.router.dart';
@@ -17,6 +18,8 @@ class LoginViewModel extends FormViewModel {
 
   final formkey = GlobalKey<FormState>();
 
+  var disabled = true;
+
   bool _obscureText = true;
 
   bool get obscureText => _obscureText;
@@ -25,9 +28,23 @@ class LoginViewModel extends FormViewModel {
     rebuildUi();
   }
 
+  User? user;
   // circular progress indicator k liye
   bool _loading = false;
   bool get loading => _loading;
+  Future<void> checkEmailVerified() async {
+    user = _authService.auth.currentUser;
+    await user!.reload();
+    if (user!.emailVerified) {
+      _navigationService.replaceWithDrawerView();
+    } else {
+      _dialog.showDialog(
+          buttonTitle: "OK",
+          title: "Opps",
+          buttonTitleColor: Colors.black,
+          description: "Please Verify email");
+    }
+  }
 
   void loginPressed() async {
     _loading = true;
@@ -35,14 +52,13 @@ class LoginViewModel extends FormViewModel {
     if (formkey.currentState!.validate()) {
       String email = emailController.text.toString();
       String password = passController.text.toString();
+      print(email);
+      print(password);
 
-      print("Email = $email");
-
-      print("Pass = $password");
       if (await _authService.signin(email, password)) {
         _loading = false;
 
-        _navigationService.replaceWithDrawerView();
+        checkEmailVerified();
       } else {
         _loading = false;
 
@@ -55,6 +71,9 @@ class LoginViewModel extends FormViewModel {
           description: error?.toUpperCase().replaceAll("-", " "),
         );
       }
+    } else {
+      _loading = false;
+      rebuildUi();
     }
     rebuildUi();
   }
@@ -62,7 +81,10 @@ class LoginViewModel extends FormViewModel {
   String? validateEmail(String? value) {
     if (value!.isEmpty) {
       return "Enter Email";
+    } else if (!(value.contains('@')) && (!value.contains('.'))) {
+      return "Invalid Email";
     }
+
     return null;
   }
 
@@ -80,7 +102,20 @@ class LoginViewModel extends FormViewModel {
   // navigation to SignUp Page
   void toSignUp() {
     _navigationService.replaceWithSignupView();
-    print("clicked on signup");
+  }
+
+  void checkValidation() {
+    formkey.currentState!.validate();
+
+    if (formkey.currentState!.validate()) {
+      disabled = false;
+    }
+
+    if (!(formkey.currentState!.validate())) {
+      _loading = false;
+      disabled = true;
+    }
+    rebuildUi();
   }
 
   @override
@@ -88,9 +123,5 @@ class LoginViewModel extends FormViewModel {
     super.dispose();
     passController.dispose();
     emailController.dispose();
-  }
-
-  void checkValidation() {
-    formkey.currentState!.validate();
   }
 }
