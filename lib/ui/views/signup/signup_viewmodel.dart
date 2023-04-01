@@ -82,7 +82,8 @@ class SignupViewModel extends BaseViewModel {
       String password = passController.text.toString();
       String name = nameController.text.toString();
 
-      if (await _authService.signup(email, password)) {
+      if (await _authService.signup(
+          email: email, password: password, name: name)) {
         _loading = false;
         _authService.sendEmailVerification();
         verify = true;

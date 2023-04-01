@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:organic_market/app/app.locator.dart';
@@ -8,6 +11,8 @@ import 'package:stacked_services/stacked_services.dart';
 class StartupViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
+  final _dialog = locator<DialogService>();
+
   Future<void> checkEmailVerified() async {
     User? user;
     user = _authService.auth.currentUser;
@@ -37,7 +42,16 @@ class StartupViewModel extends BaseViewModel {
         if (user.emailVerified) {
           _navigationService.replaceWithDrawerView();
         } else {
-          checkEmailVerified();
+          try {
+            checkEmailVerified();
+          } catch (e) {
+            _dialog.showDialog(
+              buttonTitle: "OK",
+              title: "Opps",
+              buttonTitleColor: Colors.black,
+              description: e.toString(),
+            );
+          }
         }
       }
     });

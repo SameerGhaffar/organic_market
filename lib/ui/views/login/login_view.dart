@@ -48,7 +48,7 @@ class LoginView extends StackedView<LoginViewModel> {
                             )),
                         //Email text input field
                         LoginViewTextWidget(
-                          validator: viewModel.validateEmail,
+                          validator: viewModel.emailValidator,
                           obscureText: false,
                           labeltext: ksEmail,
                           prefixicon: Icons.email,
