@@ -1,27 +1,34 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/model/user.dart';
+import 'package:organic_market/services/firestore_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _firestoreService = locator<FireStoreService>();
 
   FirebaseAuth get auth => _auth;
 
-  _signup(String email, String password) async {
-    await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-  }
-
-  _signin(String email, String password) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
-  }
-
   String? error;
+
   _error(String? e) {
     error = e;
   }
 
-  Future<bool> signup(String email, String password) async {
+  Future<bool> signup(
+      {required String email,
+      required String password,
+      required String name}) async {
     try {
-      await _signup(email, password);
+      UserCredential userCredential = await _signup(email, password);
+      // Store additional user details in Firestore
+      await _firestoreService.createUser(Userinfo(
+          id: userCredential.user!.uid,
+          name: name,
+          email: email,
+          isAdmin: false));
+
       return true;
     } on FirebaseAuthException catch (e) {
       _error(e.code);
@@ -56,11 +63,27 @@ class AuthService {
     try {
       await _auth.signOut();
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
     }
   }
 
-  Future<void> resetPassword(String email) async {
-    await _auth.sendPasswordResetEmail(email: email);
+  Future<bool> resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      _error(e.code);
+      return false;
+    }
+  }
+
+  Future<UserCredential> _signup(String email, String password) async {
+    return await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+  }
+
+  _signin(String email, String password) async {
+    return await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
   }
 }

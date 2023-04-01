@@ -52,8 +52,6 @@ class LoginViewModel extends FormViewModel {
     if (formkey.currentState!.validate()) {
       String email = emailController.text.toString();
       String password = passController.text.toString();
-      print(email);
-      print(password);
 
       if (await _authService.signin(email, password)) {
         _loading = false;
@@ -78,13 +76,18 @@ class LoginViewModel extends FormViewModel {
     rebuildUi();
   }
 
-  String? validateEmail(String? value) {
-    if (value!.isEmpty) {
-      return "Enter Email";
-    } else if (!(value.contains('@')) && (!value.contains('.'))) {
-      return "Invalid Email";
+  String? emailValidator(String? value) {
+    // \w mean any letter and numbre but not special    expression =
+    // -\.  mean contain underscore  hyphen and a dot
+    // @ mean must contail it
+    //{2,4} mean it can repeat
+    final emailRegExp =
+        RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$', caseSensitive: false);
+    if (value == null || value.isEmpty) {
+      return "Please enter Email";
+    } else if (!emailRegExp.hasMatch(value)) {
+      return "Please enter correct email address";
     }
-
     return null;
   }
 
@@ -96,7 +99,7 @@ class LoginViewModel extends FormViewModel {
   }
 
   void forgetPass() {
-    print("Forget Pass Button");
+    _navigationService.navigateToResetView();
   }
 
   // navigation to SignUp Page
