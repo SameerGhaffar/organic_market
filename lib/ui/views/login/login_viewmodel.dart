@@ -32,19 +32,19 @@ class LoginViewModel extends FormViewModel {
   // circular progress indicator k liye
   bool _loading = false;
   bool get loading => _loading;
-  Future<void> checkEmailVerified() async {
-    user = _authService.auth.currentUser;
-    await user!.reload();
-    if (user!.emailVerified) {
-      _navigationService.replaceWithDrawerView();
-    } else {
-      _dialog.showDialog(
-          buttonTitle: "OK",
-          title: "Opps",
-          buttonTitleColor: Colors.black,
-          description: "Please Verify email");
-    }
-  }
+  // Future<void> checkEmailVerified() async {
+  //   user = _authService.auth.currentUser;
+  //   await user!.reload();
+  //   if (user!.emailVerified) {
+  //     _navigationService.replaceWithDrawerView();
+  //   } else {
+  //     _dialog.showDialog(
+  //         buttonTitle: "OK",
+  //         title: "Opps",
+  //         buttonTitleColor: Colors.black,
+  //         description: "Please Verify email");
+  //   }
+  // }
 
   void loginPressed() async {
     _loading = true;
@@ -55,8 +55,6 @@ class LoginViewModel extends FormViewModel {
 
       if (await _authService.signin(email, password)) {
         _loading = false;
-
-        checkEmailVerified();
       } else {
         _loading = false;
 

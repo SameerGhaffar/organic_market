@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:organic_market/ui/views/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
   const HomeViewMySlider({super.key});
@@ -17,12 +19,22 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: CarouselSlider(
-              items: viewModel.imageList
-                  .map((imageurl) => Image.asset(
-                        imageurl,
+              items: viewModel
+                  .image()
+                  .map((imageurl) => CachedNetworkImage(
+                        imageUrl: imageurl.Image as String,
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          child: Container(),
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade300,
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
                         fit: BoxFit.cover,
                         width: double.infinity,
                       ))
+                  //  Image.network(
+                  //   imageurl.Image as String
                   .toList(),
               carouselController: viewModel.carouselController,
               options: CarouselOptions(
@@ -44,7 +56,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
           left: 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: viewModel.imageList.asMap().entries.map((entry) {
+            children: viewModel.image().asMap().entries.map((entry) {
               return GestureDetector(
                 onTap: () =>
                     viewModel.carouselController.animateToPage(entry.key),

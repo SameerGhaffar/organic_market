@@ -41,4 +41,6 @@ class HomeView extends StackedView<HomeViewModel> {
     BuildContext context,
   ) =>
       HomeViewModel();
+  @override
+  Future onViewModelReady(HomeViewModel viewModel) => viewModel.fetchpost();
 }

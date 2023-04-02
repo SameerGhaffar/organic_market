@@ -5,8 +5,11 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i8;
+import 'package:flutter/material.dart' as _i10;
 import 'package:flutter/material.dart';
+import 'package:organic_market/ui/admin/admin_view.dart' as _i8;
+import 'package:organic_market/ui/admin/widgets/slider/slider_upload_view.dart'
+    as _i9;
 import 'package:organic_market/ui/views/home/home_view.dart' as _i2;
 import 'package:organic_market/ui/views/layout/drawer_view.dart' as _i4;
 import 'package:organic_market/ui/views/login/login_view.dart' as _i5;
@@ -14,7 +17,7 @@ import 'package:organic_market/ui/views/login/reset_view.dart' as _i7;
 import 'package:organic_market/ui/views/signup/signup_view.dart' as _i6;
 import 'package:organic_market/ui/views/startup/startup_view.dart' as _i3;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i9;
+import 'package:stacked_services/stacked_services.dart' as _i11;
 
 class Routes {
   static const homeView = '/home-view';
@@ -29,6 +32,10 @@ class Routes {
 
   static const resetView = '/reset-view';
 
+  static const adminView = '/admin-view';
+
+  static const sliderAdmin = '/slider-admin';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -36,6 +43,8 @@ class Routes {
     loginView,
     signupView,
     resetView,
+    adminView,
+    sliderAdmin,
   };
 }
 
@@ -65,47 +74,69 @@ class StackedRouter extends _i1.RouterBase {
       Routes.resetView,
       page: _i7.ResetView,
     ),
+    _i1.RouteDef(
+      Routes.adminView,
+      page: _i8.AdminView,
+    ),
+    _i1.RouteDef(
+      Routes.sliderAdmin,
+      page: _i9.SliderAdmin,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
         maintainState: false,
       );
     },
     _i3.StartupView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
         maintainState: false,
       );
     },
     _i4.DrawerView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.DrawerView(),
         settings: data,
         maintainState: false,
       );
     },
     _i5.LoginView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.LoginView(),
         settings: data,
         maintainState: false,
       );
     },
     _i6.SignupView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.SignupView(),
         settings: data,
         maintainState: false,
       );
     },
     _i7.ResetView: (data) {
-      return _i8.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ResetView(),
+        settings: data,
+        maintainState: false,
+      );
+    },
+    _i8.AdminView: (data) {
+      return _i10.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i8.AdminView(),
+        settings: data,
+        maintainState: false,
+      );
+    },
+    _i9.SliderAdmin: (data) {
+      return _i10.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i9.SliderAdmin(),
         settings: data,
         maintainState: false,
       );
@@ -118,7 +149,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i9.NavigationService {
+extension NavigatorStateExtension on _i11.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -203,6 +234,34 @@ extension NavigatorStateExtension on _i9.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToAdminView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.adminView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToSliderAdmin([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.sliderAdmin,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -281,6 +340,34 @@ extension NavigatorStateExtension on _i9.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.resetView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithAdminView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.adminView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithSliderAdmin([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.sliderAdmin,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

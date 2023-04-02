@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:organic_market/services/auth_service.dart';
+import 'package:organic_market/services/firestore_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/app/app.router.dart';
@@ -12,6 +14,7 @@ class StartupViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _authService = locator<AuthService>();
   final _dialog = locator<DialogService>();
+  final _firestore = locator<FireStoreService>();
 
   Future<void> checkEmailVerified() async {
     User? user;
@@ -30,17 +33,26 @@ class StartupViewModel extends BaseViewModel {
   Future runStartupLogic() async {
     await Future.delayed(const Duration(seconds: 3));
 
-    // This is where you can make decisions on where your app should navigate when
-    // you have custom startup logic
+    // This is where i can make decisions on where your app should navigate when
 
-    // _navigationService.replaceWithDrawerView();
+    // Check if user is an admin
+    bool isAdmin;
 
-    _authService.auth.userChanges().listen((User? user) {
+    _authService.auth.userChanges().listen((User? user) async {
       if (user == null) {
         _navigationService.replaceWithLoginView();
       } else {
         if (user.emailVerified) {
-          _navigationService.replaceWithDrawerView();
+          DocumentSnapshot userSnapshot =
+              await _firestore.users.doc(user.uid).get();
+          isAdmin = userSnapshot.get('isAdmin');
+          if (isAdmin) {
+            _navigationService.replaceWithAdminView();
+          } else {
+            await _firestore.loadSliderImage();
+
+            _navigationService.replaceWithDrawerView();
+          }
         } else {
           try {
             checkEmailVerified();

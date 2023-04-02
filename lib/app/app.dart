@@ -1,6 +1,9 @@
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';
+import 'package:organic_market/services/storage_service.dart';
+import 'package:organic_market/ui/admin/admin_view.dart';
+import 'package:organic_market/ui/admin/widgets/slider/slider_upload_view.dart';
 import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:organic_market/ui/dialogs/info_alert/info_alert_dialog.dart';
 import 'package:organic_market/ui/views/layout/drawer_view.dart';
@@ -21,7 +24,9 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: DrawerView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: SignupView),
-    MaterialRoute(page: ResetView)
+    MaterialRoute(page: ResetView),
+    MaterialRoute(page: AdminView),
+    MaterialRoute(page: SliderAdmin)
 
     // @stacked-route
   ],
@@ -31,7 +36,8 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: NavigationService),
     LazySingleton(classType: NavDrawerindexService),
     LazySingleton(classType: AuthService),
-    LazySingleton(classType: FireStoreService)
+    LazySingleton(classType: FireStoreService),
+    LazySingleton(classType: StorageService)
 
     // @stacked-service
   ],

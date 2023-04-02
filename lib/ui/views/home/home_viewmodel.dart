@@ -1,17 +1,41 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/model/slider.dart';
+import 'package:organic_market/services/firestore_service.dart';
 
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
   final CarouselController carouselController = CarouselController();
+  final _firestoreService = locator<FireStoreService>();
 
-  List imageList = [
-    'assets/images/TRAVEL.png',
-    'assets/images/TRAVEL.png',
-    'assets/images/TRAVEL.png',
-    'assets/images/TRAVEL.png',
-    'assets/images/TRAVEL.png',
-  ];
+//  List imageList = [
+//     'assets/images/TRAVEL.png',
+//     'assets/images/TRAVEL.png',
+//     'assets/images/TRAVEL.png',
+//     'assets/images/TRAVEL.png',
+//     'assets/images/TRAVEL.png',
+//   ];
+  List<Sliderimage> item = [];
+  Future fetchpost() async {
+    item = _firestoreService.item;
+  }
+
+  List<Sliderimage> image() {
+    return _firestoreService.item;
+  }
+  // List<Sliderimage>? sliderlist;
+
+  // late List<Sliderimage> sliderImages;
+  // Future fetchimages() async {
+  //   var sliderImages = _firestoreService.loadData();
+  //   if (sliderImages is List<Sliderimage>) {
+  //     sliderlist = sliderImages;
+  //   } else {
+  //     print("no image in ");
+  //   }
+  // }
+
   final List<Map<String, String>> categories = [
     {"name": "Dairy", "image": "assets/images/ghee.jpg"},
     {"name": "Fruits", "image": "assets/images/cow.jpg"},
