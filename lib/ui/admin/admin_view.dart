@@ -27,7 +27,7 @@ class AdminView extends StackedView<AdminViewModel> {
               children: [
                 Card(
                   child: InkWell(
-                    onTap: viewModel.toSliderupload,
+                    onTap: viewModel.toSliderView,
                     child: Column(
                       children: const [
                         Icon(Icons.image),
@@ -38,11 +38,11 @@ class AdminView extends StackedView<AdminViewModel> {
                 ),
                 Card(
                   child: InkWell(
-                    onTap: null,
+                    onTap: viewModel.toPromotionView,
                     child: Column(
                       children: const [
                         Icon(Icons.image),
-                        Text("Slider Image Tool")
+                        Text("Promotion Image Tool")
                       ],
                     ),
                   ),
