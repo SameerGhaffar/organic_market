@@ -22,7 +22,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
               items: viewModel
                   .image()
                   .map((imageurl) => CachedNetworkImage(
-                        imageUrl: imageurl.Image as String,
+                        imageUrl: imageurl.ImageUrl as String,
                         placeholder: (context, url) => Shimmer.fromColors(
                           child: Container(),
                           baseColor: Colors.grey.shade300,

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:organic_market/model/slider.dart';
+import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/model/user.dart';
 
 class FireStoreService {
@@ -14,7 +14,7 @@ class FireStoreService {
   CollectionReference get categories => _categories;
 
   final CollectionReference imagesRef =
-      FirebaseFirestore.instance.collection('images');
+      FirebaseFirestore.instance.collection('SliderImages');
 
   String? error;
 
@@ -43,7 +43,10 @@ class FireStoreService {
 
   loadSliderImage() async {
     try {
-      await FirebaseFirestore.instance.collection('images').get().then((value) {
+      await FirebaseFirestore.instance
+          .collection('SliderImages')
+          .get()
+          .then((value) {
         item = List.generate(
           value.size,
           (index) => Sliderimage.fromMap(value.docs[index]),

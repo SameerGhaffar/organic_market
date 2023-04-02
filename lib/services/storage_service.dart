@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:organic_market/app/app.locator.dart';
-import 'package:organic_market/model/slider.dart';
+import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
 
 class StorageService {
@@ -10,7 +11,7 @@ class StorageService {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   FirebaseStorage get storage => _storage;
 
-  final Reference imagesRef = FirebaseStorage.instance.ref("images/");
+  final Reference imagesRef = FirebaseStorage.instance.ref("SliderImages/");
 
   Future<bool> uploadimage(File? image) async {
     if (image != null) {
@@ -19,11 +20,25 @@ class StorageService {
           .putFile(image.absolute);
       final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
       final String url = (await downloadUrl.ref.getDownloadURL());
-      _firestoreService.imagesRef.add(Sliderimage().toMap(url));
+      final DocumentReference docRef = _firestoreService.imagesRef.doc();
+      final String docId = docRef.id;
+      final Sliderimage imageObj = Sliderimage(ImageUrl: url, id: docId);
+
+      await docRef.set(imageObj.toMap());
 
       return true;
     }
 
     return false;
+  }
+
+  Future<bool> deleteImage(String imageUrl, String docId) async {
+    // Delete image from Firebase Storage
+    await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+
+    // Delete document from Firestore collection
+    await _firestoreService.imagesRef.doc(docId).delete();
+
+    return true;
   }
 }

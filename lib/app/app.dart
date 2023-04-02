@@ -3,7 +3,8 @@ import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:organic_market/services/storage_service.dart';
 import 'package:organic_market/ui/admin/admin_view.dart';
-import 'package:organic_market/ui/admin/widgets/slider/slider_upload_view.dart';
+import 'package:organic_market/ui/admin/widgets/promotion/a_promotion_view.dart';
+import 'package:organic_market/ui/admin/widgets/slider/a_slider_view.dart';
 import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:organic_market/ui/dialogs/info_alert/info_alert_dialog.dart';
 import 'package:organic_market/ui/views/layout/drawer_view.dart';
@@ -26,7 +27,8 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: SignupView),
     MaterialRoute(page: ResetView),
     MaterialRoute(page: AdminView),
-    MaterialRoute(page: SliderAdmin)
+    MaterialRoute(page: SliderAdmin),
+    MaterialRoute(page: PromotionAdmin)
 
     // @stacked-route
   ],

@@ -46,11 +46,10 @@ class StartupViewModel extends BaseViewModel {
           DocumentSnapshot userSnapshot =
               await _firestore.users.doc(user.uid).get();
           isAdmin = userSnapshot.get('isAdmin');
+          await _firestore.loadSliderImage();
           if (isAdmin) {
             _navigationService.replaceWithAdminView();
           } else {
-            await _firestore.loadSliderImage();
-
             _navigationService.replaceWithDrawerView();
           }
         } else {

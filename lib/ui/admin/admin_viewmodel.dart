@@ -26,7 +26,11 @@ class AdminViewModel extends BaseViewModel {
     _indexservice.setIndex = 0;
   }
 
-  void toSliderupload() {
+  void toSliderView() {
     _navigation.navigateToSliderAdmin();
+  }
+
+  void toPromotionView() {
+    _navigation.navigateToPromotionAdmin();
   }
 }

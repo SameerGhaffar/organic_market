@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:organic_market/app/app.locator.dart';
-import 'package:organic_market/model/slider.dart';
+import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
 
 import 'package:stacked/stacked.dart';
