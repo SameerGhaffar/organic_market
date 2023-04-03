@@ -43,10 +43,13 @@ class StartupViewModel extends BaseViewModel {
         _navigationService.replaceWithLoginView();
       } else {
         if (user.emailVerified) {
+          await _firestore.loadSliderImage();
+          await _firestore.loadPromotionImage();
+
           DocumentSnapshot userSnapshot =
               await _firestore.users.doc(user.uid).get();
           isAdmin = userSnapshot.get('isAdmin');
-          await _firestore.loadSliderImage();
+
           if (isAdmin) {
             _navigationService.replaceWithAdminView();
           } else {
