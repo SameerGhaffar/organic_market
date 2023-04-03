@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
 
@@ -16,13 +17,19 @@ class HomeViewModel extends BaseViewModel {
 //     'assets/images/TRAVEL.png',
 //     'assets/images/TRAVEL.png',
 //   ];
-  List<Sliderimage> item = [];
-  Future fetchpost() async {
-    item = _firestoreService.item;
+
+  Future fetchData() async {
+    _firestoreService.SliderimagesRef.snapshots().listen((event) {});
+    _firestoreService.sliderDataList;
+    _firestoreService.PromotionimagesRef;
   }
 
-  List<Sliderimage> image() {
-    return _firestoreService.item;
+  List<Sliderimage> sliderImage() {
+    return _firestoreService.sliderDataList;
+  }
+
+  List<PromotionImage> promtoionImage() {
+    return _firestoreService.promotionDataList;
   }
   // List<Sliderimage>? sliderlist;
 

@@ -57,9 +57,9 @@ class SliderAdminModel extends BaseViewModel {
   Future uploadimage() async {
     loading = true;
     rebuildUi();
-    if (await _storagesevice.uploadimage(_image)) {
+    if (await _storagesevice.sliderUploadImage(_image)) {
       loading = false;
-      fetchpost();
+      fetchData();
     }
     isImagePicked = false;
     _image = null;
@@ -71,10 +71,10 @@ class SliderAdminModel extends BaseViewModel {
                                               sliderobject.ImageUrl as String)
                                           .toList()[index] */
   List<Sliderimage> imagelist() {
-    return _firestoreService.item;
+    return _firestoreService.sliderDataList;
   }
 
-  Future fetchpost() async {
+  Future fetchData() async {
     await _firestoreService.loadSliderImage();
     rebuildUi();
   }
@@ -89,12 +89,12 @@ class SliderAdminModel extends BaseViewModel {
       if (sheetResponse.confirmed) {
         print("delete");
         try {
-          _storagesevice.deleteImage(imageUrl, docId);
+          _storagesevice.sliderDeleteImage(imageUrl, docId);
         } catch (e) {
           _dialogservice.showDialog(title: "Opps", description: e.toString());
         }
 
-        fetchpost();
+        fetchData();
         rebuildUi();
       } else {
         print("nothing");

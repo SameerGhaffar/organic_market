@@ -20,7 +20,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
             borderRadius: BorderRadius.circular(20),
             child: CarouselSlider(
               items: viewModel
-                  .image()
+                  .sliderImage()
                   .map((imageurl) => CachedNetworkImage(
                         imageUrl: imageurl.ImageUrl as String,
                         placeholder: (context, url) => Shimmer.fromColors(
@@ -56,7 +56,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
           left: 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: viewModel.image().asMap().entries.map((entry) {
+            children: viewModel.sliderImage().asMap().entries.map((entry) {
               return GestureDetector(
                 onTap: () =>
                     viewModel.carouselController.animateToPage(entry.key),

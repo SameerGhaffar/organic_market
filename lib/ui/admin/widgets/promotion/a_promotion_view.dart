@@ -91,7 +91,7 @@ class PromotionAdmin extends StackedView<PromotionAdminModel> {
                           physics: const ScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           //  itemExtent: MediaQuery.of(context).size.width * 0.40,
-                          itemCount: viewModel.imagelist().length,
+                          itemCount: viewModel.PromotionDatalist().length,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -99,19 +99,16 @@ class PromotionAdmin extends StackedView<PromotionAdminModel> {
                                 height: 210,
                                 child: InkWell(
                                   onTap: () => viewModel.deleteimage(
-                                      viewModel
-                                          .imagelist()
+                                      viewModel.PromotionDatalist()
                                           .map((sliderobject) =>
                                               sliderobject.ImageUrl as String)
                                           .toList()[index],
-                                      viewModel
-                                          .imagelist()
+                                      viewModel.PromotionDatalist()
                                           .map((sliderobject) =>
                                               sliderobject.ImageUrl as String)
                                           .toList()[index]),
                                   child: CachedNetworkImage(
-                                    imageUrl: viewModel
-                                        .imagelist()
+                                    imageUrl: viewModel.PromotionDatalist()
                                         .map((sliderobject) =>
                                             sliderobject.ImageUrl as String)
                                         .toList()[index],
@@ -146,5 +143,5 @@ class PromotionAdmin extends StackedView<PromotionAdminModel> {
       PromotionAdminModel();
   @override
   Future onViewModelReady(PromotionAdminModel viewModel) =>
-      viewModel.fetchpost();
+      viewModel.fetchData();
 }

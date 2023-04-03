@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/model/user.dart';
 
@@ -13,8 +14,10 @@ class FireStoreService {
       FirebaseFirestore.instance.collection('categories');
   CollectionReference get categories => _categories;
 
-  final CollectionReference imagesRef =
+  final CollectionReference SliderimagesRef =
       FirebaseFirestore.instance.collection('SliderImages');
+  final CollectionReference PromotionimagesRef =
+      FirebaseFirestore.instance.collection('PromotionImages');
 
   String? error;
 
@@ -39,7 +42,8 @@ class FireStoreService {
     }
   }
 
-  List<Sliderimage> item = [];
+// getting list of slider data
+  List<Sliderimage> sliderDataList = [];
 
   loadSliderImage() async {
     try {
@@ -47,9 +51,29 @@ class FireStoreService {
           .collection('SliderImages')
           .get()
           .then((value) {
-        item = List.generate(
+        sliderDataList = List.generate(
           value.size,
           (index) => Sliderimage.fromMap(value.docs[index]),
+        );
+      });
+      print('Success');
+    } catch (e) {
+      print('Failed: ' + e.toString());
+    }
+  }
+
+// getting list of promotion data
+  List<PromotionImage> promotionDataList = [];
+
+  loadPromotionImage() async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('PromotionImages')
+          .get()
+          .then((value) {
+        promotionDataList = List.generate(
+          value.size,
+          (index) => PromotionImage.fromMap(value.docs[index]),
         );
       });
       print('Success');

@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:organic_market/ui/views/home/home_viewmodel.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
@@ -7,33 +9,49 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel viewModel) {
-    return Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        padding: const EdgeInsets.all(5.0),
-        margin: const EdgeInsets.only(top: 8),
-        height: MediaQuery.of(context).size.height * 0.26,
-        child: GridView.builder(
-          padding: const EdgeInsets.all(2),
-          physics: const ScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          itemCount: viewModel.promotion.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10.0,
-              mainAxisSpacing: 10.0,
-              mainAxisExtent:
-                  MediaQuery.of(context).size.width.toDouble() * 0.46),
-          itemBuilder: (context, index) {
-            return Container(
+    return Center(
+      child: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          padding: const EdgeInsets.all(5.0),
+          margin: const EdgeInsets.only(top: 8),
+          height: MediaQuery.of(context).size.height * 0.26,
+          child: GridView.builder(
+            padding: const EdgeInsets.all(2),
+            physics: const ScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: viewModel.promtoionImage().length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.0,
+                mainAxisSpacing: 10.0,
+                mainAxisExtent:
+                    MediaQuery.of(context).size.width.toDouble() * 0.46),
+            itemBuilder: (context, index) {
+              return Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
                     borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage(viewModel.promotion[index]['image'] ??
-                          "assets/images/TRAVEL.png"),
-                      fit: BoxFit.cover,
-                    )));
-          },
-        ));
+                    border: Border.all(color: Colors.black12)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: viewModel
+                        .promtoionImage()
+                        .map((promotionObj) => promotionObj.ImageUrl as String)
+                        .toList()[index],
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      child: Container(),
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade300,
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
+                ),
+              );
+            },
+          )),
+    );
   }
 }

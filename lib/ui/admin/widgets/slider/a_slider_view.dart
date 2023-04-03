@@ -144,5 +144,5 @@ class SliderAdmin extends StackedView<SliderAdminModel> {
   @override
   SliderAdminModel viewModelBuilder(BuildContext context) => SliderAdminModel();
   @override
-  Future onViewModelReady(SliderAdminModel viewModel) => viewModel.fetchpost();
+  Future onViewModelReady(SliderAdminModel viewModel) => viewModel.fetchData();
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:organic_market/app/app.locator.dart';
-import 'package:organic_market/model/slider_model.dart';
+import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/storage_service.dart';
 import 'package:stacked/stacked.dart';
@@ -54,9 +54,9 @@ class PromotionAdminModel extends BaseViewModel {
   Future uploadimage() async {
     loading = true;
     rebuildUi();
-    if (await _storagesevice.uploadimage(_image)) {
+    if (await _storagesevice.uploadPromotionImage(_image)) {
       loading = false;
-      fetchpost();
+      fetchData();
     }
     isImagePicked = false;
     _image = null;
@@ -67,12 +67,12 @@ class PromotionAdminModel extends BaseViewModel {
                                           .map((sliderobject) =>
                                               sliderobject.ImageUrl as String)
                                           .toList()[index] */
-  List<Sliderimage> imagelist() {
-    return _firestoreService.item;
+  List<PromotionImage> PromotionDatalist() {
+    return _firestoreService.promotionDataList;
   }
 
-  Future fetchpost() async {
-    await _firestoreService.loadSliderImage();
+  Future fetchData() async {
+    await _firestoreService.loadPromotionImage();
     rebuildUi();
   }
 
@@ -86,12 +86,12 @@ class PromotionAdminModel extends BaseViewModel {
       if (sheetResponse.confirmed) {
         print("delete");
         try {
-          _storagesevice.deleteImage(imageUrl, docId);
+          _storagesevice.promotionDeleteImage(imageUrl, docId);
         } catch (e) {
           _dialogservice.showDialog(title: "Opps", description: e.toString());
         }
 
-        fetchpost();
+        fetchData();
         rebuildUi();
       } else {
         print("nothing");
