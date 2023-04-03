@@ -47,13 +47,11 @@ class FireStoreService {
 
   loadSliderImage() async {
     try {
-      await FirebaseFirestore.instance
-          .collection('SliderImages')
-          .get()
-          .then((value) {
+      await SliderimagesRef.get().then((value) {
         sliderDataList = List.generate(
           value.size,
-          (index) => Sliderimage.fromMap(value.docs[index]),
+          (index) => Sliderimage.fromMap(
+              value.docs[index] as DocumentSnapshot<Map<String, dynamic>>),
         );
       });
       print('Success');
@@ -67,13 +65,11 @@ class FireStoreService {
 
   loadPromotionImage() async {
     try {
-      await FirebaseFirestore.instance
-          .collection('PromotionImages')
-          .get()
-          .then((value) {
+      await PromotionimagesRef.get().then((value) {
         promotionDataList = List.generate(
           value.size,
-          (index) => PromotionImage.fromMap(value.docs[index]),
+          (index) => PromotionImage.fromMap(
+              value.docs[index] as DocumentSnapshot<Map<String, dynamic>>),
         );
       });
       print('Success');

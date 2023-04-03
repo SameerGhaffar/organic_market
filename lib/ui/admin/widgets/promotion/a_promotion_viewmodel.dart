@@ -86,12 +86,12 @@ class PromotionAdminModel extends BaseViewModel {
       if (sheetResponse.confirmed) {
         print("delete");
         try {
-          _storagesevice.promotionDeleteImage(imageUrl, docId);
+          await _storagesevice.promotionDeleteImage(imageUrl, docId);
+          fetchData();
         } catch (e) {
           _dialogservice.showDialog(title: "Opps", description: e.toString());
         }
 
-        fetchData();
         rebuildUi();
       } else {
         print("nothing");

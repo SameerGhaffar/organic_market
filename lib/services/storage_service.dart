@@ -13,9 +13,9 @@ class StorageService {
   FirebaseStorage get storage => _storage;
 
   final Reference sliderimagesRef =
-      FirebaseStorage.instance.ref("SliderImages/");
+      FirebaseStorage.instance.ref("SliderImages");
   final Reference promotionImageRef =
-      FirebaseStorage.instance.ref("PromotionImages/");
+      FirebaseStorage.instance.ref("PromotionImages");
 
 // Slider images Upload and delete tool used by the admin
   Future<bool> sliderUploadImage(File? image) async {

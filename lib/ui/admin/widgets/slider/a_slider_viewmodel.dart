@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,8 +9,6 @@ import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/storage_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-import '../../../../services/nav_drawer_service.dart';
 
 class SliderAdminModel extends BaseViewModel {
   final _dialogservice = locator<DialogService>();
@@ -89,15 +86,15 @@ class SliderAdminModel extends BaseViewModel {
       if (sheetResponse.confirmed) {
         print("delete");
         try {
-          _storagesevice.sliderDeleteImage(imageUrl, docId);
+          await _storagesevice.sliderDeleteImage(imageUrl, docId);
+          fetchData();
         } catch (e) {
           _dialogservice.showDialog(title: "Opps", description: e.toString());
         }
 
-        fetchData();
         rebuildUi();
       } else {
-        print("nothing");
+        print("sheet responnse false");
       }
     }
   }

@@ -107,7 +107,7 @@ class SliderAdmin extends StackedView<SliderAdminModel> {
                                       viewModel
                                           .imagelist()
                                           .map((sliderobject) =>
-                                              sliderobject.ImageUrl as String)
+                                              sliderobject.id as String)
                                           .toList()[index]),
                                   child: CachedNetworkImage(
                                     imageUrl: viewModel

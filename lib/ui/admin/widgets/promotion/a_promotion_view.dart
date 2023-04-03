@@ -105,7 +105,7 @@ class PromotionAdmin extends StackedView<PromotionAdminModel> {
                                           .toList()[index],
                                       viewModel.PromotionDatalist()
                                           .map((sliderobject) =>
-                                              sliderobject.ImageUrl as String)
+                                              sliderobject.id as String)
                                           .toList()[index]),
                                   child: CachedNetworkImage(
                                     imageUrl: viewModel.PromotionDatalist()
