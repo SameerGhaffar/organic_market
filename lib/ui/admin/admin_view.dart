@@ -46,6 +46,17 @@ class AdminView extends StackedView<AdminViewModel> {
                       ],
                     ),
                   ),
+                ),
+                Card(
+                  child: InkWell(
+                    onTap: viewModel.toCategoryView,
+                    child: Column(
+                      children: const [
+                        Icon(Icons.image),
+                        Text("Category tool")
+                      ],
+                    ),
+                  ),
                 )
               ],
             ),

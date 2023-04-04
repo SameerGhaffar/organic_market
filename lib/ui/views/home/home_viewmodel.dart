@@ -19,9 +19,9 @@ class HomeViewModel extends BaseViewModel {
 //   ];
 
   Future fetchData() async {
-    _firestoreService.SliderimagesRef.snapshots().listen((event) {});
+    _firestoreService.sliderImagesRef.snapshots().listen((event) {});
     _firestoreService.sliderDataList;
-    _firestoreService.PromotionimagesRef;
+    _firestoreService.promotionImagesRef;
   }
 
   List<Sliderimage> sliderImage() {

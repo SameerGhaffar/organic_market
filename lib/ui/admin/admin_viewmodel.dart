@@ -25,4 +25,8 @@ class AdminViewModel extends BaseViewModel {
   void toPromotionView() {
     _navigation.navigateToPromotionAdmin();
   }
+
+  void toCategoryView() {
+    _navigation.navigateToCategoryAdmin();
+  }
 }

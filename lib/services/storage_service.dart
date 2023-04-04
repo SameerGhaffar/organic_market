@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
@@ -16,6 +17,9 @@ class StorageService {
       FirebaseStorage.instance.ref("SliderImages");
   final Reference promotionImageRef =
       FirebaseStorage.instance.ref("PromotionImages");
+  final Reference categoryImagesRef =
+      FirebaseStorage.instance.ref("CategoryImages");
+  final Reference itemImagesRef = FirebaseStorage.instance.ref("ItemImages");
 
 // Slider images Upload and delete tool used by the admin
   Future<bool> sliderUploadImage(File? image) async {
@@ -25,7 +29,7 @@ class StorageService {
           .putFile(image.absolute);
       final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
       final String url = (await downloadUrl.ref.getDownloadURL());
-      final DocumentReference docRef = _firestoreService.SliderimagesRef.doc();
+      final DocumentReference docRef = _firestoreService.sliderImagesRef.doc();
       final String docId = docRef.id;
       final Sliderimage imageObj = Sliderimage(ImageUrl: url, id: docId);
 
@@ -42,7 +46,7 @@ class StorageService {
     await FirebaseStorage.instance.refFromURL(imageUrl).delete();
 
     // Delete document from Firestore collection
-    await _firestoreService.SliderimagesRef.doc(docId).delete();
+    await _firestoreService.sliderImagesRef.doc(docId).delete();
 
     return true;
   }
@@ -56,7 +60,7 @@ class StorageService {
       final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
       final String url = (await downloadUrl.ref.getDownloadURL());
       final DocumentReference docRef =
-          _firestoreService.PromotionimagesRef.doc();
+          _firestoreService.promotionImagesRef.doc();
       final String docId = docRef.id;
       final PromotionImage imageObj = PromotionImage(ImageUrl: url, id: docId);
 
@@ -73,10 +77,40 @@ class StorageService {
     await FirebaseStorage.instance.refFromURL(imageUrl).delete();
 
     // Delete document from Firestore collection
-    await _firestoreService.PromotionimagesRef.doc(docId).delete();
+    await _firestoreService.promotionImagesRef.doc(docId).delete();
 
     return true;
   }
 
   //Category
+  Future<bool> categoryUploadData({File? image, String? categoryName}) async {
+    if (image != null) {
+      final UploadTask uploadTask = categoryImagesRef
+          .child(DateTime.now().toIso8601String())
+          .putFile(image.absolute);
+      final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
+      final String url = (await downloadUrl.ref.getDownloadURL());
+      final DocumentReference docRef =
+          _firestoreService.productcategorysRef.doc();
+      final String docId = docRef.id;
+      final ProductCategory dataobj =
+          ProductCategory(imageUrl: url, id: docId, name: categoryName);
+
+      await docRef.set(dataobj.toMap());
+
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<bool> categoryDeleteData(String imageUrl, String docId) async {
+    // Delete image from Firebase Storage
+    await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+
+    // Delete document from Firestore collection
+    await _firestoreService.productcategorysRef.doc(docId).delete();
+
+    return true;
+  }
 }

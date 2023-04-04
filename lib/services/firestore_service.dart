@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/model/user.dart';
@@ -14,10 +15,12 @@ class FireStoreService {
       FirebaseFirestore.instance.collection('categories');
   CollectionReference get categories => _categories;
 
-  final CollectionReference SliderimagesRef =
+  final CollectionReference sliderImagesRef =
       FirebaseFirestore.instance.collection('SliderImages');
-  final CollectionReference PromotionimagesRef =
+  final CollectionReference promotionImagesRef =
       FirebaseFirestore.instance.collection('PromotionImages');
+  final CollectionReference productcategorysRef =
+      FirebaseFirestore.instance.collection('Categories');
 
   String? error;
 
@@ -47,7 +50,7 @@ class FireStoreService {
 
   loadSliderImage() async {
     try {
-      await SliderimagesRef.get().then((value) {
+      await sliderImagesRef.get().then((value) {
         sliderDataList = List.generate(
           value.size,
           (index) => Sliderimage.fromMap(
@@ -65,10 +68,28 @@ class FireStoreService {
 
   loadPromotionImage() async {
     try {
-      await PromotionimagesRef.get().then((value) {
+      await promotionImagesRef.get().then((value) {
         promotionDataList = List.generate(
           value.size,
           (index) => PromotionImage.fromMap(
+              value.docs[index] as DocumentSnapshot<Map<String, dynamic>>),
+        );
+      });
+      print('Success');
+    } catch (e) {
+      print('Failed: ' + e.toString());
+    }
+  }
+
+  // catgory
+  List<ProductCategory> categoryDataList = [];
+
+  loadCategoryData() async {
+    try {
+      await productcategorysRef.get().then((value) {
+        categoryDataList = List.generate(
+          value.size,
+          (index) => ProductCategory.fromMap(
               value.docs[index] as DocumentSnapshot<Map<String, dynamic>>),
         );
       });

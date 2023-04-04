@@ -1,12 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ProductCategory {
+class Item {
   String? id;
   String? imageUrl;
   String? name;
 
-  ProductCategory({
+  Item({
     this.id,
     this.imageUrl,
     this.name,
@@ -19,9 +18,9 @@ class ProductCategory {
     };
   }
 
-  factory ProductCategory.fromMap(DocumentSnapshot<Map<String, dynamic>> snap) {
+  factory Item.fromMap(DocumentSnapshot<Map<String, dynamic>> snap) {
     Map<String, dynamic> map = snap.data()!;
-    return ProductCategory(
+    return Item(
       imageUrl: map['imageUrl'],
       id: map['id'],
     );
