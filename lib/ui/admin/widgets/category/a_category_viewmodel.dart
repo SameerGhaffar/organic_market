@@ -16,6 +16,20 @@ class CategoryAdminModel extends BaseViewModel {
   final _storagesevice = locator<StorageService>();
   final _firestoreService = locator<FireStoreService>();
   final _bottomsheet = locator<BottomSheetService>();
+  TextEditingController nameController = TextEditingController();
+
+  final formKey = GlobalKey<FormState>();
+  void onchangedValidation() {
+    formKey.currentState!.validate();
+    rebuildUi();
+  }
+
+  String? nameValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Name Can not be Empty";
+    }
+    return null;
+  }
 
   final ImagePicker _imagePicker = ImagePicker();
 
@@ -26,6 +40,7 @@ class CategoryAdminModel extends BaseViewModel {
   bool isImagePicked = false;
 
   bool loading = false;
+  bool updatedisabled = false;
 
   Future imagepick() async {
     try {
@@ -52,17 +67,35 @@ class CategoryAdminModel extends BaseViewModel {
     rebuildUi();
   }
 
-  Future uploadimage() async {
+  Future uploadData() async {
     loading = true;
     rebuildUi();
-    if (await _storagesevice.categoryUploadData(
-        image: _image, categoryName: "Dairy")) {
+    if (formKey.currentState!.validate()) {
+      String name = nameController.text.toString();
+      if (await _storagesevice.categoryUploadData(
+          categoryName: name, image: _image)) {
+        loading = false;
+        nameController.clear();
+        rebuildUi();
+        fetchData();
+      }
+      isImagePicked = false;
+      _image = null;
+      rebuildUi();
+    } else {
       loading = false;
-      fetchData();
     }
-    isImagePicked = false;
-    _image = null;
-    rebuildUi();
+  }
+
+  Future updateData({required String id, required String imageUrl}) async {
+    String name = nameController.text.toString();
+
+    _dialogservice.showDialog(title: "Uploading");
+
+    if (await _storagesevice.categoryUpdateData(
+        id: id, categoryName: name, image: _image, imageUrl: imageUrl)) {
+      _dialogservice.completeDialog(DialogResponse(confirmed: true));
+    }
   }
 
 /*.imagelist()
@@ -80,10 +113,18 @@ class CategoryAdminModel extends BaseViewModel {
           await _firestoreService.loadCategoryData();
           rebuildUi();
         }
+        if (doc.type == DocumentChangeType.added) {
+          await _firestoreService.loadCategoryData();
+          rebuildUi();
+        }
+        if (doc.type == DocumentChangeType.modified) {
+          await _firestoreService.loadCategoryData();
+          rebuildUi();
+        }
       });
     });
-    await _firestoreService.loadCategoryData();
-    rebuildUi();
+    // await _firestoreService.loadCategoryData();
+    // rebuildUi();
   }
 
   Future deleteimage({String? imageUrl, String? docId}) async {

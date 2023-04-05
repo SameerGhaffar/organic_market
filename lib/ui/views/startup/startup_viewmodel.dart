@@ -45,6 +45,7 @@ class StartupViewModel extends BaseViewModel {
         if (user.emailVerified) {
           await _firestore.loadSliderImage();
           await _firestore.loadPromotionImage();
+          await _firestore.loadCategoryData();
 
           DocumentSnapshot userSnapshot =
               await _firestore.users.doc(user.uid).get();

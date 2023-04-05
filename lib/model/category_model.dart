@@ -2,9 +2,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProductCategory {
-  String? id;
-  String? imageUrl;
-  String? name;
+  final String? id;
+  final String? imageUrl;
+  final String? name;
 
   ProductCategory({
     this.id,
@@ -16,14 +16,13 @@ class ProductCategory {
     return {
       'id': id,
       'imageUrl': imageUrl,
+      'name': name,
     };
   }
 
   factory ProductCategory.fromMap(DocumentSnapshot<Map<String, dynamic>> snap) {
     Map<String, dynamic> map = snap.data()!;
     return ProductCategory(
-      imageUrl: map['imageUrl'],
-      id: map['id'],
-    );
+        imageUrl: map['imageUrl'], id: map['id'], name: map['name']);
   }
 }

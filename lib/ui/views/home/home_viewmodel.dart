@@ -1,14 +1,17 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
 
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final CarouselController carouselController = CarouselController();
   final _firestoreService = locator<FireStoreService>();
+  final _dialogService = locator<DialogService>();
 
 //  List imageList = [
 //     'assets/images/TRAVEL.png',
@@ -21,7 +24,16 @@ class HomeViewModel extends BaseViewModel {
   Future fetchData() async {
     _firestoreService.sliderImagesRef.snapshots().listen((event) {});
     _firestoreService.sliderDataList;
-    _firestoreService.promotionImagesRef;
+    _firestoreService.promotionDataList;
+    _firestoreService.categoryDataList;
+    /* _firestoreService.productcategorysRef.snapshots().listen((snapshot) {
+      snapshot.docChanges.forEach((doc) async {
+        if (doc.type == DocumentChangeType.removed) {
+          await _firestoreService.loadCategoryData();
+          rebuildUi();
+        }
+      });
+    }); */
   }
 
   List<Sliderimage> sliderImage() {
@@ -30,6 +42,14 @@ class HomeViewModel extends BaseViewModel {
 
   List<PromotionImage> promtoionImage() {
     return _firestoreService.promotionDataList;
+  }
+
+  ProductCategory categorydata(int index) {
+    return categoryList().map((e) => e).toList()[index];
+  }
+
+  List<ProductCategory> categoryList() {
+    return _firestoreService.categoryDataList;
   }
   // List<Sliderimage>? sliderlist;
 
@@ -68,6 +88,11 @@ class HomeViewModel extends BaseViewModel {
   }
 
   int get currentIndex => _currentIndex;
+
+  void tap(String id) {
+    _dialogService.showDialog(
+        title: "category clicked", description: id, buttonTitle: "ok");
+  }
 }
 
 

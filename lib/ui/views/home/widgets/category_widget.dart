@@ -31,13 +31,17 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
               physics: const ScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemExtent: MediaQuery.of(context).size.width * 0.40,
-              itemCount: viewModel.categories.length,
+              itemCount: viewModel.categoryList().length,
               itemBuilder: (context, index) {
-                return Categorycard(
-                    categoryName:
-                        viewModel.categories[index]['name'] ?? "Dairy",
-                    imagePath: viewModel.categories[index]['image'] ??
-                        "assets/images/ghee.jpg");
+                return InkWell(
+                  onTap: () =>
+                      viewModel.tap(viewModel.categorydata(index).id as String),
+                  child: Categorycard(
+                      categoryName:
+                          viewModel.categorydata(index).name as String,
+                      imagePath:
+                          viewModel.categorydata(index).imageUrl as String),
+                );
               },
             )),
       ],

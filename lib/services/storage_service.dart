@@ -94,7 +94,7 @@ class StorageService {
           _firestoreService.productcategorysRef.doc();
       final String docId = docRef.id;
       final ProductCategory dataobj =
-          ProductCategory(imageUrl: url, id: docId, name: categoryName);
+          ProductCategory(name: categoryName, imageUrl: url, id: docId);
 
       await docRef.set(dataobj.toMap());
 
@@ -102,6 +102,68 @@ class StorageService {
     }
 
     return false;
+  }
+
+  Future<bool> categoryUpdateData(
+      {File? image,
+      String? categoryName,
+      required String id,
+      required String imageUrl}) async {
+    if (image != null && categoryName != null) {
+      // delete image that is stored and upload new also name
+      await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+
+      final UploadTask uploadTask = categoryImagesRef
+          .child(DateTime.now().toIso8601String())
+          .putFile(image.absolute);
+
+      final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
+
+      final String url = (await downloadUrl.ref.getDownloadURL());
+      final DocumentReference docRef =
+          _firestoreService.productcategorysRef.doc(id);
+
+      await docRef.update({
+        'imageUrl': url,
+        'name': categoryName,
+      });
+
+      return true;
+    } else if (image != null && categoryName == null) {
+      await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+
+      final UploadTask uploadTask = categoryImagesRef
+          .child(DateTime.now().toIso8601String())
+          .putFile(image.absolute);
+
+      final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
+
+      final String url = (await downloadUrl.ref.getDownloadURL());
+      final DocumentReference docRef =
+          _firestoreService.productcategorysRef.doc(id);
+
+      await docRef.update({
+        'imageUrl': url,
+      });
+
+      return true;
+
+      // delete image upload image
+    } else if (categoryName != null && image == null) {
+      if (categoryName.isNotEmpty) {
+        final DocumentReference docRef =
+            _firestoreService.productcategorysRef.doc(id);
+
+        await docRef.update({
+          'name': categoryName,
+        });
+      }
+      // only update name
+
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<bool> categoryDeleteData(String imageUrl, String docId) async {

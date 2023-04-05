@@ -93,7 +93,8 @@ class FireStoreService {
               value.docs[index] as DocumentSnapshot<Map<String, dynamic>>),
         );
       });
-      print('Success');
+      print('Category slider list is done ');
+      print(categoryDataList.length);
     } catch (e) {
       print('Failed: ' + e.toString());
     }
