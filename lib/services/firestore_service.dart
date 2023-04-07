@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:organic_market/model/category_model.dart';
+import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/model/user.dart';
@@ -21,6 +22,15 @@ class FireStoreService {
       FirebaseFirestore.instance.collection('PromotionImages');
   final CollectionReference productcategorysRef =
       FirebaseFirestore.instance.collection('Categories');
+  final CollectionReference itemRef =
+      FirebaseFirestore.instance.collection('Items');
+  String _categoryid = "";
+
+  String get categoryid => _categoryid;
+
+  void setDocId(String id) {
+    _categoryid = id;
+  }
 
   String? error;
 
@@ -57,9 +67,9 @@ class FireStoreService {
               value.docs[index] as DocumentSnapshot<Map<String, dynamic>>),
         );
       });
-      print('Success');
+      print('Success Slider image are in list ');
     } catch (e) {
-      print('Failed: ' + e.toString());
+      print('Slider images Failed: ' + e.toString());
     }
   }
 
@@ -75,9 +85,9 @@ class FireStoreService {
               value.docs[index] as DocumentSnapshot<Map<String, dynamic>>),
         );
       });
-      print('Success');
+      print('Success Promotion images in list ');
     } catch (e) {
-      print('Failed: ' + e.toString());
+      print('Failed: promotion images' + e.toString());
     }
   }
 
@@ -96,7 +106,37 @@ class FireStoreService {
       print('Category slider list is done ');
       print(categoryDataList.length);
     } catch (e) {
+      print('Failed: category list ' + e.toString());
+    }
+  }
+
+  // item get
+
+  List<Item> itemDataList = [];
+
+  loadItemData() async {
+    try {
+      await itemRef.get().then((value) {
+        itemDataList = List.generate(
+          value.size,
+          (index) => Item.fromMap(
+              value.docs[index] as DocumentSnapshot<Map<String, dynamic>>),
+        );
+      });
+      print('Category item list is done ');
+      print(itemDataList.length);
+    } catch (e) {
       print('Failed: ' + e.toString());
     }
+  }
+
+  List<Item> selecteditemList = [];
+  generateItem(String check) {
+    selecteditemList =
+        itemDataList.where((element) => element.categoryId == check).toList();
+  }
+
+  Item itemdata(int index) {
+    return selecteditemList.map((e) => e).toList()[index];
   }
 }

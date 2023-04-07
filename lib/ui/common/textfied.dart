@@ -11,6 +11,7 @@ class TextWidget extends StatelessWidget {
   final TextInputType keyboardtype;
   final TextEditingController controller;
   final Function? onpressed;
+  final String hint;
 
   const TextWidget({
     Key? key,
@@ -22,6 +23,7 @@ class TextWidget extends StatelessWidget {
     required this.keyboardtype,
     required this.controller,
     this.onpressed,
+    required this.hint,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class TextWidget extends StatelessWidget {
         controller: controller,
         decoration: InputDecoration(
           labelText: labeltext,
+          hintText: hint,
           filled: true,
           labelStyle: const TextStyle(
             color: Colors.black,

@@ -1,13 +1,15 @@
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';
-import 'package:organic_market/services/storage_service.dart';
+import 'package:organic_market/services/manager.dart';
 import 'package:organic_market/ui/admin/admin_view.dart';
 import 'package:organic_market/ui/admin/widgets/category/a_category_view.dart';
+import 'package:organic_market/ui/admin/widgets/item/a_item_view.dart';
 import 'package:organic_market/ui/admin/widgets/promotion/a_promotion_view.dart';
 import 'package:organic_market/ui/admin/widgets/slider/a_slider_view.dart';
 import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:organic_market/ui/dialogs/info_alert/info_alert_dialog.dart';
+import 'package:organic_market/ui/views/item/item_view.dart';
 import 'package:organic_market/ui/views/layout/drawer_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/login/login_view.dart';
@@ -30,7 +32,9 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: AdminView),
     MaterialRoute(page: SliderAdmin),
     MaterialRoute(page: PromotionAdmin),
-    MaterialRoute(page: CategoryAdmin)
+    MaterialRoute(page: CategoryAdmin),
+    MaterialRoute(page: ItemView),
+    MaterialRoute(page: CategoryItemAdmin),
 
     // @stacked-route
   ],

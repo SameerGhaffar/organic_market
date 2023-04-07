@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
-import 'package:organic_market/services/storage_service.dart';
+import 'package:organic_market/services/manager.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -67,7 +67,7 @@ class PromotionAdminModel extends BaseViewModel {
                                           .map((sliderobject) =>
                                               sliderobject.ImageUrl as String)
                                           .toList()[index] */
-  List<PromotionImage> PromotionDatalist() {
+  List<PromotionImage> promotionDatalist() {
     return _firestoreService.promotionDataList;
   }
 

@@ -17,7 +17,7 @@ class Categorycard extends ViewModelWidget<HomeViewModel> {
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return SizedBox(
       child: Card(
-        color: Colors.black,
+        color: Colors.white10,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25), topRight: Radius.circular(25))),
@@ -56,15 +56,19 @@ class Categorycard extends ViewModelWidget<HomeViewModel> {
                   ),
                   child: CachedNetworkImage(
                     imageUrl: imagePath,
+                    height: MediaQuery.of(context).size.height * 0.17,
+                    width: MediaQuery.of(context).size.width * 0.35,
                     placeholder: (context, url) => Shimmer.fromColors(
-                      child: Container(),
+                      child: Container(
+                        color: Colors.grey.shade300,
+                      ),
                       baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.grey.shade300,
+                      highlightColor: Colors.white,
+                      direction: ShimmerDirection.ttb,
                     ),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
                     fit: BoxFit.fill,
-                    width: double.infinity,
                   ),
                 ),
               ],

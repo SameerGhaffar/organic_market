@@ -1,5 +1,9 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
@@ -11,7 +15,7 @@ import 'package:stacked_services/stacked_services.dart';
 class HomeViewModel extends BaseViewModel {
   final CarouselController carouselController = CarouselController();
   final _firestoreService = locator<FireStoreService>();
-  final _dialogService = locator<DialogService>();
+  final _navigation = locator<NavigationService>();
 
 //  List imageList = [
 //     'assets/images/TRAVEL.png',
@@ -20,12 +24,28 @@ class HomeViewModel extends BaseViewModel {
 //     'assets/images/TRAVEL.png',
 //     'assets/images/TRAVEL.png',
 //   ];
-
   Future fetchData() async {
-    _firestoreService.sliderImagesRef.snapshots().listen((event) {});
-    _firestoreService.sliderDataList;
-    _firestoreService.promotionDataList;
-    _firestoreService.categoryDataList;
+    _firestoreService.productcategorysRef.snapshots().listen((snapshot) {
+      snapshot.docChanges.forEach((doc) async {
+        await _firestoreService.loadCategoryData();
+        rebuildUi();
+      });
+    });
+    _firestoreService.sliderImagesRef.snapshots().listen((snapshot) {
+      snapshot.docChanges.forEach((doc) async {
+        await _firestoreService.loadSliderImage();
+        rebuildUi();
+      });
+    });
+    _firestoreService.promotionImagesRef.snapshots().listen((snapshot) {
+      snapshot.docChanges.forEach((doc) async {
+        await _firestoreService.loadPromotionImage();
+        rebuildUi();
+      });
+    });
+    // _firestoreService.sliderDataList;
+    // _firestoreService.promotionDataList;
+    // _firestoreService.categoryDataList;
     /* _firestoreService.productcategorysRef.snapshots().listen((snapshot) {
       snapshot.docChanges.forEach((doc) async {
         if (doc.type == DocumentChangeType.removed) {
@@ -40,7 +60,11 @@ class HomeViewModel extends BaseViewModel {
     return _firestoreService.sliderDataList;
   }
 
-  List<PromotionImage> promtoionImage() {
+  PromotionImage promotionImage(int index) {
+    return promtoionlist().map((e) => e).toList()[index];
+  }
+
+  List<PromotionImage> promtoionlist() {
     return _firestoreService.promotionDataList;
   }
 
@@ -89,9 +113,15 @@ class HomeViewModel extends BaseViewModel {
 
   int get currentIndex => _currentIndex;
 
-  void tap(String id) {
-    _dialogService.showDialog(
-        title: "category clicked", description: id, buttonTitle: "ok");
+  void tap(String id) async {
+    _firestoreService.setDocId(id);
+    _firestoreService.itemDataList = [];
+
+    await _firestoreService.loadItemData();
+    _navigation.navigateToItemView();
+
+    // _dialogService.showDialog(
+    //     title: "category clicked", description: id, buttonTitle: "ok");
   }
 }
 

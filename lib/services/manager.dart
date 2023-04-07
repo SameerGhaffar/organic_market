@@ -4,12 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/model/category_model.dart';
+import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
 
 class StorageService {
   final _firestoreService = locator<FireStoreService>();
+
   final FirebaseStorage _storage = FirebaseStorage.instance;
   FirebaseStorage get storage => _storage;
 
@@ -109,59 +111,36 @@ class StorageService {
       String? categoryName,
       required String id,
       required String imageUrl}) async {
-    if (image != null && categoryName != null) {
-      // delete image that is stored and upload new also name
-      await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+    try {
+      if (image != null) {
+        // delete image that is stored and upload new also name
+        await FirebaseStorage.instance.refFromURL(imageUrl).delete();
 
-      final UploadTask uploadTask = categoryImagesRef
-          .child(DateTime.now().toIso8601String())
-          .putFile(image.absolute);
+        final UploadTask uploadTask = categoryImagesRef
+            .child(DateTime.now().toIso8601String())
+            .putFile(image.absolute);
 
-      final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
+        final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
 
-      final String url = (await downloadUrl.ref.getDownloadURL());
-      final DocumentReference docRef =
-          _firestoreService.productcategorysRef.doc(id);
+        final String url = (await downloadUrl.ref.getDownloadURL());
+        final DocumentReference docRef =
+            _firestoreService.productcategorysRef.doc(id);
 
-      await docRef.update({
-        'imageUrl': url,
-        'name': categoryName,
-      });
-
-      return true;
-    } else if (image != null && categoryName == null) {
-      await FirebaseStorage.instance.refFromURL(imageUrl).delete();
-
-      final UploadTask uploadTask = categoryImagesRef
-          .child(DateTime.now().toIso8601String())
-          .putFile(image.absolute);
-
-      final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
-
-      final String url = (await downloadUrl.ref.getDownloadURL());
-      final DocumentReference docRef =
-          _firestoreService.productcategorysRef.doc(id);
-
-      await docRef.update({
-        'imageUrl': url,
-      });
-
-      return true;
-
-      // delete image upload image
-    } else if (categoryName != null && image == null) {
-      if (categoryName.isNotEmpty) {
+        await docRef.update({
+          'imageUrl': url,
+        });
+      }
+      if (categoryName != null && categoryName.isNotEmpty) {
         final DocumentReference docRef =
             _firestoreService.productcategorysRef.doc(id);
 
         await docRef.update({
           'name': categoryName,
-        });
+        }); // delete image upload image
       }
-      // only update name
-
       return true;
-    } else {
+    } catch (e) {
+      print("error in update data $e");
       return false;
     }
   }
@@ -174,5 +153,101 @@ class StorageService {
     await _firestoreService.productcategorysRef.doc(docId).delete();
 
     return true;
+  }
+
+  // item upload
+
+  Future<bool> itemUploadData(
+      {required File image,
+      required String itemTitle,
+      required int quantity,
+      required String qType,
+      required int price}) async {
+    try {
+      final UploadTask uploadTask = itemImagesRef
+          .child(DateTime.now().toIso8601String())
+          .putFile(image.absolute);
+      final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
+      final String url = (await downloadUrl.ref.getDownloadURL());
+      final DocumentReference docRef = _firestoreService.itemRef.doc();
+      final String docId = docRef.id;
+      String categoryId = _firestoreService.categoryid;
+      final Item dataobj = Item(
+          categoryId: categoryId,
+          imageUrl: url,
+          id: docId,
+          price: price,
+          quantity: quantity,
+          quantityType: qType,
+          title: itemTitle);
+
+      await docRef.set(dataobj.toMap());
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> itemDeleteData(String imageUrl, String docId) async {
+    // Delete image from Firebase Storage
+    await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+
+    // Delete document from Firestore collection
+    await _firestoreService.itemRef.doc(docId).delete();
+
+    return true;
+  }
+
+  Future<bool> itemUpdateData(
+      {required String id,
+      required String imageUrl,
+      required File? image,
+      required String? itemTitle,
+      required int? quantity,
+      required String? qType,
+      required int? price}) async {
+    final DocumentReference docRef = _firestoreService.itemRef.doc(id);
+
+    try {
+      if (image != null) {
+        final UploadTask uploadTask = categoryImagesRef
+            .child(DateTime.now().toIso8601String())
+            .putFile(image.absolute);
+        final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() {});
+        final String url = (await downloadUrl.ref.getDownloadURL());
+        if (url.isNotEmpty) {
+          await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+          await docRef.update({
+            'imageUrl': url,
+          });
+        }
+      }
+      if (itemTitle != null && itemTitle.isNotEmpty) {
+        await docRef.update({
+          'title': itemTitle,
+        });
+      }
+      if (quantity != null) {
+        await docRef.update({
+          'quantity': quantity,
+        });
+      }
+      if (qType != null && qType.isNotEmpty) {
+        await docRef.update({
+          'quantityType': qType,
+        });
+      }
+      if (price != null) {
+        await docRef.update({
+          'price': price,
+        });
+      }
+
+      return true;
+    } catch (e) {
+      print("item update fail $e");
+      return false;
+    }
   }
 }

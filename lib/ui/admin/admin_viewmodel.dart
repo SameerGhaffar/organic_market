@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';

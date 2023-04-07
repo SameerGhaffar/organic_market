@@ -24,12 +24,14 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
                   .map((imageurl) => CachedNetworkImage(
                         imageUrl: imageurl.ImageUrl as String,
                         placeholder: (context, url) => Shimmer.fromColors(
-                          child: Container(),
+                          child: Container(
+                            color: Colors.grey,
+                          ),
                           baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.grey.shade300,
+                          highlightColor: Colors.white,
                         ),
                         errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                            Image.asset("assets/images/card.png"),
                         fit: BoxFit.cover,
                         width: double.infinity,
                       ))

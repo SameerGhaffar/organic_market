@@ -19,7 +19,7 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
             padding: const EdgeInsets.all(2),
             physics: const ScrollPhysics(),
             scrollDirection: Axis.horizontal,
-            itemCount: viewModel.promtoionImage().length,
+            itemCount: viewModel.promtoionlist().length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10.0,
@@ -34,14 +34,14 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
-                    imageUrl: viewModel
-                        .promtoionImage()
-                        .map((promotionObj) => promotionObj.ImageUrl as String)
-                        .toList()[index],
+                    imageUrl:
+                        viewModel.promotionImage(index).ImageUrl as String,
                     placeholder: (context, url) => Shimmer.fromColors(
-                      child: Container(),
+                      child: Container(
+                        color: Colors.grey,
+                      ),
                       baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.grey.shade300,
+                      highlightColor: Colors.white,
                     ),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),

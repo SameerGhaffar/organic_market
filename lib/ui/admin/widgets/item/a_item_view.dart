@@ -1,21 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:organic_market/ui/admin/widgets/category/a_category_viewmodel.dart';
 import 'package:organic_market/ui/common/textfied.dart';
 import 'package:organic_market/ui/common/ui_helpers.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 
-class CategoryAdmin extends StackedView<CategoryAdminModel> {
-  const CategoryAdmin({super.key});
+import 'a_item_viewmodel.dart';
+
+class CategoryItemAdmin extends StackedView<CategoryItemAdminModel> {
+  const CategoryItemAdmin({super.key});
 
   @override
   Widget builder(
-      BuildContext context, CategoryAdminModel viewModel, Widget? child) {
+      BuildContext context, CategoryItemAdminModel viewModel, Widget? child) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Category Tool",
+        title: Text("Item Tool",
             style: GoogleFonts.lato(
                 textStyle: const TextStyle(
               fontWeight: FontWeight.bold,
@@ -36,7 +37,7 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
-                        "Add Category ",
+                        "Add Item Data",
                         style: GoogleFonts.lato(
                             textStyle: const TextStyle(
                                 fontSize: 18,
@@ -44,7 +45,6 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                                 color: Colors.green)),
                       ),
                     ),
-                    verticalSpaceTiny,
                     InkWell(
                       onTap: () => viewModel.imagepick(),
                       child: Container(
@@ -63,16 +63,49 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                     ),
                     Form(
                       key: viewModel.formKey,
-                      onChanged: viewModel.onchangedValidation,
-                      child: TextWidget(
-                        controller: viewModel.nameController,
-                        keyboardtype: TextInputType.name,
-                        hint: "Category Name",
-                        validator: viewModel.nameValidator,
-                        labeltext: "Category Name",
-                        prefixicon: Icons.add_circle_sharp,
-                        eyepass: false,
-                        obscureText: false,
+                      child: Column(
+                        children: [
+                          TextWidget(
+                            controller: viewModel.titleController,
+                            keyboardtype: TextInputType.name,
+                            validator: viewModel.titleValidator,
+                            labeltext: "Item Title",
+                            hint: "e.g Apple",
+                            prefixicon: Icons.add_circle_sharp,
+                            eyepass: false,
+                            obscureText: false,
+                          ),
+                          TextWidget(
+                            hint: "1,2",
+                            controller: viewModel.quantityController,
+                            keyboardtype: TextInputType.number,
+                            validator: viewModel.qunatityValidator,
+                            labeltext: "Item Quantity",
+                            prefixicon: Icons.add_circle_sharp,
+                            eyepass: false,
+                            obscureText: false,
+                          ),
+                          TextWidget(
+                            hint: "kg , g, L",
+                            controller: viewModel.quantityTypeController,
+                            keyboardtype: TextInputType.name,
+                            validator: viewModel.quantityTypeValidator,
+                            labeltext: "Type",
+                            prefixicon: Icons.add_circle_sharp,
+                            eyepass: false,
+                            obscureText: false,
+                          ),
+                          TextWidget(
+                            hint: "200 , 100",
+                            controller: viewModel.priceController,
+                            keyboardtype: TextInputType.number,
+                            validator: viewModel.priceValidator,
+                            labeltext: "Item Price",
+                            prefixicon: Icons.add_circle_sharp,
+                            eyepass: false,
+                            obscureText: false,
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
@@ -89,7 +122,7 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                         child: viewModel.loading
                             ? const CircularProgressIndicator()
                             : Text(
-                                "Add Category",
+                                "Add Item",
                                 style: GoogleFonts.lato(
                                     textStyle: TextStyle(
                                       color: viewModel.isImagePicked
@@ -112,24 +145,24 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                     alignment: Alignment.topLeft,
                     padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      "Categories",
+                      "Item List",
                       style: GoogleFonts.lato(
                           textStyle: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black45)),
+                              color: Colors.green)),
                     ),
                   ),
                   SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.40,
+                      height: MediaQuery.of(context).size.height * 0.50,
                       child: ListView.builder(
                         physics: const ScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         //  itemExtent: MediaQuery.of(context).size.width * 0.40,
-                        itemCount: viewModel.datalist().length,
+                        itemCount: viewModel.itemList.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            height: 110,
+                            height: 200,
                             padding: const EdgeInsets.all(8.0),
                             margin: const EdgeInsets.symmetric(
                                 horizontal: 4, vertical: 4),
@@ -140,14 +173,11 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                               children: [
                                 Container(
                                   color: Colors.black,
-                                  height: 80,
-                                  width: 80,
+                                  height: 120,
+                                  width: 100,
                                   child: CachedNetworkImage(
-                                    imageUrl: viewModel
-                                        .datalist()
-                                        .map((categoryobject) =>
-                                            categoryobject.imageUrl as String)
-                                        .toList()[index],
+                                    imageUrl:
+                                        viewModel.itemdata(index).imageUrl,
                                     placeholder: (context, url) =>
                                         Shimmer.fromColors(
                                       child: Container(),
@@ -162,35 +192,64 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 10),
+                                    horizontal: 12,
+                                  ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                          viewModel
-                                              .datalist()
-                                              .map((e) => e.name as String)
-                                              .toList()[index],
+                                      Text(viewModel.itemdata(index).title,
                                           style: GoogleFonts.lato(
                                               textStyle: const TextStyle(
                                                   fontSize: 17,
                                                   color: Colors.black,
                                                   fontWeight:
                                                       FontWeight.w600))),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 30),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                                viewModel
+                                                        .itemdata(index)
+                                                        .quantity
+                                                        .toString() +
+                                                    viewModel
+                                                        .itemdata(index)
+                                                        .quantityType,
+                                                style: GoogleFonts.lato(
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 17,
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600))),
+                                            verticalSpaceTiny,
+                                            Text(
+                                                "Rs." +
+                                                    viewModel
+                                                        .itemdata(index)
+                                                        .price
+                                                        .toString(),
+                                                style: GoogleFonts.lato(
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 17,
+                                                        color: Colors.blue,
+                                                        fontWeight:
+                                                            FontWeight.w600))),
+                                          ],
+                                        ),
+                                      ),
                                       InkWell(
                                         onTap: () => viewModel.updateData(
-                                            id: viewModel
-                                                .datalist()
-                                                .map((e) => e.id as String)
-                                                .toList()[index],
+                                            id: viewModel.itemdata(index).id,
                                             imageUrl: viewModel
-                                                .datalist()
-                                                .map(
-                                                    (e) => e.imageUrl as String)
-                                                .toList()[index]),
+                                                .itemdata(index)
+                                                .imageUrl),
                                         child: Container(
                                             padding: const EdgeInsets.all(4),
                                             decoration: BoxDecoration(
@@ -212,7 +271,8 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: Colors.black)),
+                                                      color:
+                                                          Colors.deepOrange)),
                                             )),
                                       ),
                                     ],
@@ -228,29 +288,18 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
-                                          onTap: () => viewModel.deleteData(
+                                          onTap: () => viewModel.deleteItem(
                                               imageUrl: viewModel
-                                                  .datalist()
-                                                  .map((categoryobject) =>
-                                                      categoryobject.imageUrl
-                                                          as String)
-                                                  .toList()[index],
-                                              docId: viewModel
-                                                  .datalist()
-                                                  .map((categoryobject) =>
-                                                      categoryobject.id
-                                                          as String)
-                                                  .toList()[index]),
+                                                  .itemdata(index)
+                                                  .imageUrl,
+                                              docId:
+                                                  viewModel.itemdata(index).id),
                                           child: const Icon(Icons.delete,
                                               color: Colors.red)),
                                       Row(
                                         children: [
                                           InkWell(
-                                            onTap: () => viewModel.additem(
-                                                viewModel
-                                                    .datalist()
-                                                    .map((e) => e.id as String)
-                                                    .toList()[index]),
+                                            onTap: null,
                                             child: Container(
                                                 padding:
                                                     const EdgeInsets.all(4),
@@ -300,9 +349,9 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
   }
 
   @override
-  CategoryAdminModel viewModelBuilder(BuildContext context) =>
-      CategoryAdminModel();
+  CategoryItemAdminModel viewModelBuilder(BuildContext context) =>
+      CategoryItemAdminModel();
   @override
-  Future onViewModelReady(CategoryAdminModel viewModel) =>
+  Future onViewModelReady(CategoryItemAdminModel viewModel) =>
       viewModel.fetchData();
 }

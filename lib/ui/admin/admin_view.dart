@@ -17,48 +17,58 @@ class AdminView extends StackedView<AdminViewModel> {
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             verticalSpaceMassive,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Card(
-                  child: InkWell(
-                    onTap: viewModel.toSliderView,
-                    child: Column(
-                      children: const [
-                        Icon(Icons.image),
-                        Text("Slider Image Tool")
-                      ],
+            Container(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: Card(
+                      child: InkWell(
+                        onTap: viewModel.toSliderView,
+                        child: Column(
+                          children: const [
+                            Icon(Icons.image),
+                            Text("Slider Image Tool")
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Card(
-                  child: InkWell(
-                    onTap: viewModel.toPromotionView,
-                    child: Column(
-                      children: const [
-                        Icon(Icons.image),
-                        Text("Promotion Image Tool")
-                      ],
+                  Expanded(
+                    child: Card(
+                      child: InkWell(
+                        onTap: viewModel.toPromotionView,
+                        child: Column(
+                          children: const [
+                            Icon(Icons.image),
+                            Text("Promotion Image Tool")
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Card(
-                  child: InkWell(
-                    onTap: viewModel.toCategoryView,
-                    child: Column(
-                      children: const [
-                        Icon(Icons.image),
-                        Text("Category tool")
-                      ],
+                  Expanded(
+                    child: Card(
+                      child: InkWell(
+                        onTap: viewModel.toCategoryView,
+                        child: Column(
+                          children: const [
+                            Icon(Icons.image),
+                            Text("Category tool")
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
             verticalSpaceLarge,
             ElevatedButton(

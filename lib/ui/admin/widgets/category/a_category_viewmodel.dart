@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
-import 'package:organic_market/services/storage_service.dart';
+import 'package:organic_market/services/manager.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -16,9 +17,18 @@ class CategoryAdminModel extends BaseViewModel {
   final _storagesevice = locator<StorageService>();
   final _firestoreService = locator<FireStoreService>();
   final _bottomsheet = locator<BottomSheetService>();
+  final _navigation = locator<NavigationService>();
   TextEditingController nameController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+
+  void additem(String id) {
+    _firestoreService.setDocId(id);
+
+    print(id);
+    _navigation.navigateToCategoryItemAdmin();
+  }
+
   void onchangedValidation() {
     formKey.currentState!.validate();
     rebuildUi();
@@ -77,7 +87,6 @@ class CategoryAdminModel extends BaseViewModel {
         loading = false;
         nameController.clear();
         rebuildUi();
-        fetchData();
       }
       isImagePicked = false;
       _image = null;
@@ -94,20 +103,22 @@ class CategoryAdminModel extends BaseViewModel {
 
     if (await _storagesevice.categoryUpdateData(
         id: id, categoryName: name, image: _image, imageUrl: imageUrl)) {
+      isImagePicked = false;
+      _image = null;
+      nameController.clear();
+
+      rebuildUi();
       _dialogservice.completeDialog(DialogResponse(confirmed: true));
     }
   }
 
-/*.imagelist()
-                                          .map((sliderobject) =>
-                                              sliderobject.ImageUrl as String)
-                                          .toList()[index] */
   List<ProductCategory> datalist() {
     return _firestoreService.categoryDataList;
   }
 
   Future fetchData() async {
     _firestoreService.productcategorysRef.snapshots().listen((snapshot) {
+      // ignore: avoid_function_literals_in_foreach_calls
       snapshot.docChanges.forEach((doc) async {
         if (doc.type == DocumentChangeType.removed) {
           await _firestoreService.loadCategoryData();
@@ -127,7 +138,18 @@ class CategoryAdminModel extends BaseViewModel {
     // rebuildUi();
   }
 
-  Future deleteimage({String? imageUrl, String? docId}) async {
+  Future deleteData({String? imageUrl, String? docId}) async {
+    _firestoreService.setDocId(docId!);
+    _firestoreService.loadItemData();
+    _firestoreService.generateItem(docId);
+    if (_firestoreService.selecteditemList.isNotEmpty) {
+      _dialogservice.showDialog(
+          title: "Opps Cant Delete",
+          description: "Category Has Items First delete Them",
+          buttonTitle: "Ok");
+
+      return;
+    }
     var sheetResponse = await _bottomsheet.showBottomSheet(
       title: "Delete",
       description: "Selected Image will be deleted",
@@ -138,7 +160,6 @@ class CategoryAdminModel extends BaseViewModel {
         print("delete");
         try {
           await _storagesevice.categoryDeleteData(imageUrl!, docId!);
-          fetchData();
         } catch (e) {
           _dialogservice.showDialog(title: "Opps", description: e.toString());
         }
@@ -148,5 +169,10 @@ class CategoryAdminModel extends BaseViewModel {
         print("sheet responnse false");
       }
     }
+  }
+
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
   }
 }

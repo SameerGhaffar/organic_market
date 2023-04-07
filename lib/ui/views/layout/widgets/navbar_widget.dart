@@ -4,6 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:organic_market/ui/views/account/account_view.dart';
 import 'package:organic_market/ui/views/cart/cart_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
+import 'package:organic_market/ui/views/item/item_view.dart';
 import 'package:organic_market/ui/views/layout/drawer_viewmodel.dart';
 
 import 'package:stacked/stacked.dart';
@@ -22,7 +23,7 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
           child: IndexedStack(
         children: const [
           HomeView(),
-          HomeView(),
+          ItemView(),
           CartView(),
           AccountView(),
         ],
@@ -57,8 +58,7 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
                 gap: 8,
                 activeColor: Colors.green,
                 iconSize: 24,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 duration: const Duration(milliseconds: 300),
                 tabBackgroundColor: Colors.grey.withOpacity(0.1),
                 color: Colors.black,

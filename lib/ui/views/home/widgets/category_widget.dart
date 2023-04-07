@@ -26,11 +26,11 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
           ),
         ),
         SizedBox(
-            height: MediaQuery.of(context).size.height * 0.24,
+            height: MediaQuery.of(context).size.height * 0.26,
             child: ListView.builder(
               physics: const ScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemExtent: MediaQuery.of(context).size.width * 0.40,
+              itemExtent: MediaQuery.of(context).size.width * 0.42,
               itemCount: viewModel.categoryList().length,
               itemBuilder: (context, index) {
                 return InkWell(

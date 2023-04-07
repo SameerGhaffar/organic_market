@@ -13,7 +13,11 @@ class PromotionAdmin extends StackedView<PromotionAdminModel> {
       BuildContext context, PromotionAdminModel viewModel, Widget? child) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Admin"),
+        title: Text("Promotion Tool",
+            style: GoogleFonts.lato(
+                textStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ))),
         centerTitle: true,
       ),
       body: Padding(
@@ -91,7 +95,7 @@ class PromotionAdmin extends StackedView<PromotionAdminModel> {
                           physics: const ScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           //  itemExtent: MediaQuery.of(context).size.width * 0.40,
-                          itemCount: viewModel.PromotionDatalist().length,
+                          itemCount: viewModel.promotionDatalist().length,
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -99,16 +103,19 @@ class PromotionAdmin extends StackedView<PromotionAdminModel> {
                                 height: 210,
                                 child: InkWell(
                                   onTap: () => viewModel.deleteimage(
-                                      viewModel.PromotionDatalist()
+                                      viewModel
+                                          .promotionDatalist()
                                           .map((sliderobject) =>
                                               sliderobject.ImageUrl as String)
                                           .toList()[index],
-                                      viewModel.PromotionDatalist()
+                                      viewModel
+                                          .promotionDatalist()
                                           .map((sliderobject) =>
                                               sliderobject.id as String)
                                           .toList()[index]),
                                   child: CachedNetworkImage(
-                                    imageUrl: viewModel.PromotionDatalist()
+                                    imageUrl: viewModel
+                                        .promotionDatalist()
                                         .map((sliderobject) =>
                                             sliderobject.ImageUrl as String)
                                         .toList()[index],
