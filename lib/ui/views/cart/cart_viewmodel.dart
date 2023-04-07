@@ -1,85 +1,96 @@
+import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/model/cart_model.dart';
+import 'package:organic_market/model/item_model.dart';
+import 'package:organic_market/services/auth_service.dart';
+import 'package:organic_market/services/firestore_service.dart';
+import 'package:organic_market/services/manager.dart';
+import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:stacked/stacked.dart';
 
 class CartViewModel extends BaseViewModel {
-  final List<Map<String, dynamic>> itemsInCart = [
-    {
-      "name": "Dairy",
-      "image": "assets/images/ghee.jpg",
-      "quantity": 1,
-      "price": 400
-    },
-    {
-      "name": "Fruits",
-      "image": "assets/images/cow.jpg",
-      "quantity": 1,
-      "price": 500
-    },
-    {
-      "name": "Eggs",
-      "image": "assets/images/Eggs.jpg",
-      "quantity": 1,
-      "price": 700
-    },
-    {
-      "name": "Goat Milk",
-      "image": "assets/images/Goat.jpg",
-      "quantity": 1,
-      "price": 800
-    },
-    {
-      "name": "Dairy",
-      "image": "assets/images/ghee.jpg",
-      "quantity": 1,
-      "price": 200
-    },
-    {
-      "name": "Fruits",
-      "image": "assets/images/cow.jpg",
-      "quantity": 1,
-      "price": 100
-    },
-    {
-      "name": "Eggs",
-      "image": "assets/images/Eggs.jpg",
-      "quantity": 1,
-      "price": 150
-    },
-    {
-      "name": "Goat Milk",
-      "image": "assets/images/Goat.jpg",
-      "quantity": 1,
-      "price": 350
-    },
-  ];
+  final _firestoreService = locator<FireStoreService>();
+  final _authService = locator<AuthService>();
+  final _storageService = locator<StorageService>();
 
-  void incrementQuantity(int index) {
-    int quantity = itemsInCart[index]["quantity"];
-    quantity++;
-    itemsInCart[index]["quantity"] = quantity;
-    rebuildUi();
+  // getting id from cart then finding the item from the list
+  List<Item> cartItemList = [];
+  List<Cart> cartList = [];
+
+  Item cartitemData(int index) {
+    return cartItemList.map((e) => e).toList()[index];
   }
 
-  void decrimentQuantity(int index) {
-    int quantity = itemsInCart[index]["quantity"];
-    quantity--;
-    if (quantity <= 0) {
-      quantity = 1;
+  int cartItemQuantity(String itemid) {
+    Cart item = cartList.firstWhere((element) => element.itemId == itemid);
+    return item.quantity;
+  }
+
+  generateItem() {
+    cartItemList = _firestoreService.itemDataList
+        .where((item) =>
+            cartList.map((cart) => cart.itemId).toList().contains(item.id))
+        .toList();
+  }
+
+  String? uid;
+  Future fetchData() async {
+    uid = _authService.auth.currentUser!.uid;
+
+    _firestoreService.users
+        .doc(uid)
+        .collection('Cart')
+        .snapshots()
+        .listen((querySnapshot) async {
+      await _firestoreService.loadCartData(uid!);
+      cartList = _firestoreService.userCartList.toList();
+      removeUnavailable();
+      generateItem();
+      rebuildUi();
+    });
+  }
+
+  void removeUnavailable() {
+    List<String> itemIds =
+        _firestoreService.itemDataList.map((item) => item.id).toList();
+    List<Cart> cartCopy = List.from(cartList);
+
+    for (Cart cartItem in cartCopy) {
+      if (!(itemIds.contains(cartItem.itemId))) {
+        _storageService.deletFromCart(
+            docId: cartItem.itemId, uid: uid as String);
+        print("not in items" + cartItem.itemId);
+        // make a delete function
+        // delte that
+      }
     }
-    itemsInCart[index]["quantity"] = quantity;
-    rebuildUi();
   }
 
-  void deleteitemfromcart(int index) {
-    itemsInCart.removeAt(index);
+  void incrementQuantity(String id) {
+    int count = cartItemQuantity(id);
+    count = count + 1;
+    _storageService.updateCartQuantity(Q: count, docId: id, uid: uid as String);
+  }
+
+  void decrimentQuantity(String id) {
+    int count = cartItemQuantity(id);
+    count = count - 1;
+    if (count >= 1) {
+      _storageService.updateCartQuantity(
+          Q: count, docId: id, uid: uid as String);
+    }
+  }
+
+  void deleteitemfromcart(String id) {
+    _storageService.deletFromCart(docId: id, uid: uid as String);
     rebuildUi();
   }
 
   int totalprice() {
     int total = 0;
-    if (itemsInCart.isNotEmpty) {
-      for (int i = 0; i < itemsInCart.length; i++) {
-        int price = itemsInCart[i]["price"];
-        int quantity = itemsInCart[i]["quantity"];
+    if (cartItemList.isNotEmpty) {
+      for (int i = 0; i < cartItemList.length; i++) {
+        int price = cartitemData(i).price;
+        int quantity = cartItemQuantity(cartitemData(i).id);
         total = total + (price * quantity);
       }
     } else {
@@ -87,4 +98,6 @@ class CartViewModel extends BaseViewModel {
     }
     return total;
   }
+
+  void checkout() {}
 }

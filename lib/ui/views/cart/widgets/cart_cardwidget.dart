@@ -1,7 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:organic_market/ui/views/cart/cart_viewmodel.dart';
@@ -27,7 +29,20 @@ class CartViewCard extends ViewModelWidget<CartViewModel> {
             color: Colors.black,
             height: 80,
             width: 80,
-            child: Image.asset(viewModel.itemsInCart[index]["image"]),
+            child: CachedNetworkImage(
+              height: 155.4,
+              imageUrl: viewModel.cartitemData(index).imageUrl,
+              placeholder: (context, url) => Shimmer.fromColors(
+                child: Container(
+                  color: Colors.grey,
+                ),
+                baseColor: Colors.grey.shade300,
+                highlightColor: Colors.white,
+              ),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              fit: BoxFit.cover,
+              width: double.infinity,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -35,13 +50,13 @@ class CartViewCard extends ViewModelWidget<CartViewModel> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(viewModel.itemsInCart[index]["name"],
+                Text(viewModel.cartitemData(index).title,
                     style: GoogleFonts.lato(
                         textStyle: const TextStyle(
                             fontSize: 17,
                             color: Colors.black,
                             fontWeight: FontWeight.w600))),
-                Text("Rs.${viewModel.itemsInCart[index]["price"]}",
+                Text("Rs.${viewModel.cartitemData(index).price}",
                     style: GoogleFonts.lato(
                         textStyle: const TextStyle(
                             fontSize: 14,
@@ -58,12 +73,14 @@ class CartViewCard extends ViewModelWidget<CartViewModel> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                    onTap: () => viewModel.deleteitemfromcart(index),
+                    onTap: () => viewModel
+                        .deleteitemfromcart(viewModel.cartitemData(index).id),
                     child: const Icon(Icons.delete, color: Colors.red)),
                 Row(
                   children: [
                     InkWell(
-                      onTap: () => viewModel.decrimentQuantity(index),
+                      onTap: () => viewModel
+                          .decrimentQuantity(viewModel.cartitemData(index).id),
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
@@ -86,7 +103,8 @@ class CartViewCard extends ViewModelWidget<CartViewModel> {
                       width: 20,
                       alignment: Alignment.center,
                       margin: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Text("${viewModel.itemsInCart[index]["quantity"]}",
+                      child: Text(
+                          "${viewModel.cartItemQuantity(viewModel.cartitemData(index).id)}",
                           style: GoogleFonts.lato(
                               textStyle: const TextStyle(
                                   wordSpacing: 2,
@@ -95,7 +113,8 @@ class CartViewCard extends ViewModelWidget<CartViewModel> {
                                   fontWeight: FontWeight.w600))),
                     ),
                     InkWell(
-                      onTap: () => viewModel.incrementQuantity(index),
+                      onTap: () => viewModel
+                          .incrementQuantity(viewModel.cartitemData(index).id),
                       child: Container(
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(

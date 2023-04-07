@@ -34,7 +34,8 @@ class ItemView extends StackedView<ItemViewModel> {
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: Itemcard(
-                  addtocart: () => viewModel.addToCart(index),
+                  addtocart: () =>
+                      viewModel.addToCart(viewModel.itemdata(index).id),
                   imageUrl: viewModel.itemdata(index).imageUrl,
                   price: viewModel.itemdata(index).price,
                   quantity: viewModel.itemdata(index).quantity,

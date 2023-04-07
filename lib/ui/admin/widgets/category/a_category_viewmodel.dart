@@ -138,8 +138,8 @@ class CategoryAdminModel extends BaseViewModel {
     // rebuildUi();
   }
 
-  Future deleteData({String? imageUrl, String? docId}) async {
-    _firestoreService.setDocId(docId!);
+  Future deleteData({String? imageUrl, required String docId}) async {
+    _firestoreService.setDocId(docId);
     _firestoreService.loadItemData();
     _firestoreService.generateItem(docId);
     if (_firestoreService.selecteditemList.isNotEmpty) {
@@ -159,7 +159,7 @@ class CategoryAdminModel extends BaseViewModel {
       if (sheetResponse.confirmed) {
         print("delete");
         try {
-          await _storagesevice.categoryDeleteData(imageUrl!, docId!);
+          await _storagesevice.categoryDeleteData(imageUrl!, docId);
         } catch (e) {
           _dialogservice.showDialog(title: "Opps", description: e.toString());
         }
@@ -171,6 +171,7 @@ class CategoryAdminModel extends BaseViewModel {
     }
   }
 
+  @override
   void dispose() {
     super.dispose();
     nameController.dispose();

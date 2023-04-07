@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/model/cart_model.dart';
 import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
@@ -249,5 +250,67 @@ class StorageService {
       print("item update fail $e");
       return false;
     }
+  }
+
+  Future<bool> addToCart({
+    required String uid,
+    required String itemId,
+    required int quantity,
+  }) async {
+    try {
+      final DocumentReference docRef =
+          _firestoreService.users.doc(uid).collection("Cart").doc(itemId);
+
+      docRef.get().then((DocumentSnapshot snapshot) async {
+        if (snapshot.exists) {
+          try {
+            Cart cartitem = Cart.fromMap(
+                snapshot as DocumentSnapshot<Map<String, dynamic>>);
+
+            int q = cartitem.quantity + quantity;
+
+            await docRef.update({
+              'quantity': q,
+            });
+            print("Update");
+          } catch (e) {
+            print(e);
+          }
+        } else {
+          final Cart dataobj = Cart(quantity: quantity, itemId: itemId);
+          await docRef.set(dataobj.toMap());
+          print("Create");
+        }
+      });
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> deletFromCart(
+      {required String docId, required String uid}) async {
+    // Delete document from Firestore collection
+
+    ;
+    await _firestoreService.users
+        .doc(uid)
+        .collection("Cart")
+        .doc(docId)
+        .delete();
+
+    return true;
+  }
+
+  Future<bool> updateCartQuantity(
+      {required String docId, required String uid, required int Q}) async {
+    final DocumentReference docRef =
+        _firestoreService.users.doc(uid).collection("Cart").doc(docId);
+    await docRef.update({
+      'quantity': Q,
+    });
+
+    return true;
   }
 }

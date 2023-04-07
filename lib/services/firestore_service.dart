@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:organic_market/model/cart_model.dart';
 import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
@@ -24,6 +25,7 @@ class FireStoreService {
       FirebaseFirestore.instance.collection('Categories');
   final CollectionReference itemRef =
       FirebaseFirestore.instance.collection('Items');
+
   String _categoryid = "";
 
   String get categoryid => _categoryid;
@@ -138,5 +140,20 @@ class FireStoreService {
 
   Item itemdata(int index) {
     return selecteditemList.map((e) => e).toList()[index];
+  }
+
+  List<Cart> userCartList = [];
+
+  loadCartData(String uid) async {
+    try {
+      await _users.doc(uid).collection('Cart').get().then((value) {
+        userCartList = List.generate(
+            value.size, (index) => Cart.fromMap(value.docs[index]));
+      });
+      print('userCartList list is done ');
+      print(userCartList.length);
+    } catch (e) {
+      print('Failed: ' + e.toString());
+    }
   }
 }

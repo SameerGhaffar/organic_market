@@ -47,6 +47,7 @@ class StartupViewModel extends BaseViewModel {
           await _firestore.loadPromotionImage();
           await _firestore.loadCategoryData();
           await _firestore.loadItemData();
+          await _firestore.loadCartData(_authService.auth.currentUser!.uid);
 
           DocumentSnapshot userSnapshot =
               await _firestore.users.doc(user.uid).get();

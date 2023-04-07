@@ -22,7 +22,7 @@ class CartView extends StackedView<CartViewModel> {
               alignment: Alignment.topLeft,
               height: MediaQuery.of(context).size.height * 0.03,
               child: Text(
-                "Total Items x ${viewModel.itemsInCart.length}",
+                "Total Items x ${viewModel.cartItemList.length}",
                 style: GoogleFonts.lato(
                     textStyle: const TextStyle(
                         wordSpacing: 2,
@@ -39,7 +39,7 @@ class CartView extends StackedView<CartViewModel> {
                   color: Color(0xffedecf2),
                 ),
                 child: ListView.builder(
-                  itemCount: viewModel.itemsInCart.length,
+                  itemCount: viewModel.cartItemList.length,
                   itemBuilder: (BuildContext context, int index) =>
                       CartViewCard(index: index),
                 )),
@@ -82,7 +82,7 @@ class CartView extends StackedView<CartViewModel> {
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.green),
                         ),
-                        onPressed: () {},
+                        onPressed: () => viewModel.checkout(),
                         child: Text(
                           "Check Out",
                           style:
@@ -103,4 +103,6 @@ class CartView extends StackedView<CartViewModel> {
 
   @override
   CartViewModel viewModelBuilder(BuildContext context) => CartViewModel();
+  @override
+  Future onViewModelReady(CartViewModel viewModel) => viewModel.fetchData();
 }
