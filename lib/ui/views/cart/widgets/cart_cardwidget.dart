@@ -26,7 +26,7 @@ class CartViewCard extends ViewModelWidget<CartViewModel> {
       child: Row(
         children: [
           Container(
-            color: Colors.black,
+            color: Colors.white,
             height: 80,
             width: 80,
             child: CachedNetworkImage(
@@ -73,8 +73,10 @@ class CartViewCard extends ViewModelWidget<CartViewModel> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                    onTap: () => viewModel
-                        .deleteitemfromcart(viewModel.cartitemData(index).id),
+                    onTap: () => viewModel.deleteitemfromcart(
+                        viewModel.cartitemData(index).id,
+                        viewModel.cartitemData(index).title,
+                        context),
                     child: const Icon(Icons.delete, color: Colors.red)),
                 Row(
                   children: [

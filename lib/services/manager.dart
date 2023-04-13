@@ -1,11 +1,14 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:organic_market/app/app.locator.dart';
+
 import 'package:organic_market/model/cart_model.dart';
 import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/item_model.dart';
+import 'package:organic_market/model/order_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
@@ -293,7 +296,6 @@ class StorageService {
       {required String docId, required String uid}) async {
     // Delete document from Firestore collection
 
-    ;
     await _firestoreService.users
         .doc(uid)
         .collection("Cart")
@@ -312,5 +314,37 @@ class StorageService {
     });
 
     return true;
+  }
+
+  //
+  //Order
+  Future<bool> newOrder({
+    required String userId,
+    required int totalAmount,
+    required List<Cart> items,
+  }) async {
+    try {
+      final random = Random();
+      final datatime = DateTime.now();
+      final orderId =
+          '#${datatime.millisecond}${random.nextInt(999999)}${datatime.millisecond}'
+              .padLeft(7, '0');
+      final DocumentReference docRef = _firestoreService.orderRef.doc(orderId);
+      final String docId = docRef.id;
+
+      OrderModel orderObj = OrderModel(
+        id: docId,
+        userId: userId,
+        totalAmount: totalAmount,
+        timestamp: datatime,
+        isCompleted: false,
+        items: items,
+      );
+      await docRef.set(orderObj.toMap());
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

@@ -11,51 +11,72 @@ class DrawerViewDrawer extends ViewModelWidget<DrawerViewModel> {
   Widget build(BuildContext context, DrawerViewModel viewModel) {
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          ListTile(
-            title: Text(
-              "Home",
-              style: GoogleFonts.lato(
-                  textStyle: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.bold)),
-            ),
-            leading: const Icon(Icons.home),
-            onTap: () => viewModel.updateindex(0),
-          ),
-          ListTile(
-            title: Text(
-              "Account",
-              style: GoogleFonts.lato(
-                  textStyle: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.bold)),
-            ),
-            leading: const Icon(Icons.person),
-            onTap: () => viewModel.updateindex(3),
-          ),
-          ListTile(
-            title: Text(
-              "Products Catalog",
-              style: GoogleFonts.lato(
-                  textStyle: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.bold)),
-            ),
-            leading: const Icon(Icons.production_quantity_limits),
-            onTap: () {},
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 300),
-            alignment: Alignment.bottomLeft,
-            child: ListTile(
+        body: SafeArea(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            const Spacer(),
+            ListTile(
               title: Text(
-                "Products Catalog",
+                "Home",
                 style: GoogleFonts.lato(
                     textStyle: const TextStyle(
-                        fontSize: 17, fontWeight: FontWeight.bold)),
+                        fontSize: 17,
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.bold)),
               ),
-              leading: const Icon(Icons.production_quantity_limits),
-              onTap: () {},
+              leading: const Icon(
+                Icons.home_outlined,
+                color: Colors.purple,
+              ),
+              onTap: () => viewModel.updateindex(0),
             ),
-          ),
-        ]));
+            ListTile(
+              title: Text(
+                "Profile",
+                style: GoogleFonts.lato(
+                    textStyle: const TextStyle(
+                        fontSize: 17,
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.bold)),
+              ),
+              leading: const Icon(Icons.person_outlined, color: Colors.blue),
+              onTap: () => viewModel.updateindex(3),
+            ),
+            ListTile(
+              title: Text(
+                "Cart",
+                style: GoogleFonts.lato(
+                    textStyle: const TextStyle(
+                        fontSize: 17,
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.bold)),
+              ),
+              leading: const Icon(
+                Icons.shopping_cart_outlined,
+                color: Colors.green,
+              ),
+              onTap: () => viewModel.updateindex(2),
+            ),
+            const Spacer(),
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              alignment: Alignment.bottomLeft,
+              child: ListTile(
+                title: Text(
+                  "Logout",
+                  style: GoogleFonts.lato(
+                      textStyle: const TextStyle(
+                          fontSize: 17,
+                          letterSpacing: 2,
+                          fontWeight: FontWeight.w600)),
+                ),
+                leading: const Icon(
+                  Icons.logout,
+                  color: Colors.red,
+                ),
+                onTap: () => viewModel.logout(),
+              ),
+            ),
+          ]),
+        ));
   }
 }

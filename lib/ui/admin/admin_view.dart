@@ -22,7 +22,7 @@ class AdminView extends StackedView<AdminViewModel> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             verticalSpaceMassive,
-            Container(
+            SizedBox(
               width: double.infinity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

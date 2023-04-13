@@ -11,7 +11,8 @@ class CartView extends StackedView<CartViewModel> {
   @override
   Widget builder(BuildContext context, CartViewModel viewModel, Widget? child) {
     return Scaffold(
-      body: Padding(
+      body: Container(
+        margin: const EdgeInsets.only(top: 2),
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -34,7 +35,7 @@ class CartView extends StackedView<CartViewModel> {
             Container(
                 //temporary height
                 margin: const EdgeInsets.only(bottom: 5),
-                height: MediaQuery.of(context).size.height * 0.60,
+                height: MediaQuery.of(context).size.height * 0.59,
                 decoration: const BoxDecoration(
                   color: Color(0xffedecf2),
                 ),
@@ -58,7 +59,7 @@ class CartView extends StackedView<CartViewModel> {
                     width: double.infinity,
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Total : ${viewModel.totalprice()}",
+                      "Total : Rs.${viewModel.totalprice()}",
                       style: GoogleFonts.lato(
                           textStyle: const TextStyle(
                             fontSize: 18,
@@ -83,11 +84,15 @@ class CartView extends StackedView<CartViewModel> {
                               MaterialStateProperty.all<Color>(Colors.green),
                         ),
                         onPressed: () => viewModel.checkout(),
-                        child: Text(
-                          "Check Out",
-                          style:
-                              GoogleFonts.lato(fontSize: 17, letterSpacing: 1),
-                        )),
+                        child: viewModel.isLoading
+                            ? const CircularProgressIndicator(
+                                color: Colors.black,
+                              )
+                            : Text(
+                                "Check Out",
+                                style: GoogleFonts.lato(
+                                    fontSize: 17, letterSpacing: 1),
+                              )),
                   ),
                   //size box i will implement google auth
 

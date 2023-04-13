@@ -28,41 +28,38 @@ class TextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-        keyboardType: keyboardtype,
-        validator: validator,
-        obscureText: obscureText,
-        showCursor: true,
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: labeltext,
-          hintText: hint,
-          filled: true,
-          labelStyle: const TextStyle(
-            color: Colors.black,
-          ),
-          fillColor: const Color(0xFFF2F3F5),
-          border: InputBorder.none,
-          focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
-              borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          prefixIcon: Icon(
-            prefixicon,
-            color: const Color(0xFF666666),
-          ),
-          suffixIcon: eyepass
-              ? IconButton(
-                  icon: Icon(
-                      obscureText ? Icons.visibility_off : Icons.visibility),
-                  color: Colors.black,
-                  onPressed: () => onpressed)
-              : null,
-          hintStyle: const TextStyle(
-            color: Color(0xFF666666),
-            //hintText: "Phone Number",
-          ),
+    return TextFormField(
+      keyboardType: keyboardtype,
+      validator: validator,
+      obscureText: obscureText,
+      showCursor: true,
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labeltext,
+        hintText: hint,
+        filled: true,
+        labelStyle: const TextStyle(
+          color: Colors.black,
+        ),
+        fillColor: Colors.white54,
+        border: InputBorder.none,
+        focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+        prefixIcon: Icon(
+          prefixicon,
+          color: const Color(0xFF666666),
+        ),
+        suffixIcon: eyepass
+            ? IconButton(
+                icon:
+                    Icon(obscureText ? Icons.visibility_off : Icons.visibility),
+                color: Colors.black,
+                onPressed: () => onpressed)
+            : null,
+        hintStyle: const TextStyle(
+          color: Color(0xFF666666),
+          //hintText: "Phone Number",
         ),
       ),
     );

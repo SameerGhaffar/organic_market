@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '560060554313',
     projectId: 'organic-market-pakistan',
     storageBucket: 'organic-market-pakistan.appspot.com',
-    iosClientId: '560060554313-u4p1iik5h2k6lpe9f0n4fuhtgqllnaqs.apps.googleusercontent.com',
+    iosClientId:
+        '560060554313-u4p1iik5h2k6lpe9f0n4fuhtgqllnaqs.apps.googleusercontent.com',
     iosBundleId: 'com.example.organicMarket',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '560060554313',
     projectId: 'organic-market-pakistan',
     storageBucket: 'organic-market-pakistan.appspot.com',
-    iosClientId: '560060554313-u4p1iik5h2k6lpe9f0n4fuhtgqllnaqs.apps.googleusercontent.com',
+    iosClientId:
+        '560060554313-u4p1iik5h2k6lpe9f0n4fuhtgqllnaqs.apps.googleusercontent.com',
     iosBundleId: 'com.example.organicMarket',
   );
 }

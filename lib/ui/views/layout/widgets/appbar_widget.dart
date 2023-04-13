@@ -17,7 +17,12 @@ class DrawerViewMyAppBar extends ViewModelWidget<DrawerViewModel>
         icon: const Icon(Icons.menu),
         onPressed: () => viewModel.opendrawer(),
       ),
-      title: const Text("ORGANIC MARKET"),
+      title: Text(
+        viewModel.title[viewModel.selctedindex],
+        style: const TextStyle(
+          letterSpacing: 1,
+        ),
+      ),
       centerTitle: true,
     );
   }

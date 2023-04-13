@@ -23,8 +23,8 @@ class HomeView extends StackedView<HomeViewModel> {
             children: const [
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                elevation: 12,
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                elevation: 2,
                 child: HomeViewMySlider(),
               ),
               HomeViewCategoryWidget(),

@@ -11,10 +11,13 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
   Widget build(BuildContext context, HomeViewModel viewModel) {
     return Center(
       child: Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
           padding: const EdgeInsets.all(5.0),
           margin: const EdgeInsets.only(top: 8),
-          height: MediaQuery.of(context).size.height * 0.26,
+          height: MediaQuery.of(context).size.height * 0.40,
           child: GridView.builder(
             padding: const EdgeInsets.all(2),
             physics: const ScrollPhysics(),
@@ -22,15 +25,15 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
             itemCount: viewModel.promtoionlist().length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 4.0,
                 mainAxisExtent:
-                    MediaQuery.of(context).size.width.toDouble() * 0.46),
+                    MediaQuery.of(context).size.height.toDouble() * 0.35),
             itemBuilder: (context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.black12)),
+              return Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                elevation: 2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
@@ -45,7 +48,7 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
                     ),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                     width: double.infinity,
                   ),
                 ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
-class Itemcard extends StatelessWidget {
+class ProductItemcard extends StatelessWidget {
   final Function addtocart;
   final String imageUrl;
   final int quantity;
@@ -12,7 +12,7 @@ class Itemcard extends StatelessWidget {
   final int price;
 
   final String title;
-  const Itemcard({
+  const ProductItemcard({
     Key? key,
     required this.addtocart,
     required this.imageUrl,

@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/model/category_model.dart';
@@ -118,15 +117,14 @@ class HomeViewModel extends BaseViewModel {
     _firestoreService.itemDataList = [];
 
     await _firestoreService.loadItemData();
+
+    // _navigation.navigateToView(const ItemView());
     _navigation.navigateToItemView();
 
     // _dialogService.showDialog(
     //     title: "category clicked", description: id, buttonTitle: "ok");
   }
 }
-
-
-
 
 /*
   final _dialogService = locator<DialogService>();

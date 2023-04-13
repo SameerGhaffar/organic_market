@@ -27,16 +27,19 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  another_flushbar: ^1.12.29
+  badges: ^3.0.3
   cached_network_image: ^3.2.3
   carousel_slider: ^4.2.1
   cloud_firestore: ^4.5.0
-
   cupertino_icons: ^1.0.2
+  device_preview: ^1.1.0
   firebase_auth: ^4.3.0
   firebase_core: ^2.8.0
   firebase_storage: ^11.1.0
   flutter:
     sdk: flutter
+  flutter_cache_manager: ^3.3.0
   flutter_svg: ^2.0.3
   flutter_zoom_drawer: ^3.0.4
   google_fonts: ^4.0.3

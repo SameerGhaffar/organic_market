@@ -17,7 +17,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
             //   print(currentIndex);
           },
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(12),
             child: CarouselSlider(
               items: viewModel
                   .sliderImage()
@@ -31,7 +31,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
                           highlightColor: Colors.white,
                         ),
                         errorWidget: (context, url, error) =>
-                            Image.asset("assets/images/card.png"),
+                            const Icon(Icons.error),
                         fit: BoxFit.cover,
                         width: double.infinity,
                       ))
@@ -71,8 +71,8 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: viewModel.currentIndex == entry.key
-                          ? Colors.white
-                          : Colors.black),
+                          ? Colors.black
+                          : Colors.white),
                 ),
               );
             }).toList(),

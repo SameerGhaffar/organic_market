@@ -1,13 +1,21 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:stacked/stacked.dart';
 
 class DrawerViewModel extends BaseViewModel {
   final ZoomDrawerController _drawerControl = ZoomDrawerController();
   final _indexservice = locator<NavDrawerindexService>();
+  final _authService = locator<AuthService>();
 
   ZoomDrawerController get drawerControl => _drawerControl;
+
+  void logout() async {
+    await _authService.signOut();
+    _indexservice.setIndex = 0;
+  }
 
   void opendrawer() {
     _drawerControl.toggle?.call();
@@ -25,4 +33,17 @@ class DrawerViewModel extends BaseViewModel {
     _indexservice.setIndex = index;
     rebuildUi();
   }
+
+  List<Color> colorList = [
+    Colors.deepPurple,
+    Colors.purple,
+    Colors.green,
+    Colors.blue
+  ];
+  List<String> title = [
+    "ORGANIC MARKET",
+    "PRODUCTS",
+    "CART",
+    "PROFILE",
+  ];
 }

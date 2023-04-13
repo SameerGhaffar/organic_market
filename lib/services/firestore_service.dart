@@ -25,6 +25,8 @@ class FireStoreService {
       FirebaseFirestore.instance.collection('Categories');
   final CollectionReference itemRef =
       FirebaseFirestore.instance.collection('Items');
+  final CollectionReference orderRef =
+      FirebaseFirestore.instance.collection('Order');
 
   String _categoryid = "";
 
