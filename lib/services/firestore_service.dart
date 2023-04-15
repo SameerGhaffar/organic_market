@@ -53,7 +53,7 @@ class FireStoreService {
   Future getUser(String uid) async {
     try {
       var userdata = await _users.doc(uid).get();
-      return Userinfo.fromMap(userdata.data as Map<String, dynamic>);
+      return Userinfo.fromMap(userdata.data() as Map<String, dynamic>);
     } on FirebaseException catch (e) {
       return e.message;
     }

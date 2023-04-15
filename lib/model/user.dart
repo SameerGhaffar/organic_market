@@ -14,7 +14,7 @@ class Userinfo {
 
   Userinfo.fromMap(Map<String, dynamic> data)
       : id = data['id'],
-        name = data['name'],
+        name = data['Name'],
         email = data['email'],
         isAdmin = data['isAdmin'];
 

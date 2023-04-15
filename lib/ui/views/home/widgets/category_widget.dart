@@ -17,12 +17,12 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
           alignment: Alignment.topLeft,
           padding: const EdgeInsets.all(4.0),
           child: Text(
-            "Category",
+            "Categories",
             style: GoogleFonts.lato(
                 textStyle: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black54)),
+                    color: Colors.black)),
           ),
         ),
         Padding(
