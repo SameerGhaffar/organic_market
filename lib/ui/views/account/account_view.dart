@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/ui/common/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import 'account_viewmodel.dart';
 
@@ -95,7 +97,7 @@ class AccountView extends StackedView<AccountViewModel> {
               padding: const EdgeInsets.all(2),
               alignment: Alignment.center,
               child: InkWell(
-                onTap: null,
+                onTap: () => viewModel.onClick(index),
                 child: Card(
                   elevation: 1,
                   color: viewModel.profileMenuColor[index],

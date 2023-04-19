@@ -29,6 +29,7 @@ environment:
 dependencies:
   another_flushbar: ^1.12.29
   badges: ^3.0.3
+
   cached_network_image: ^3.2.3
   carousel_slider: ^4.2.1
   cloud_firestore: ^4.5.0
@@ -46,13 +47,14 @@ dependencies:
   google_nav_bar: ^5.0.6
   image_picker: ^0.8.7+1
   shimmer: ^2.0.0
-  stacked: ^3.2.0
-  stacked_services: ^1.0.0
+  stacked: ^3.2.1
+  stacked_services: ^1.0.2
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
-  build_runner: ^2.2.0
+  build_runner: ^2.3.3
+  stacked_generator: ^1.0.0
   flutter_launcher_icons: "^0.13.0"
+  flutter_lints: ^1.0.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -65,12 +67,9 @@ flutter_icons:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-
   flutter_test:
     sdk: flutter
   mockito: ^5.3.2
-
-  stacked_generator: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

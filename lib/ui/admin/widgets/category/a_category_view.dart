@@ -140,7 +140,7 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                         child: Row(
                           children: [
                             Container(
-                              color: Colors.black,
+                              color: Colors.white,
                               height: 80,
                               width: 80,
                               child: CachedNetworkImage(

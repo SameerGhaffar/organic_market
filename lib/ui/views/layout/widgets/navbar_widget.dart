@@ -29,69 +29,67 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
         ],
         index: viewModel.selctedindex,
       )),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30)),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 20,
-                  color: Colors.black.withOpacity(.1),
-                )
-              ],
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 8),
-                    child: GNav(
-                      tabActiveBorder: Border.all(
-                          color: viewModel.colorList[viewModel.selctedindex]),
-                      haptic: false,
-                      rippleColor: Colors.grey[300]!,
-                      hoverColor: Colors.grey[100]!,
-                      gap: 8,
-                      activeColor: viewModel.colorList[viewModel.selctedindex],
-                      iconSize: 24,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
-                      duration: const Duration(milliseconds: 300),
-                      tabBackgroundColor: Colors.white.withOpacity(0.1),
-                      color: Colors.black,
-                      tabs: const [
-                        GButton(
-                          icon: CupertinoIcons.home,
-                          text: 'Home',
-                        ),
-                        GButton(
-                          icon: CupertinoIcons.star,
-                          text: 'Products',
-                        ),
-                        GButton(
-                          icon: CupertinoIcons.cart,
-                          text: 'Cart',
-                        ),
-                        GButton(
-                          icon: Icons.person,
-                          text: 'Profile',
-                        ),
-                      ],
-                      selectedIndex: viewModel.selctedindex,
-                      onTabChange: (index) => viewModel.updateindex(index),
-                    ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 20,
+                color: Colors.black.withOpacity(.1),
+              )
+            ],
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                  child: GNav(
+                    tabActiveBorder: Border.all(
+                        color: viewModel.colorList[viewModel.selctedindex]),
+                    haptic: false,
+                    rippleColor: Colors.grey[300]!,
+                    hoverColor: Colors.grey[100]!,
+                    gap: 8,
+                    activeColor: viewModel.colorList[viewModel.selctedindex],
+                    iconSize: 24,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    duration: const Duration(milliseconds: 300),
+                    tabBackgroundColor: Colors.white.withOpacity(0.1),
+                    color: Colors.black,
+                    tabs: const [
+                      GButton(
+                        icon: CupertinoIcons.home,
+                        text: 'Home',
+                      ),
+                      GButton(
+                        icon: CupertinoIcons.star,
+                        text: 'Products',
+                      ),
+                      GButton(
+                        icon: CupertinoIcons.cart,
+                        text: 'Cart',
+                      ),
+                      GButton(
+                        icon: Icons.person,
+                        text: 'Profile',
+                      ),
+                    ],
+                    selectedIndex: viewModel.selctedindex,
+                    onTabChange: (index) => viewModel.updateindex(index),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

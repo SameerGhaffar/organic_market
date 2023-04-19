@@ -9,7 +9,7 @@ class OrderModel {
   final int totalAmount;
   final DateTime timestamp;
   final bool isCompleted;
-  final List<Cart> items;
+  final List<dynamic> items;
 
   OrderModel({
     required this.id,
@@ -20,15 +20,17 @@ class OrderModel {
     required this.items,
   });
 
-  OrderModel.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : id = snapshot.id,
-        userId = snapshot['userId'],
-        totalAmount = snapshot['totalAmount'],
-        items = (snapshot['items'] as List)
-            .map((item) => Cart.fromMap(item))
-            .toList(),
-        isCompleted = snapshot['isCompleted'],
-        timestamp = snapshot['timestamp'].toDate();
+  factory OrderModel.fromFirestore(DocumentSnapshot snapshot) {
+    final data = snapshot.data();
+
+    return OrderModel(
+        id: snapshot['id'],
+        userId: snapshot['userId'],
+        totalAmount: snapshot['totalAmount'],
+        timestamp: (snapshot['timestamp'] as Timestamp).toDate(),
+        isCompleted: snapshot['isCompleted'],
+        items: snapshot['items']);
+  }
 
   Map<String, dynamic> toMap() {
     return {

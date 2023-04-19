@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:organic_market/ui/common/ui_helpers.dart';
 import 'package:organic_market/ui/views/cart/cart_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -12,32 +13,51 @@ class CartView extends StackedView<CartViewModel> {
   Widget builder(BuildContext context, CartViewModel viewModel, Widget? child) {
     return Scaffold(
       body: Container(
-        margin: const EdgeInsets.only(top: 2),
+        height: screenHeight(context),
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              alignment: Alignment.topLeft,
+              alignment: Alignment.topCenter,
               height: MediaQuery.of(context).size.height * 0.03,
-              child: Text(
-                "Total Items x ${viewModel.cartItemList.length}",
-                style: GoogleFonts.lato(
-                    textStyle: const TextStyle(
-                        wordSpacing: 2,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green)),
-              ),
+              child: RichText(
+                  text: TextSpan(
+                      text: "Total Items ",
+                      style: GoogleFonts.lato(
+                          textStyle: const TextStyle(
+                              letterSpacing: 2,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54)),
+                      children: <TextSpan>[
+                    TextSpan(
+                      text: "x ",
+                      style: GoogleFonts.lato(
+                          textStyle: const TextStyle(
+                              wordSpacing: 2,
+                              fontSize: 18,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black)),
+                    ),
+                    TextSpan(
+                      text: "${viewModel.cartItemList.length}",
+                      style: GoogleFonts.lato(
+                          textStyle: const TextStyle(
+                              wordSpacing: 2,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue)),
+                    )
+                  ])),
             ),
             Container(
                 //temporary height
                 margin: const EdgeInsets.only(bottom: 5),
-                height: MediaQuery.of(context).size.height * 0.59,
-                decoration: const BoxDecoration(
-                  color: Color(0xffedecf2),
+                height: screenHeight(context) * 0.52,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
                 ),
                 child: ListView.builder(
                   itemCount: viewModel.cartItemList.length,
@@ -45,11 +65,12 @@ class CartView extends StackedView<CartViewModel> {
                       CartViewCard(index: index),
                 )),
             Container(
+              margin: const EdgeInsets.only(bottom: 2),
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
-              height: MediaQuery.of(context).size.height * 0.12,
+              height: screenHeight(context) * 0.12,
               width: MediaQuery.of(context).size.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -58,17 +79,26 @@ class CartView extends StackedView<CartViewModel> {
                     margin: const EdgeInsets.only(top: 2),
                     width: double.infinity,
                     alignment: Alignment.topLeft,
-                    child: Text(
-                      "Total : Rs.${viewModel.totalprice()}",
-                      style: GoogleFonts.lato(
-                          textStyle: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.blue,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1),
-                    ),
+                    child: RichText(
+                        text: TextSpan(
+                            text: "Total : ",
+                            style: GoogleFonts.lato(
+                                textStyle: const TextStyle(
+                                    letterSpacing: 2,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue)),
+                            children: <TextSpan>[
+                          TextSpan(
+                            text: "Rs.${viewModel.totalprice()}",
+                            style: GoogleFonts.lato(
+                                textStyle: const TextStyle(
+                                    letterSpacing: 2,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black)),
+                          )
+                        ])),
                   ),
 
                   //sizebox of 15
@@ -87,6 +117,7 @@ class CartView extends StackedView<CartViewModel> {
                         child: viewModel.isLoading
                             ? const CircularProgressIndicator(
                                 color: Colors.black,
+                                value: 1,
                               )
                             : Text(
                                 "Check Out",

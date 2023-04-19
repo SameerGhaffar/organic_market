@@ -22,27 +22,33 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
     Widget? child,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            request.title!,
-            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
-          ),
-          verticalSpaceTiny,
-          Text(
-            request.description!,
-            style: const TextStyle(fontSize: 14, color: kcMediumGrey),
-            maxLines: 3,
-            softWrap: true,
-          ),
-          verticalSpaceLarge,
-        ],
+      height: bottomSheetHeight(context),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              request.title!,
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+            ),
+            verticalSpaceTiny,
+            Text(
+              request.description!,
+              style: const TextStyle(fontSize: 14, color: kcMediumGrey),
+              maxLines: 2,
+              softWrap: true,
+            ),
+            verticalSpaceTiny,
+            Container(
+              color: Colors.black,
+            ),
+          ],
+        ),
       ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.5),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),

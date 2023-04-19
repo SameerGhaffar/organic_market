@@ -1,18 +1,23 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:organic_market/app/app.bottomsheets.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/model/cart_model.dart';
 import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/manager.dart';
+import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class CartViewModel extends BaseViewModel {
   final _firestoreService = locator<FireStoreService>();
   final _authService = locator<AuthService>();
   final _storageService = locator<StorageService>();
+
+  final _bottomSheet = locator<BottomSheetService>();
   bool isLoading = false;
 
   // getting id from cart then finding the item from the list
@@ -153,15 +158,24 @@ class CartViewModel extends BaseViewModel {
 
   void checkout() async {
     isLoading = true;
+    rebuildUi();
     int totalAmount = totalprice();
     int itemCount = cartList.length;
     print(totalAmount);
     print(itemCount);
     print(cartList.map((e) => e.itemId).toList());
-    if (await _storageService.newOrder(
-        userId: uid as String, totalAmount: totalAmount, items: cartList)) {
-      isLoading = false;
-    }
+    // if (await _storageService.newOrder(
+    //     userId: uid as String, totalAmount: totalAmount, items: cartList)) {
+    //   isLoading = false;
+    // }
+    isLoading = false;
+    rebuildUi();
+    _bottomSheet.showCustomSheet(
+      variant: BottomSheetType.notice,
+      title: "Selected Your Location",
+      description: 'From the Map',
+    );
+    // _bottomSheet.showBottomSheet(title: "Set your Address");
     // Order order = Order(
     //     id: id,
     //     userId: userId,

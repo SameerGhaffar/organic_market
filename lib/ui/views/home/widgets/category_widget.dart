@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:organic_market/ui/common/ui_helpers.dart';
 import 'package:organic_market/ui/views/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -28,11 +29,11 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.26,
+              height: screenWidth(context) * 0.5,
               child: ListView.builder(
                 physics: const ScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemExtent: MediaQuery.of(context).size.width * 0.42,
+                itemExtent: screenWidth(context) * 0.42,
                 itemCount: viewModel.categoryList().length,
                 itemBuilder: (context, index) {
                   return InkWell(

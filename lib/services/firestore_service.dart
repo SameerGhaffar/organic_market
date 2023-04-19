@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:organic_market/model/cart_model.dart';
 import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/item_model.dart';
+import 'package:organic_market/model/order_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/model/user.dart';
@@ -156,6 +157,23 @@ class FireStoreService {
       print(userCartList.length);
     } catch (e) {
       print('Failed: ' + e.toString());
+    }
+  }
+
+  //order
+  List<OrderModel> orderDataList = [];
+
+  loadOrderData() async {
+    try {
+      await orderRef.get().then((value) {
+        orderDataList = List.generate(
+          value.size,
+          (index) => OrderModel.fromFirestore(value.docs[index]),
+        );
+      });
+      print('order List done');
+    } catch (e) {
+      print('Order List Failed: ' + e.toString());
     }
   }
 }

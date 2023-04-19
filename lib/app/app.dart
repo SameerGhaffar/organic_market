@@ -9,11 +9,13 @@ import 'package:organic_market/ui/admin/widgets/promotion/a_promotion_view.dart'
 import 'package:organic_market/ui/admin/widgets/slider/a_slider_view.dart';
 import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:organic_market/ui/dialogs/info_alert/info_alert_dialog.dart';
+import 'package:organic_market/ui/views/account/account_view.dart';
 import 'package:organic_market/ui/views/item/item_view.dart';
 import 'package:organic_market/ui/views/layout/drawer_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/login/login_view.dart';
 import 'package:organic_market/ui/views/login/reset_view.dart';
+import 'package:organic_market/ui/views/order/order_view.dart';
 import 'package:organic_market/ui/views/signup/signup_view.dart';
 import 'package:organic_market/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -37,6 +39,8 @@ import 'package:organic_market/ui/views/product/product_view.dart';
     MaterialRoute(page: CategoryItemAdmin),
     MaterialRoute(page: HomeView),
     MaterialRoute(page: ProductView),
+    MaterialRoute(page: AccountView),
+    MaterialRoute(page: OrderView),
 
 // @stacked-route
   ],

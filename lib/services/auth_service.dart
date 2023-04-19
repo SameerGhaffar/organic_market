@@ -16,6 +16,10 @@ class AuthService {
     error = e;
   }
 
+  String userId() {
+    return _auth.currentUser!.uid;
+  }
+
   Future<bool> signup(
       {required String email,
       required String password,
