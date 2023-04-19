@@ -5,11 +5,12 @@ import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:stacked/stacked.dart';
 
-class DrawerViewModel extends BaseViewModel {
+class DrawerViewModel extends ReactiveViewModel {
   final ZoomDrawerController _drawerControl = ZoomDrawerController();
   final _indexservice = locator<NavDrawerindexService>();
   final _authService = locator<AuthService>();
 
+  @override
   ZoomDrawerController get drawerControl => _drawerControl;
 
   void logout() async {
@@ -46,4 +47,9 @@ class DrawerViewModel extends BaseViewModel {
     "CART",
     "PROFILE",
   ];
+  Future fetchData() async {
+    _indexservice.addListener(() {
+      rebuildUi();
+    });
+  }
 }
