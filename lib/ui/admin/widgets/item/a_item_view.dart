@@ -66,6 +66,7 @@ class CategoryItemAdmin extends StackedView<CategoryItemAdminModel> {
                       child: Column(
                         children: [
                           TextWidget(
+                            focusNode: FocusNode(),
                             controller: viewModel.titleController,
                             keyboardtype: TextInputType.name,
                             validator: viewModel.titleValidator,
@@ -76,6 +77,7 @@ class CategoryItemAdmin extends StackedView<CategoryItemAdminModel> {
                             obscureText: false,
                           ),
                           TextWidget(
+                            focusNode: FocusNode(),
                             hint: "1,2",
                             controller: viewModel.quantityController,
                             keyboardtype: TextInputType.number,
@@ -86,6 +88,7 @@ class CategoryItemAdmin extends StackedView<CategoryItemAdminModel> {
                             obscureText: false,
                           ),
                           TextWidget(
+                            focusNode: FocusNode(),
                             hint: "kg , g, L",
                             controller: viewModel.quantityTypeController,
                             keyboardtype: TextInputType.name,
@@ -96,6 +99,7 @@ class CategoryItemAdmin extends StackedView<CategoryItemAdminModel> {
                             obscureText: false,
                           ),
                           TextWidget(
+                            focusNode: FocusNode(),
                             hint: "200 , 100",
                             controller: viewModel.priceController,
                             keyboardtype: TextInputType.number,

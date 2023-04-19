@@ -20,8 +20,9 @@ class ItemViewModel extends BaseViewModel {
   final _navigation = locator<NavigationService>();
   final _indexservice = locator<NavDrawerindexService>();
   cartPage() {
-    print("back");
+    print("back Preseed");
     _indexservice.setIndex = 2;
+    print("index =${_indexservice.selctedindex}");
     _navigation.back();
   }
 

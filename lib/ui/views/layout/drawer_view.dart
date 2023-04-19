@@ -30,4 +30,6 @@ class DrawerView extends StackedView<DrawerViewModel> {
 
   @override
   DrawerViewModel viewModelBuilder(BuildContext context) => DrawerViewModel();
+  @override
+  Future onViewModelReady(DrawerViewModel viewModel) => viewModel.fetchData();
 }

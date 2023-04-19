@@ -37,10 +37,10 @@ import 'package:organic_market/ui/views/product/product_view.dart';
     MaterialRoute(page: PromotionAdmin),
     MaterialRoute(page: CategoryAdmin),
     MaterialRoute(page: CategoryItemAdmin),
-    MaterialRoute(page: HomeView),
     MaterialRoute(page: ProductView),
     MaterialRoute(page: AccountView),
     MaterialRoute(page: OrderView),
+    MaterialRoute(page: HomeView),
 
 // @stacked-route
   ],

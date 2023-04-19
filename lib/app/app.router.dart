@@ -15,14 +15,14 @@ import 'package:organic_market/ui/admin/widgets/promotion/a_promotion_view.dart'
     as _i10;
 import 'package:organic_market/ui/admin/widgets/slider/a_slider_view.dart'
     as _i9;
-import 'package:organic_market/ui/views/account/account_view.dart' as _i15;
-import 'package:organic_market/ui/views/home/home_view.dart' as _i13;
+import 'package:organic_market/ui/views/account/account_view.dart' as _i14;
+import 'package:organic_market/ui/views/home/home_view.dart' as _i16;
 import 'package:organic_market/ui/views/item/item_view.dart' as _i7;
 import 'package:organic_market/ui/views/layout/drawer_view.dart' as _i5;
 import 'package:organic_market/ui/views/login/login_view.dart' as _i3;
 import 'package:organic_market/ui/views/login/reset_view.dart' as _i6;
-import 'package:organic_market/ui/views/order/order_view.dart' as _i16;
-import 'package:organic_market/ui/views/product/product_view.dart' as _i14;
+import 'package:organic_market/ui/views/order/order_view.dart' as _i15;
+import 'package:organic_market/ui/views/product/product_view.dart' as _i13;
 import 'package:organic_market/ui/views/signup/signup_view.dart' as _i4;
 import 'package:organic_market/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
@@ -51,13 +51,13 @@ class Routes {
 
   static const categoryItemAdmin = '/category-item-admin';
 
-  static const homeView = '/home-view';
-
   static const productView = '/product-view';
 
   static const accountView = '/account-view';
 
   static const orderView = '/order-view';
+
+  static const homeView = '/home-view';
 
   static const all = <String>{
     startupView,
@@ -71,10 +71,10 @@ class Routes {
     promotionAdmin,
     categoryAdmin,
     categoryItemAdmin,
-    homeView,
     productView,
     accountView,
     orderView,
+    homeView,
   };
 }
 
@@ -125,20 +125,20 @@ class StackedRouter extends _i1.RouterBase {
       page: _i12.CategoryItemAdmin,
     ),
     _i1.RouteDef(
-      Routes.homeView,
-      page: _i13.HomeView,
-    ),
-    _i1.RouteDef(
       Routes.productView,
-      page: _i14.ProductView,
+      page: _i13.ProductView,
     ),
     _i1.RouteDef(
       Routes.accountView,
-      page: _i15.AccountView,
+      page: _i14.AccountView,
     ),
     _i1.RouteDef(
       Routes.orderView,
-      page: _i16.OrderView,
+      page: _i15.OrderView,
+    ),
+    _i1.RouteDef(
+      Routes.homeView,
+      page: _i16.HomeView,
     ),
   ];
 
@@ -209,27 +209,27 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i13.HomeView: (data) {
+    _i13.ProductView: (data) {
       return _i17.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i13.HomeView(),
+        builder: (context) => const _i13.ProductView(),
         settings: data,
       );
     },
-    _i14.ProductView: (data) {
+    _i14.AccountView: (data) {
       return _i17.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i14.ProductView(),
+        builder: (context) => const _i14.AccountView(),
         settings: data,
       );
     },
-    _i15.AccountView: (data) {
+    _i15.OrderView: (data) {
       return _i17.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i15.AccountView(),
+        builder: (context) => const _i15.OrderView(),
         settings: data,
       );
     },
-    _i16.OrderView: (data) {
+    _i16.HomeView: (data) {
       return _i17.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i16.OrderView(),
+        builder: (context) => const _i16.HomeView(),
         settings: data,
       );
     },
@@ -396,20 +396,6 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToHomeView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.homeView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToProductView([
     int? routerId,
     bool preventDuplicates = true,
@@ -446,6 +432,20 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.orderView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToHomeView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.homeView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -606,20 +606,6 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithHomeView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.homeView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithProductView([
     int? routerId,
     bool preventDuplicates = true,
@@ -656,6 +642,20 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.orderView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithHomeView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.homeView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

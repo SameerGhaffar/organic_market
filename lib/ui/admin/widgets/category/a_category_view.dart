@@ -65,6 +65,7 @@ class CategoryAdmin extends StackedView<CategoryAdminModel> {
                       key: viewModel.formKey,
                       onChanged: viewModel.onchangedValidation,
                       child: TextWidget(
+                        focusNode: FocusNode(),
                         controller: viewModel.nameController,
                         keyboardtype: TextInputType.name,
                         hint: "Category Name",

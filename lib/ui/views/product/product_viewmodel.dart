@@ -15,6 +15,16 @@ class ProductViewModel extends BaseViewModel {
   final _authService = locator<AuthService>();
   TextEditingController searchController = TextEditingController();
   bool show = false;
+  final focusNode = FocusNode();
+  Future<bool> onBackPressed() async {
+    if (focusNode.hasFocus) {
+      focusNode.unfocus();
+
+      return false; // prevent the back button from popping the route
+    }
+    return true; // allow the back button to pop the route
+  }
+
   keyboardDismiss(BuildContext context) {
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus) {

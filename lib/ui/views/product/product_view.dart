@@ -33,17 +33,21 @@ class ProductView extends StackedView<ProductViewModel> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                       elevation: 2,
-                      child: TextWidget(
-                        controller: viewModel.searchController,
-                        eyepass: false,
-                        hint: 'Search',
-                        labeltext: 'Search Product',
-                        keyboardtype: TextInputType.name,
-                        prefixicon: Icons.search,
-                        obscureText: false,
-                        validator: (String? value) {
-                          return null;
-                        },
+                      child: WillPopScope(
+                        onWillPop: viewModel.onBackPressed,
+                        child: TextWidget(
+                          focusNode: viewModel.focusNode,
+                          controller: viewModel.searchController,
+                          eyepass: false,
+                          hint: 'Search',
+                          labeltext: 'Search Product',
+                          keyboardtype: TextInputType.name,
+                          prefixicon: Icons.search,
+                          obscureText: false,
+                          validator: (String? value) {
+                            return null;
+                          },
+                        ),
                       ),
                     ),
                   ),

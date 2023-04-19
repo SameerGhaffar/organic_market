@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 class TextWidget extends StatelessWidget {
+  final FocusNode focusNode;
   final String labeltext;
   final String? Function(String? value) validator;
   final IconData prefixicon;
@@ -15,6 +16,7 @@ class TextWidget extends StatelessWidget {
 
   const TextWidget({
     Key? key,
+    required this.focusNode,
     required this.labeltext,
     required this.validator,
     required this.prefixicon,
@@ -29,6 +31,7 @@ class TextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       keyboardType: keyboardtype,
       validator: validator,
       obscureText: obscureText,

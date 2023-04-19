@@ -7,6 +7,8 @@ import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
+import 'package:organic_market/services/nav_drawer_service.dart';
+import 'package:organic_market/ui/views/item/item_view.dart';
 
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -15,6 +17,7 @@ class HomeViewModel extends BaseViewModel {
   final CarouselController carouselController = CarouselController();
   final _firestoreService = locator<FireStoreService>();
   final _navigation = locator<NavigationService>();
+  final _indexservice = locator<NavDrawerindexService>();
 
 //  List imageList = [
 //     'assets/images/TRAVEL.png',
@@ -118,8 +121,10 @@ class HomeViewModel extends BaseViewModel {
 
     await _firestoreService.loadItemData();
 
-    // _navigation.navigateToView(const ItemView());
-    _navigation.navigateToItemView();
+    _navigation.navigateToView(const ItemView());
+    // await _navigation.navigateTo(Routes.itemView);
+
+    // _navigation.navigateToItemView();
 
     // _dialogService.showDialog(
     //     title: "category clicked", description: id, buttonTitle: "ok");
