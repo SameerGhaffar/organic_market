@@ -19,6 +19,7 @@ class ProductViewModel extends BaseViewModel {
   Future<bool> onBackPressed() async {
     if (focusNode.hasFocus) {
       focusNode.unfocus();
+      focusNode.dispose();
 
       return false; // prevent the back button from popping the route
     }

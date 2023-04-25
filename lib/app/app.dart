@@ -22,6 +22,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'package:organic_market/ui/views/product/product_view.dart';
+import 'package:organic_market/ui/views/map/map_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -42,6 +43,7 @@ import 'package:organic_market/ui/views/product/product_view.dart';
     MaterialRoute(page: OrderView),
     MaterialRoute(page: HomeView),
 
+    MaterialRoute(page: MapView),
 // @stacked-route
   ],
   dependencies: [

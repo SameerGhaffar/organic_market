@@ -32,6 +32,9 @@ class LoginViewModel extends FormViewModel {
   // circular progress indicator k liye
   bool _loading = false;
   bool get loading => _loading;
+  bool _googleLoading = false;
+  bool get googleLoading => _googleLoading;
+
   // Future<void> checkEmailVerified() async {
   //   user = _authService.auth.currentUser;
   //   await user!.reload();
@@ -45,6 +48,20 @@ class LoginViewModel extends FormViewModel {
   //         description: "Please Verify email");
   //   }
   // }
+
+  void googleLoginPressed() async {
+    print('pressed');
+    _googleLoading = true;
+    rebuildUi();
+
+    if (await _authService.signUpWithGoogle()) {
+      _googleLoading = false;
+      rebuildUi();
+    } else {
+      _googleLoading = false;
+      rebuildUi();
+    }
+  }
 
   void loginPressed() async {
     _loading = true;

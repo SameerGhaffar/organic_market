@@ -4,6 +4,7 @@ import 'package:organic_market/ui/common/app_strings.dart';
 import 'package:organic_market/ui/views/login/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:auth_buttons/auth_buttons.dart';
 import 'widgets/text_widget.dart';
 
 class LoginView extends StackedView<LoginViewModel> {
@@ -147,6 +148,11 @@ class LoginView extends StackedView<LoginViewModel> {
                         ),
                       ],
                     ),
+                  ),
+                  GoogleAuthButton(
+                    onPressed: () => viewModel.googleLoginPressed(),
+                    isLoading: viewModel.googleLoading,
+                    style: AuthButtonStyle(),
                   )
                 ],
               ),

@@ -11,6 +11,8 @@ class DrawerViewModel extends ReactiveViewModel {
   final _authService = locator<AuthService>();
 
   @override
+  List<ListenableServiceMixin> get listenableService => [_indexservice];
+
   ZoomDrawerController get drawerControl => _drawerControl;
 
   void logout() async {
@@ -32,6 +34,7 @@ class DrawerViewModel extends ReactiveViewModel {
 
   void updateindex(int index) {
     _indexservice.setIndex = index;
+
     rebuildUi();
   }
 
@@ -51,5 +54,9 @@ class DrawerViewModel extends ReactiveViewModel {
     _indexservice.addListener(() {
       rebuildUi();
     });
+
+    // _indexservice.addListener(() {
+    //   rebuildUi();
+    // });
   }
 }

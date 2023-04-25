@@ -34,22 +34,27 @@ class AccountViewModel extends BaseViewModel {
   }
 
   List<String> profileMenu = [
-    "My Orders",
-    "Subscription",
+    "My Subscriptions",
+    "My Account",
+    "Track Your Order",
     "Order History",
-    "Address",
+    "Suggestions & Feedback",
   ];
   List<Color> profileMenuColor = [
     Colors.amber.shade300,
     Colors.deepOrange.shade300,
     const Color.fromARGB(255, 1, 219, 183),
     Colors.blue.shade200,
+    Colors.deepPurple.shade400,
   ];
   void onClick(int index) {
     switch (index) {
       case 0:
         _navigationService.navigateToOrderView();
         // rebuildUi();
+        break;
+      case 3:
+        _navigationService.navigateToMapView();
         break;
       default:
     }

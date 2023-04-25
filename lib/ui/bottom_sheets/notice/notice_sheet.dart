@@ -42,13 +42,29 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
             ),
             verticalSpaceTiny,
             Container(
+              height: bottomSheetHeight(context) * 0.59,
               color: Colors.black,
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 3),
+              alignment: Alignment.center,
+              height: bottomSheetHeight(context) * 0.06,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text(
+                  "Set Address",
+                  style: TextStyle(fontSize: 18),
+                ),
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black)),
+              ),
             ),
           ],
         ),
       ),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.5),
+      decoration: const BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),

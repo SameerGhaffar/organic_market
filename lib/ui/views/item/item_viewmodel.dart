@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/model/cart_model.dart';
+import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
@@ -80,10 +81,19 @@ class ItemViewModel extends BaseViewModel {
     return itemList.map((e) => e).toList()[index];
   }
 
+  String appbarTitle = "";
+
+  List<ProductCategory> item = [];
   int total = 0;
   Future fetchData() async {
     _firestoreService.itemRef.snapshots().listen((querySnapshot) async {
       await _firestoreService.loadItemData();
+      await _firestoreService.loadCategoryData();
+
+      item = _firestoreService.categoryDataList
+          .where((element) => element.id == _firestoreService.categoryid)
+          .toList();
+      appbarTitle = item[0].name!;
       itemList = _firestoreService.itemDataList
           .where(
               (element) => element.categoryId == _firestoreService.categoryid)

@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class NavDrawerindexService with ChangeNotifier {
+class NavDrawerindexService with ListenableServiceMixin {
   int _selectedIndex = 0;
 
   int get selctedindex => _selectedIndex;

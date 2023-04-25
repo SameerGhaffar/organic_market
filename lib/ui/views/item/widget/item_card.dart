@@ -87,7 +87,7 @@ class Itemcard extends StatelessWidget {
               height: 1,
             ),
             Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.topLeft,
               child: Text("Rs.$price",
                   style: GoogleFonts.lato(
                       textStyle: const TextStyle(
