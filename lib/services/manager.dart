@@ -17,6 +17,7 @@ class StorageService {
   final _firestoreService = locator<FireStoreService>();
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
+
   FirebaseStorage get storage => _storage;
 
   final Reference sliderimagesRef =

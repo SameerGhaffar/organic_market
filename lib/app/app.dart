@@ -16,13 +16,14 @@ import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/login/login_view.dart';
 import 'package:organic_market/ui/views/login/reset_view.dart';
 import 'package:organic_market/ui/views/order/order_view.dart';
+import 'package:organic_market/ui/views/searchproduct/search_product_view.dart';
 import 'package:organic_market/ui/views/signup/signup_view.dart';
 import 'package:organic_market/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import 'package:organic_market/ui/views/product/product_view.dart';
 import 'package:organic_market/ui/views/map/map_view.dart';
+import 'package:organic_market/ui/views/product/product_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -38,12 +39,14 @@ import 'package:organic_market/ui/views/map/map_view.dart';
     MaterialRoute(page: PromotionAdmin),
     MaterialRoute(page: CategoryAdmin),
     MaterialRoute(page: CategoryItemAdmin),
-    MaterialRoute(page: ProductView),
     MaterialRoute(page: AccountView),
     MaterialRoute(page: OrderView),
     MaterialRoute(page: HomeView),
 
+    MaterialRoute(page: SearchProductView),
+
     MaterialRoute(page: MapView),
+    MaterialRoute(page: ProductView),
 // @stacked-route
   ],
   dependencies: [

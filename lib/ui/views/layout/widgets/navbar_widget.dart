@@ -5,7 +5,7 @@ import 'package:organic_market/ui/views/account/account_view.dart';
 import 'package:organic_market/ui/views/cart/cart_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/layout/drawer_viewmodel.dart';
-import 'package:organic_market/ui/views/product/product_view.dart';
+import 'package:organic_market/ui/views/searchproduct/search_product_view.dart';
 
 import 'package:stacked/stacked.dart';
 
@@ -18,12 +18,12 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
   Widget build(Object context, DrawerViewModel viewModel) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: const DrawerViewMyAppBar(),
+      appBar: DrawerViewMyAppBar(),
       body: Center(
           child: IndexedStack(
         children: const [
           HomeView(),
-          ProductView(),
+          SearchProductView(),
           CartView(),
           AccountView(),
         ],

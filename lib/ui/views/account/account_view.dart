@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:organic_market/app/app.router.dart';
-import 'package:organic_market/ui/common/ui_helpers.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 import 'account_viewmodel.dart';
 
@@ -13,37 +11,36 @@ class AccountView extends StackedView<AccountViewModel> {
   @override
   Widget builder(
       BuildContext context, AccountViewModel viewModel, Widget? child) {
-    return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
+    return ResponsiveSizer(builder: (context, orientation, screenType) {
+      return Scaffold(
+          body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(4),
+            padding: EdgeInsets.all(4.px),
             alignment: Alignment.center,
             child: Card(
-              elevation: 1,
+              elevation: 1.px,
               color: Colors.white70,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(15.px)),
               child: SizedBox(
-                height: screenHeight(context) * 0.3,
-                width: screenWidth(context) * 0.7,
+                height: Adaptive.h(30),
+                width: 70.w,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
                       alignment: Alignment.topLeft,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 22, vertical: 10),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 22.px, vertical: 10.px),
                       child: Text(
                         "Profile Card",
                         style: GoogleFonts.lato(
-                            textStyle: const TextStyle(
-                                wordSpacing: 1,
-                                letterSpacing: 2,
-                                fontSize: 18,
+                            textStyle: TextStyle(
+                                letterSpacing: 3.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black38)),
                       ),
@@ -54,20 +51,20 @@ class AccountView extends StackedView<AccountViewModel> {
                       child: Text(
                         viewModel.user?.name ?? "No Name",
                         style: GoogleFonts.lato(
-                            textStyle: const TextStyle(
-                                wordSpacing: 2,
-                                fontSize: 16,
+                            textStyle: TextStyle(
+                                letterSpacing: 3.sp,
+                                fontSize: 18.sp,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black)),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(6.0),
+                      padding: EdgeInsets.all(6.px),
                       child: Text(viewModel.email() ?? "No Email Found",
                           style: GoogleFonts.lato(
-                              textStyle: const TextStyle(
+                              textStyle: TextStyle(
                                   fontStyle: FontStyle.italic,
-                                  fontSize: 16,
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black))),
                     ),
@@ -75,9 +72,10 @@ class AccountView extends StackedView<AccountViewModel> {
                     InkWell(
                       onTap: () => viewModel.logout(),
                       child: Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: EdgeInsets.all(8.px),
                         alignment: Alignment.bottomRight,
-                        child: const Icon(
+                        child: Icon(
+                          size: 23.sp,
                           Icons.logout_rounded,
                           color: Colors.redAccent,
                         ),
@@ -88,48 +86,48 @@ class AccountView extends StackedView<AccountViewModel> {
               ),
             ),
           ),
-          verticalSpaceMedium,
+          const Spacer(
+            flex: 2,
+          ),
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: viewModel.profileMenu.length,
             itemBuilder: (context, index) => Container(
-              padding: const EdgeInsets.all(2),
+              padding: EdgeInsets.all(3.px),
               alignment: Alignment.center,
               child: InkWell(
                 onTap: () => viewModel.onClick(index),
                 child: Card(
-                  elevation: 1,
+                  elevation: 4.sp,
                   color: viewModel.profileMenuColor[index],
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                      borderRadius: BorderRadius.circular(8.px)),
                   child: SizedBox(
-                    height: screenHeight(context) * 0.08,
-                    width: screenWidth(context) * 0.9,
+                    height: 35.sp,
+                    width: 90.w,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           //    alignment: Alignment.centerLeft,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 22, vertical: 4),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 22.px, vertical: 4.px),
                           child: Text(
                             viewModel.profileMenu[index],
                             style: GoogleFonts.lato(
-                                textStyle: const TextStyle(
-                                    wordSpacing: 1,
-                                    letterSpacing: 2,
-                                    fontSize: 16,
+                                textStyle: TextStyle(
+                                    letterSpacing: 2.sp,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black)),
                           ),
                         ),
                         //const Spacer(),
                         Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: EdgeInsets.all(8.px),
                           //   alignment: Alignment.centerRight,
-                          child:
-                              const Icon(Icons.keyboard_arrow_right, size: 30),
+                          child: Icon(Icons.keyboard_arrow_right, size: 25.sp),
                         )
                       ],
                     ),
@@ -137,10 +135,11 @@ class AccountView extends StackedView<AccountViewModel> {
                 ),
               ),
             ),
-          )
+          ),
+          const Spacer(),
         ],
-      ),
-    ));
+      ));
+    });
   }
 
   @override

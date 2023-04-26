@@ -54,10 +54,7 @@ class LoginViewModel extends FormViewModel {
     _googleLoading = true;
     rebuildUi();
 
-    if (await _authService.signUpWithGoogle()) {
-      _googleLoading = false;
-      rebuildUi();
-    } else {
+    if (!await _authService.signUpWithGoogle()) {
       _googleLoading = false;
       rebuildUi();
     }

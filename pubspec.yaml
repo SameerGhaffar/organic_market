@@ -40,6 +40,7 @@ dependencies:
   firebase_storage: ^11.1.0
   flutter:
     sdk: flutter
+  flutter_animated_icons: ^1.0.1
   flutter_cache_manager: ^3.3.0
   flutter_svg: ^2.0.3
   flutter_zoom_drawer: ^3.0.4
@@ -47,8 +48,10 @@ dependencies:
   google_nav_bar: ^5.0.6
   google_sign_in: ^6.1.0
   image_picker: ^0.8.7+1
+  responsive_sizer: ^3.1.1
   shimmer: ^2.0.0
   stacked: ^3.2.1
+  stacked_hooks: ^0.2.3
   stacked_services: ^1.0.2
 
 dev_dependencies:

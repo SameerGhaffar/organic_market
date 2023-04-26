@@ -9,6 +9,7 @@ import 'package:organic_market/services/firestore_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final _firestoreService = locator<FireStoreService>();
 
   FirebaseAuth get auth => _auth;
@@ -36,26 +37,20 @@ class AuthService {
       final credential = GoogleAuthProvider.credential(
           accessToken: gAuth.accessToken, idToken: gAuth.idToken);
 
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: gUSer.email)
-          .get();
-      final List<DocumentSnapshot> documents = result.docs;
+      final userWithGivenEmail =
+          await _firestoreService.getUserWithEmail(gUSer.email);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
-      if (documents.isEmpty) {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithCredential(credential);
+      if (userWithGivenEmail == null) {
         await _firestoreService.createUser(Userinfo(
             id: userCredential.user?.uid,
             name: userCredential.user?.displayName as String,
             email: userCredential.user?.email as String,
             isAdmin: false));
         print('empty');
-      } else {
-        UserCredential userCredential =
-            await FirebaseAuth.instance.signInWithCredential(credential);
-        print('Not Empty');
       }
+
       return true;
     } on FirebaseAuthException catch (e) {
       switch (e.code) {

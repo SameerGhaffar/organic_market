@@ -1,12 +1,17 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:organic_market/app/app.locator.dart';
-import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/model/category_model.dart';
+import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
+import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
+import 'package:organic_market/services/manager.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:organic_market/ui/views/item/item_view.dart';
 
@@ -18,6 +23,14 @@ class HomeViewModel extends BaseViewModel {
   final _firestoreService = locator<FireStoreService>();
   final _navigation = locator<NavigationService>();
   final _indexservice = locator<NavDrawerindexService>();
+
+  final _storagesevice = locator<StorageService>();
+  final _authService = locator<AuthService>();
+  List<Item> itemList = [];
+
+  Item itemdata(int index) {
+    return itemList.map((e) => e).toList()[index];
+  }
 
 //  List imageList = [
 //     'assets/images/TRAVEL.png',
@@ -44,6 +57,16 @@ class HomeViewModel extends BaseViewModel {
         await _firestoreService.loadPromotionImage();
         rebuildUi();
       });
+    });
+    _firestoreService.itemRef.snapshots().listen((querySnapshot) async {
+      await _firestoreService.loadItemData();
+
+      itemList = _firestoreService.itemDataList
+          // .where(
+          //     (element) => element. == _firestoreService.categoryid)
+          .toList();
+
+      rebuildUi();
     });
     // _firestoreService.sliderDataList;
     // _firestoreService.promotionDataList;
@@ -122,12 +145,61 @@ class HomeViewModel extends BaseViewModel {
     await _firestoreService.loadItemData();
 
     _navigation.navigateToView(const ItemView());
+
     // await _navigation.navigateTo(Routes.itemView);
 
     // _navigation.navigateToItemView();
 
     // _dialogService.showDialog(
     //     title: "category clicked", description: id, buttonTitle: "ok");
+  }
+
+  addToCart(String itemId, String itemName, BuildContext context) {
+    _storagesevice.addToCart(
+        itemId: itemId, quantity: 1, uid: _authService.auth.currentUser!.uid);
+
+    Flushbar(
+      // message: "$itemName have been added to your Cart",
+      messageText: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            itemName,
+            style: GoogleFonts.lato(
+                textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18)),
+          ),
+          Text(
+            "have been added to your cart",
+            style: GoogleFonts.lato(
+                textStyle: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            )),
+          )
+        ],
+      ),
+
+      icon: const Icon(
+        Icons.check_circle,
+        size: 28.0,
+        color: Colors.white,
+      ),
+      duration: const Duration(milliseconds: 900),
+      padding: const EdgeInsets.all(9),
+
+      //animationDuration: Duration(milliseconds: 200),
+      flushbarPosition: FlushbarPosition.TOP,
+      flushbarStyle: FlushbarStyle.GROUNDED,
+
+      backgroundColor: Colors.green,
+    ).show(context);
+
+    print("itemId = $itemId");
   }
 }
 

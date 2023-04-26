@@ -29,6 +29,16 @@ class FireStoreService {
   final CollectionReference orderRef =
       FirebaseFirestore.instance.collection('Order');
 
+  Future<Userinfo?> getUserWithEmail(String email) async {
+    final result = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+    final documents = result.docs;
+    if (documents.isEmpty) return null;
+    return Userinfo.fromMap(documents.first.data());
+  }
+
   String _categoryid = "";
 
   String get categoryid => _categoryid;
@@ -45,7 +55,7 @@ class FireStoreService {
 
   Future createUser(Userinfo user) async {
     try {
-      await _users.doc(user.id).set(user.toMap());
+      await _users.doc(user.id).set(user.toMap(), SetOptions(merge: true));
     } catch (e) {
       _error(e as String?);
     }

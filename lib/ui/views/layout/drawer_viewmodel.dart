@@ -9,12 +9,13 @@ class DrawerViewModel extends ReactiveViewModel {
   final ZoomDrawerController _drawerControl = ZoomDrawerController();
   final _indexservice = locator<NavDrawerindexService>();
   final _authService = locator<AuthService>();
+  late AnimationController controller;
 
   @override
   List<ListenableServiceMixin> get listenableService => [_indexservice];
 
   ZoomDrawerController get drawerControl => _drawerControl;
-
+  onCreateContrller(controller) {}
   void logout() async {
     await _authService.signOut();
     _indexservice.setIndex = 0;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'home_viewmodel.dart';
 import 'widgets/category_widget.dart';
+import 'widgets/new_products_widget.dart';
 import 'widgets/promotion_widget.dart';
 import 'widgets/slider_widget.dart';
 
@@ -28,6 +29,7 @@ class HomeView extends StackedView<HomeViewModel> {
                 child: HomeViewMySlider(),
               ),
               HomeViewCategoryWidget(),
+              HomeViewNewProductWidget(),
               HomeViewPromotion()
             ],
           ),

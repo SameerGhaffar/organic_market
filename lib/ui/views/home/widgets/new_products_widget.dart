@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:organic_market/ui/common/ui_helpers.dart';
 import 'package:organic_market/ui/views/home/home_viewmodel.dart';
+import 'package:organic_market/ui/views/home/widgets/new_products_card_widget.dart';
+import 'package:organic_market/ui/views/item/item_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'category_card_widget.dart';
 
-class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
-  const HomeViewCategoryWidget({super.key});
+class HomeViewNewProductWidget extends ViewModelWidget<HomeViewModel> {
+  const HomeViewNewProductWidget({super.key});
 
   @override
   Widget build(BuildContext context, viewModel) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -22,7 +24,7 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               child: Text(
-                "Categories",
+                "New Products",
                 style: GoogleFonts.lato(
                     textStyle: const TextStyle(
                         fontSize: 18,
@@ -53,28 +55,36 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.black12.withOpacity(0.02),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.black12.withOpacity(0.02),
+            ),
+            height: 280,
+            child: GridView.builder(
+              physics: const ScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: viewModel.itemList.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1,
+                childAspectRatio: 1.5,
               ),
-              height: screenWidth(context) * 0.46,
-              child: ListView.builder(
-                physics: const ScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemExtent: screenWidth(context) * 0.40,
-                itemCount: viewModel.categoryList().length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => viewModel
-                        .tap(viewModel.categorydata(index).id as String),
-                    child: Categorycard(
-                        categoryName:
-                            viewModel.categorydata(index).name as String,
-                        imagePath:
-                            viewModel.categorydata(index).imageUrl as String),
-                  );
-                },
-              )),
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Itemcard(
+                  addtocart: () => viewModel.addToCart(
+                      viewModel.itemdata(index).id,
+                      viewModel.itemdata(index).title,
+                      context),
+                  imageUrl: viewModel.itemdata(index).imageUrl,
+                  price: viewModel.itemdata(index).price,
+                  quantity: viewModel.itemdata(index).quantity,
+                  quantitytype: viewModel.itemdata(index).quantityType,
+                  title: viewModel.itemdata(index).title,
+                ),
+              ),
+            ),
+          ),
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:organic_market/ui/common/app_strings.dart';
+import 'package:organic_market/ui/common/ui_helpers.dart';
 import 'package:organic_market/ui/views/login/login_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -26,7 +27,7 @@ class LoginView extends StackedView<LoginViewModel> {
             child: Container(
               padding: const EdgeInsets.all(25),
               width: double.infinity,
-              color: Colors.white70,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -149,10 +150,23 @@ class LoginView extends StackedView<LoginViewModel> {
                       ],
                     ),
                   ),
+                  verticalSpaceLarge,
                   GoogleAuthButton(
                     onPressed: () => viewModel.googleLoginPressed(),
                     isLoading: viewModel.googleLoading,
-                    style: AuthButtonStyle(),
+                    style: AuthButtonStyle(
+                      elevation: 0.5,
+                      progressIndicatorColor: Colors.black,
+                      progressIndicatorValueColor: Colors.white,
+                      shadowColor: Colors.white,
+                      textStyle: GoogleFonts.lato(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1),
+                      ),
+                    ),
                   )
                 ],
               ),

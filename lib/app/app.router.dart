@@ -5,7 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i18;
+import 'package:flutter/material.dart' as _i19;
 import 'package:flutter/material.dart';
 import 'package:organic_market/ui/admin/admin_view.dart' as _i8;
 import 'package:organic_market/ui/admin/widgets/category/a_category_view.dart'
@@ -15,19 +15,21 @@ import 'package:organic_market/ui/admin/widgets/promotion/a_promotion_view.dart'
     as _i10;
 import 'package:organic_market/ui/admin/widgets/slider/a_slider_view.dart'
     as _i9;
-import 'package:organic_market/ui/views/account/account_view.dart' as _i14;
-import 'package:organic_market/ui/views/home/home_view.dart' as _i16;
+import 'package:organic_market/ui/views/account/account_view.dart' as _i13;
+import 'package:organic_market/ui/views/home/home_view.dart' as _i15;
 import 'package:organic_market/ui/views/item/item_view.dart' as _i7;
 import 'package:organic_market/ui/views/layout/drawer_view.dart' as _i5;
 import 'package:organic_market/ui/views/login/login_view.dart' as _i3;
 import 'package:organic_market/ui/views/login/reset_view.dart' as _i6;
 import 'package:organic_market/ui/views/map/map_view.dart' as _i17;
-import 'package:organic_market/ui/views/order/order_view.dart' as _i15;
-import 'package:organic_market/ui/views/product/product_view.dart' as _i13;
+import 'package:organic_market/ui/views/order/order_view.dart' as _i14;
+import 'package:organic_market/ui/views/product/product_view.dart' as _i18;
+import 'package:organic_market/ui/views/searchproduct/search_product_view.dart'
+    as _i16;
 import 'package:organic_market/ui/views/signup/signup_view.dart' as _i4;
 import 'package:organic_market/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i19;
+import 'package:stacked_services/stacked_services.dart' as _i20;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -52,15 +54,17 @@ class Routes {
 
   static const categoryItemAdmin = '/category-item-admin';
 
-  static const productView = '/product-view';
-
   static const accountView = '/account-view';
 
   static const orderView = '/order-view';
 
   static const homeView = '/home-view';
 
+  static const searchProductView = '/search-product-view';
+
   static const mapView = '/map-view';
+
+  static const productView = '/product-view';
 
   static const all = <String>{
     startupView,
@@ -74,11 +78,12 @@ class Routes {
     promotionAdmin,
     categoryAdmin,
     categoryItemAdmin,
-    productView,
     accountView,
     orderView,
     homeView,
+    searchProductView,
     mapView,
+    productView,
   };
 }
 
@@ -129,121 +134,131 @@ class StackedRouter extends _i1.RouterBase {
       page: _i12.CategoryItemAdmin,
     ),
     _i1.RouteDef(
-      Routes.productView,
-      page: _i13.ProductView,
-    ),
-    _i1.RouteDef(
       Routes.accountView,
-      page: _i14.AccountView,
+      page: _i13.AccountView,
     ),
     _i1.RouteDef(
       Routes.orderView,
-      page: _i15.OrderView,
+      page: _i14.OrderView,
     ),
     _i1.RouteDef(
       Routes.homeView,
-      page: _i16.HomeView,
+      page: _i15.HomeView,
+    ),
+    _i1.RouteDef(
+      Routes.searchProductView,
+      page: _i16.SearchProductView,
     ),
     _i1.RouteDef(
       Routes.mapView,
       page: _i17.MapView,
     ),
+    _i1.RouteDef(
+      Routes.productView,
+      page: _i18.ProductView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.StartupView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.StartupView(),
         settings: data,
       );
     },
     _i3.LoginView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.LoginView(),
         settings: data,
       );
     },
     _i4.SignupView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.SignupView(),
         settings: data,
       );
     },
     _i5.DrawerView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.DrawerView(),
         settings: data,
       );
     },
     _i6.ResetView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.ResetView(),
         settings: data,
       );
     },
     _i7.ItemView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ItemView(),
         settings: data,
       );
     },
     _i8.AdminView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.AdminView(),
         settings: data,
       );
     },
     _i9.SliderAdmin: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.SliderAdmin(),
         settings: data,
       );
     },
     _i10.PromotionAdmin: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.PromotionAdmin(),
         settings: data,
       );
     },
     _i11.CategoryAdmin: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.CategoryAdmin(),
         settings: data,
       );
     },
     _i12.CategoryItemAdmin: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.CategoryItemAdmin(),
         settings: data,
       );
     },
-    _i13.ProductView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i13.ProductView(),
+    _i13.AccountView: (data) {
+      return _i19.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i13.AccountView(),
         settings: data,
       );
     },
-    _i14.AccountView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i14.AccountView(),
+    _i14.OrderView: (data) {
+      return _i19.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i14.OrderView(),
         settings: data,
       );
     },
-    _i15.OrderView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i15.OrderView(),
+    _i15.HomeView: (data) {
+      return _i19.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i15.HomeView(),
         settings: data,
       );
     },
-    _i16.HomeView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i16.HomeView(),
+    _i16.SearchProductView: (data) {
+      return _i19.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i16.SearchProductView(),
         settings: data,
       );
     },
     _i17.MapView: (data) {
-      return _i18.MaterialPageRoute<dynamic>(
+      return _i19.MaterialPageRoute<dynamic>(
         builder: (context) => const _i17.MapView(),
+        settings: data,
+      );
+    },
+    _i18.ProductView: (data) {
+      return _i19.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i18.ProductView(),
         settings: data,
       );
     },
@@ -255,7 +270,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i19.NavigationService {
+extension NavigatorStateExtension on _i20.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -410,20 +425,6 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToProductView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.productView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToAccountView([
     int? routerId,
     bool preventDuplicates = true,
@@ -466,6 +467,20 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToSearchProductView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.searchProductView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> navigateToMapView([
     int? routerId,
     bool preventDuplicates = true,
@@ -474,6 +489,20 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.mapView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToProductView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.productView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -634,20 +663,6 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithProductView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.productView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithAccountView([
     int? routerId,
     bool preventDuplicates = true,
@@ -690,6 +705,20 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> replaceWithSearchProductView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.searchProductView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithMapView([
     int? routerId,
     bool preventDuplicates = true,
@@ -698,6 +727,20 @@ extension NavigatorStateExtension on _i19.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.mapView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithProductView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.productView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
