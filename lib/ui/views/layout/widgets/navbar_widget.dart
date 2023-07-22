@@ -22,6 +22,7 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
       appBar: const DrawerViewMyAppBar(),
       body: Center(
           child: IndexedStack(
+        index: viewModel.selctedindex,
         children: const [
           HomeView(),
           SearchProductView(),
@@ -29,7 +30,6 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
           AccountView(),
           // ChatScreenView()
         ],
-        index: viewModel.selctedindex,
       )),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),

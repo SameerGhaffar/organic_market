@@ -53,11 +53,11 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
                       imageUrl:
                           viewModel.promotionImage(index).ImageUrl as String,
                       placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.white,
                         child: Container(
                           color: Colors.grey,
                         ),
-                        baseColor: Colors.grey.shade300,
-                        highlightColor: Colors.white,
                       ),
                       errorWidget: (context, url, error) =>
                           const Icon(Icons.error),

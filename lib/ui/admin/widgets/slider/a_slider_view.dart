@@ -117,9 +117,9 @@ class SliderAdmin extends StackedView<SliderAdminModel> {
                                         .toList()[index],
                                     placeholder: (context, url) =>
                                         Shimmer.fromColors(
-                                      child: Container(),
                                       baseColor: Colors.grey.shade300,
                                       highlightColor: Colors.grey.shade300,
+                                      child: Container(),
                                     ),
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.error),

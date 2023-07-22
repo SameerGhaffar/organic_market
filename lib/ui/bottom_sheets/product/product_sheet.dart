@@ -28,6 +28,13 @@ class ProductSheet extends StackedView<ProductSheetModel> {
       {
         return Container(
           height: screenHeight(context),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -66,13 +73,13 @@ class ProductSheet extends StackedView<ProductSheetModel> {
                         width: 150.px,
                         imageUrl: viewModel.item().imageUrl,
                         placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.white,
                           child: Container(
                             height: 145.px,
                             width: 150.px,
                             color: Colors.grey,
                           ),
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.white,
                         ),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
@@ -188,13 +195,6 @@ class ProductSheet extends StackedView<ProductSheetModel> {
                       ),
                 )
               ],
-            ),
-          ),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
             ),
           ),
         );

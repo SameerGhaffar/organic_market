@@ -50,12 +50,12 @@ class Categorycard extends ViewModelWidget<HomeViewModel> {
                   height: MediaQuery.of(context).size.height * 0.15,
                   width: MediaQuery.of(context).size.width * 0.32,
                   placeholder: (context, url) => Shimmer.fromColors(
-                    child: Container(
-                      color: Colors.grey.shade300,
-                    ),
                     baseColor: Colors.grey.shade300,
                     highlightColor: Colors.white,
                     direction: ShimmerDirection.ttb,
+                    child: Container(
+                      color: Colors.grey.shade300,
+                    ),
                   ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                   fit: BoxFit.fill,

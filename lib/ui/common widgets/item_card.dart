@@ -79,11 +79,11 @@ class Itemcard extends StatelessWidget {
                         height: 160.px,
                         imageUrl: imageUrl,
                         placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.white,
                           child: Container(
                             color: Colors.grey,
                           ),
-                          baseColor: Colors.grey.shade300,
-                          highlightColor: Colors.white,
                         ),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),

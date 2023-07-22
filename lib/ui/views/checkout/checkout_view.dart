@@ -126,7 +126,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                 CheckOutViewCard(index: index),
                           )),
                       Container(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         alignment: Alignment.bottomCenter,
                         color: Colors.white,
                         child: Column(

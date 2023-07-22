@@ -24,6 +24,13 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
     return Container(
       height: bottomSheetHeight(context),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,23 +58,16 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
               height: bottomSheetHeight(context) * 0.06,
               child: ElevatedButton(
                 onPressed: () {},
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.black)),
                 child: const Text(
                   "Set Address",
                   style: TextStyle(fontSize: 18),
                 ),
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black)),
               ),
             ),
           ],
-        ),
-      ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
         ),
       ),
     );
