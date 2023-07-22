@@ -44,7 +44,7 @@ void main() async {
   // FlutterNativeSplash.remove();
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: true,
       backgroundColor: Colors.black,
       builder: (context) => const MyApp(), // Wrap your app
     ),

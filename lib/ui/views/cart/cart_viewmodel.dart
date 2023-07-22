@@ -5,6 +5,7 @@ import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/model/cart_model.dart';
 import 'package:organic_market/model/item_model.dart';
+import 'package:organic_market/model/user.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/cart_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
@@ -199,6 +200,12 @@ class CartViewModel extends BaseViewModel {
     _tempService.totalPrice = totalprice();
 
     isLoading = false;
+    Userinfo? user = await _firestoreService.getUser(uid!);
+    if (user?.address != null) {
+      _tempService.getinfo = true;
+    } else {
+      _tempService.getinfo = false;
+    }
     _navService.navigateToCheckoutView();
     // rebuildUi();
     // _bottomSheet.showCustomSheet(

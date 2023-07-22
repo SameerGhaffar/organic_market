@@ -30,39 +30,42 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
               ))),
           centerTitle: true,
         ),
-        body: viewModel.getInfo
+        body: viewModel.getInfo ?? false
             ? Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        color: Colors.amber,
-                        height: screenHeight(context) * 0.1,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Row(
+                        decoration: const BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        height: screenHeight(context) * 0.12,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
                                 children: [
                                   Text(
                                     "Address",
                                     style: GoogleFonts.lato(
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                         letterSpacing: 1.0,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16.0,
+                                        fontSize: 18.0,
                                       ),
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   GestureDetector(
                                     onTap: () => viewModel.next(),
                                     child: Text(
                                       "Edit",
                                       style: GoogleFonts.lato(
-                                        textStyle: TextStyle(
+                                        textStyle: const TextStyle(
                                           letterSpacing: 1.0,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16.0,
@@ -72,25 +75,48 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                   ),
                                 ],
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: Text(
-                                viewModel.address,
-                                style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                    fontSize: 14.0,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Text(
+                                  viewModel.address,
+                                  style: GoogleFonts.lato(
+                                    textStyle: const TextStyle(
+                                      fontSize: 16.0,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                              Text(
+                                "Payment Method",
+                                style: GoogleFonts.lato(
+                                  textStyle: const TextStyle(
+                                    letterSpacing: 1.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Text(
+                                  "Cash On Delivery",
+                                  style: GoogleFonts.lato(
+                                    textStyle: const TextStyle(
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Container(
                           //temporary height
                           margin: EdgeInsets.only(bottom: 5.px),
-                          height: screenHeight(context) * 0.615,
+                          height: screenHeight(context) * 0.5, //0.615
                           decoration: BoxDecoration(
                             color: Theme.of(context).scaffoldBackgroundColor,
                           ),
@@ -100,6 +126,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                 CheckOutViewCard(index: index),
                           )),
                       Container(
+                        padding: EdgeInsets.all(8.0),
                         alignment: Alignment.bottomCenter,
                         color: Colors.white,
                         child: Column(
@@ -134,10 +161,13 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
 
                             // Login button
                             Container(
+                              height: 60.px,
                               alignment: Alignment.topRight,
                               margin: EdgeInsets.only(right: 10.px),
                               child: ElevatedButton(
                                   style: ButtonStyle(
+                                    fixedSize: MaterialStateProperty.all<Size>(
+                                        Size.fromHeight(50.px)),
                                     elevation:
                                         MaterialStateProperty.all<double>(2.px),
                                     backgroundColor:
@@ -151,9 +181,9 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                           value: 1,
                                         )
                                       : Text(
-                                          "Check Out",
+                                          "Confirm Order",
                                           style: GoogleFonts.lato(
-                                              fontSize: 16.sp,
+                                              fontSize: 17.sp,
                                               letterSpacing: 1.px),
                                         )),
                             ),

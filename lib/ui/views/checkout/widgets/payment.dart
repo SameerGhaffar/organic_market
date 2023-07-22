@@ -6,8 +6,8 @@ class PaymentMethodSelection extends ViewModelWidget<CheckoutViewModel> {
   @override
   Widget build(BuildContext context, CheckoutViewModel viewModel) {
     // TODO: implement build
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

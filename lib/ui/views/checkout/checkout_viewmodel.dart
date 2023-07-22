@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/model/user.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/tempdata_service.dart';
@@ -13,9 +14,9 @@ class CheckoutViewModel extends BaseViewModel {
   final _firestore = locator<FireStoreService>();
   final _auth = locator<AuthService>();
 
-  bool isloading = true;
+  bool isloading = false;
   String address = "";
-  bool getInfo = false;
+  bool? getInfo;
 
   TextEditingController addressController = TextEditingController();
 
@@ -37,8 +38,17 @@ class CheckoutViewModel extends BaseViewModel {
     return _cartdataService.totalPrice;
   }
 
+  Userinfo? user;
   Future fetchData() async {
+    getInfo = _cartdataService.getinfo;
     cartList = _cartdataService.ListOfCartItem;
+    String uid = await _auth.auth.currentUser!.uid;
+    user = await _firestore.getUser(uid);
+    if (user?.address != null) {
+      address = user!.address!; // Add the null check using '!'
+    }
+
+    rebuildUi();
   }
 
   updateAddress() {
@@ -52,7 +62,7 @@ class CheckoutViewModel extends BaseViewModel {
   }
 
   next() {
-    getInfo = !getInfo;
+    getInfo = !getInfo!;
     rebuildUi();
   }
 

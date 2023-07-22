@@ -95,6 +95,18 @@ class CheckOutViewCard extends ViewModelWidget<CheckoutViewModel> {
                     ),
                   ),
                   const Spacer(),
+                  Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(horizontal: 10.px),
+                    child: Text(
+                        "Quantity: ${viewModel.cartitemData(index).quantity}",
+                        style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                                wordSpacing: 2,
+                                fontSize: 16.px,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600))),
+                  ),
                 ],
               ),
             ),
