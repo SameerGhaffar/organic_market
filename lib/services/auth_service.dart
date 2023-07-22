@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -6,16 +5,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/model/user.dart';
 import 'package:organic_market/services/firestore_service.dart';
+import 'package:stacked/stacked.dart';
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
+class AuthService with ListenableServiceMixin {
   final _firestoreService = locator<FireStoreService>();
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseAuth get auth => _auth;
 
   String? error;
 
+  ///A Function to that set error msg on 'error' in auth
   _error(String? e) {
     error = e;
   }
@@ -24,6 +24,7 @@ class AuthService {
     return _auth.currentUser!.uid;
   }
 
+  /// A Function to SignIN User from google
   Future<bool> signUpWithGoogle() async {
     try {
       await GoogleSignIn().signOut();
@@ -43,11 +44,12 @@ class AuthService {
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       if (userWithGivenEmail == null) {
-        await _firestoreService.createUser(Userinfo(
+        Userinfo user = Userinfo(
             id: userCredential.user?.uid,
             name: userCredential.user?.displayName as String,
             email: userCredential.user?.email as String,
-            isAdmin: false));
+            isAdmin: false);
+        await _firestoreService.createUser(user);
         print('empty');
       }
 
@@ -72,36 +74,33 @@ class AuthService {
           break;
       }
       return false;
+    } on PlatformException catch (e) {
+      _error(e.message);
+      print(e);
+      return false;
     } catch (e) {
-      print('Google Sign-In error');
       print(e);
       return false;
     }
   }
 
+  ///SignUp with email and password
   Future<bool> signup(
       {required String email,
       required String password,
       required String name}) async {
     try {
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: email)
-          .get();
-      final List<DocumentSnapshot> documents = result.docs;
+      final userWithGivenEmail =
+          await _firestoreService.getUserWithEmail(email);
+      UserCredential userCredential = await _signup(email, password);
 
-      if (documents.isEmpty) {
-        UserCredential userCredential = await _signup(email, password);
-        // Store additional user details in Firestore
-        await _firestoreService.createUser(Userinfo(
-            id: userCredential.user!.uid,
+      if (userWithGivenEmail == null) {
+        Userinfo user = Userinfo(
+            id: userCredential.user?.uid,
             name: name,
-            email: email,
-            isAdmin: false));
-        print('EMail empty');
-      } else {
-        print('Email Not Empty');
-        UserCredential userCredential = await _signup(email, password);
+            email: userCredential.user?.email as String,
+            isAdmin: false);
+        await _firestoreService.createUser(user);
       }
       return true;
     } on FirebaseAuthException catch (e) {
@@ -110,9 +109,10 @@ class AuthService {
     }
   }
 
+  ///SignIn with email password
   Future<bool> signin(String email, String password) async {
     try {
-      await _signin(email, password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       return true;
     } on FirebaseAuthException catch (e) {
       _error(e.code);
@@ -120,27 +120,33 @@ class AuthService {
     }
   }
 
-  Future<bool> isUserLoggedIn() async {
-    var user = _auth.currentUser;
-    return user != null;
-  }
+  // Future<bool> isUserLoggedIn() async {
+  //   var user = _auth.currentUser;
+  //   return user != null;
+  // }
 
   // Stream<bool> get emailVerifiedChanges =>
   //     _auth.authStateChanges().map((user) => user?.emailVerified ?? false);
 
+  ///send email verification
   Future<void> sendEmailVerification() async {
     User? user = _auth.currentUser;
     await user?.sendEmailVerification();
   }
 
-  Future<void> signOut() async {
+  ///SignOut User
+  Future<bool> signOut() async {
     try {
+      // await GoogleSignIn().signOut();
       await _auth.signOut();
+      return true;
     } catch (e) {
       debugPrint(e.toString());
+      return false;
     }
   }
 
+  ///Reset password for User
   Future<bool> resetPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
@@ -153,11 +159,6 @@ class AuthService {
 
   Future<UserCredential> _signup(String email, String password) async {
     return await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-  }
-
-  _signin(String email, String password) async {
-    return await _auth.signInWithEmailAndPassword(
         email: email, password: password);
   }
 }

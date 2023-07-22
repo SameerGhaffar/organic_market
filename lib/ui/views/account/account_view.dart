@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 
 import 'account_viewmodel.dart';
 
+/// Ye profile wala page hai
 class AccountView extends StackedView<AccountViewModel> {
   const AccountView({super.key});
 
@@ -14,7 +15,7 @@ class AccountView extends StackedView<AccountViewModel> {
     return ResponsiveSizer(builder: (context, orientation, screenType) {
       return Scaffold(
           body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
@@ -86,57 +87,54 @@ class AccountView extends StackedView<AccountViewModel> {
               ),
             ),
           ),
-          const Spacer(
-            flex: 2,
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: viewModel.profileMenu.length,
-            itemBuilder: (context, index) => Container(
-              padding: EdgeInsets.all(3.px),
-              alignment: Alignment.center,
-              child: InkWell(
-                onTap: () => viewModel.onClick(index),
-                child: Card(
-                  elevation: 4.sp,
-                  color: viewModel.profileMenuColor[index],
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.px)),
-                  child: SizedBox(
-                    height: 35.sp,
-                    width: 90.w,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          //    alignment: Alignment.centerLeft,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 22.px, vertical: 4.px),
-                          child: Text(
-                            viewModel.profileMenu[index],
-                            style: GoogleFonts.lato(
-                                textStyle: TextStyle(
-                                    letterSpacing: 2.sp,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black)),
-                          ),
-                        ),
-                        //const Spacer(),
-                        Container(
-                          padding: EdgeInsets.all(8.px),
-                          //   alignment: Alignment.centerRight,
-                          child: Icon(Icons.keyboard_arrow_right, size: 25.sp),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const Spacer(),
+
+          // ListView.builder(
+          //   shrinkWrap: true,
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   itemCount: viewModel.profileMenu.length,
+          //   itemBuilder: (context, index) => Container(
+          //     padding: EdgeInsets.all(3.px),
+          //     alignment: Alignment.center,
+          //     child: InkWell(
+          //       onTap: () => viewModel.onClick(index),
+          //       child: Card(
+          //         elevation: 4.sp,
+          //         color: Colors.white,
+          //         shape: RoundedRectangleBorder(
+          //             borderRadius: BorderRadius.circular(8.px)),
+          //         child: SizedBox(
+          //           height: 35.sp,
+          //           width: 90.w,
+          //           child: Row(
+          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //             children: [
+          //               Container(
+          //                 //    alignment: Alignment.centerLeft,
+          //                 padding: EdgeInsets.symmetric(
+          //                     horizontal: 22.px, vertical: 4.px),
+          //                 child: Text(
+          //                   viewModel.profileMenu[index],
+          //                   style: GoogleFonts.lato(
+          //                       textStyle: TextStyle(
+          //                           letterSpacing: 2.sp,
+          //                           fontSize: 18.sp,
+          //                           fontWeight: FontWeight.bold,
+          //                           color: Colors.black)),
+          //                 ),
+          //               ),
+          //               //const Spacer(),
+          //               Container(
+          //                 padding: EdgeInsets.all(8.px),
+          //                 //   alignment: Alignment.centerRight,
+          //                 child: Icon(Icons.keyboard_arrow_right, size: 25.sp),
+          //               )
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ));
     });

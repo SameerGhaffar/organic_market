@@ -30,7 +30,7 @@ class NoticeSheet extends StackedView<NoticeSheetModel> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              request.title!,
+              request.title ?? 'Title',
               style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
             ),
             verticalSpaceTiny,

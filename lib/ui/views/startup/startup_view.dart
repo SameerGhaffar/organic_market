@@ -15,36 +15,26 @@ class StartupView extends StackedView<StartupViewModel> {
     Widget? child,
   ) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color(0xFF00BF63),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              'Organic Market',
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w900,
-              ),
+            Center(
+              child: SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Image.asset("assets/images/Organic.png")),
             ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Text(
-                  'Loading ...',
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-                horizontalSpaceSmall,
-                SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    color: Colors.black,
-                    strokeWidth: 6,
-                  ),
-                )
-              ],
+            horizontalSpaceMedium,
+            const SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(
+                color: Colors.black,
+                strokeWidth: 6,
+              ),
             ),
           ],
         ),

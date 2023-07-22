@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:organic_market/ui/views/account/account_view.dart';
 import 'package:organic_market/ui/views/cart/cart_view.dart';
+//import 'package:organic_market/ui/views/chat_screen/chat_screen_view.dart';
 import 'package:organic_market/ui/views/home/home_view.dart';
 import 'package:organic_market/ui/views/layout/drawer_viewmodel.dart';
 import 'package:organic_market/ui/views/searchproduct/search_product_view.dart';
@@ -17,8 +18,8 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
   @override
   Widget build(Object context, DrawerViewModel viewModel) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: DrawerViewMyAppBar(),
+      resizeToAvoidBottomInset: false,
+      appBar: const DrawerViewMyAppBar(),
       body: Center(
           child: IndexedStack(
         children: const [
@@ -26,6 +27,7 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
           SearchProductView(),
           CartView(),
           AccountView(),
+          // ChatScreenView()
         ],
         index: viewModel.selctedindex,
       )),
@@ -72,8 +74,8 @@ class DrawerViewNavbar extends ViewModelWidget<DrawerViewModel> {
                         text: 'Home',
                       ),
                       GButton(
-                        icon: CupertinoIcons.star,
-                        text: 'Products',
+                        icon: CupertinoIcons.search,
+                        text: 'Search',
                       ),
                       GButton(
                         icon: CupertinoIcons.cart,

@@ -15,7 +15,7 @@ class DrawerViewMyAppBar extends ViewModelWidget<DrawerViewModel>
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.menu),
-        onPressed: () => viewModel.opendrawer(),
+        onPressed: () => viewModel.drawerToggle(),
       ),
       title: Text(
         viewModel.title[viewModel.selctedindex],

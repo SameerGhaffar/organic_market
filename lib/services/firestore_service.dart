@@ -6,8 +6,9 @@ import 'package:organic_market/model/order_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/model/user.dart';
+import 'package:stacked/stacked.dart';
 
-class FireStoreService {
+class FireStoreService with ListenableServiceMixin {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseFirestore get firestore => _firestore;
 
@@ -29,6 +30,20 @@ class FireStoreService {
   final CollectionReference orderRef =
       FirebaseFirestore.instance.collection('Order');
 
+  Item? item;
+  setItem(Item i) {
+    item = i;
+    notifyListeners();
+  }
+
+  DocumentReference<Object?> getCartItemRef({
+    required String uid,
+    required String itemId,
+  }) {
+    DocumentReference docRef = users.doc(uid).collection("Cart").doc(itemId);
+    return docRef;
+  }
+
   Future<Userinfo?> getUserWithEmail(String email) async {
     final result = await FirebaseFirestore.instance
         .collection('users')
@@ -37,6 +52,14 @@ class FireStoreService {
     final documents = result.docs;
     if (documents.isEmpty) return null;
     return Userinfo.fromMap(documents.first.data());
+  }
+
+  String _categoryName = "";
+
+  String get categoryName => _categoryName;
+
+  void setDocName(String name) {
+    _categoryName = name;
   }
 
   String _categoryid = "";
@@ -58,6 +81,26 @@ class FireStoreService {
       await _users.doc(user.id).set(user.toMap(), SetOptions(merge: true));
     } catch (e) {
       _error(e as String?);
+    }
+  }
+
+  Future<void> updateaddress(String userId, String address) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      if (snapshot.exists) {
+        Map<String, dynamic> userData = snapshot.data()!;
+        userData['address'] = address;
+        await _users.doc(userId).set(userData, SetOptions(merge: true));
+      } else {
+        // Document does not exist, handle accordingly
+        // For example, you might want to create a new document for the user here
+      }
+    } catch (e) {
+      _error(e.toString());
     }
   }
 

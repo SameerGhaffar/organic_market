@@ -27,11 +27,11 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
                     textStyle: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black54)),
+                        color: Colors.black)),
               ),
             ),
             const Spacer(),
-            (viewModel.categoryList().length > 9)
+            (viewModel.categoryList().length > 6)
                 ? GestureDetector(
                     onTap: () => null,
                     child: Container(
@@ -42,8 +42,8 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
                         style: GoogleFonts.lato(
                             textStyle: const TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.green)),
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF00BF63))),
                       ),
                     ),
                   )
@@ -61,12 +61,13 @@ class HomeViewCategoryWidget extends ViewModelWidget<HomeViewModel> {
               child: ListView.builder(
                 physics: const ScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemExtent: screenWidth(context) * 0.40,
+                itemExtent: screenWidth(context) * 0.42,
                 itemCount: viewModel.categoryList().length,
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () => viewModel
-                        .tap(viewModel.categorydata(index).id as String),
+                    onTap: () => viewModel.tap(
+                        id: viewModel.categorydata(index).id as String,
+                        name: viewModel.categorydata(index).name!),
                     child: Categorycard(
                         categoryName:
                             viewModel.categorydata(index).name as String,

@@ -32,7 +32,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
                         ),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.error),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                         width: double.infinity,
                       ))
                   //  Image.network(
@@ -40,7 +40,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
                   .toList(),
               carouselController: viewModel.carouselController,
               options: CarouselOptions(
-                height: 210,
+                height: 220,
                 scrollPhysics: const BouncingScrollPhysics(),
                 autoPlay: true,
                 aspectRatio: 2,

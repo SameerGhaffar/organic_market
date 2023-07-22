@@ -1,7 +1,9 @@
 import 'package:organic_market/services/auth_service.dart';
+import 'package:organic_market/services/cart_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:organic_market/services/manager.dart';
+import 'package:organic_market/services/tempdata_service.dart';
 import 'package:organic_market/ui/admin/admin_view.dart';
 import 'package:organic_market/ui/admin/widgets/category/a_category_view.dart';
 import 'package:organic_market/ui/admin/widgets/item/a_item_view.dart';
@@ -24,6 +26,9 @@ import 'package:stacked_services/stacked_services.dart';
 
 import 'package:organic_market/ui/views/map/map_view.dart';
 import 'package:organic_market/ui/views/product/product_view.dart';
+import 'package:organic_market/ui/bottom_sheets/product/product_sheet.dart';
+import 'package:organic_market/ui/views/chat_screen/chat_screen_view.dart';
+import 'package:organic_market/ui/views/checkout/checkout_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -47,6 +52,8 @@ import 'package:organic_market/ui/views/product/product_view.dart';
 
     MaterialRoute(page: MapView),
     MaterialRoute(page: ProductView),
+    MaterialRoute(page: ChatScreenView),
+    MaterialRoute(page: CheckoutView),
 // @stacked-route
   ],
   dependencies: [
@@ -56,13 +63,16 @@ import 'package:organic_market/ui/views/product/product_view.dart';
     LazySingleton(classType: NavDrawerindexService),
     LazySingleton(classType: AuthService),
     LazySingleton(classType: FireStoreService),
-    LazySingleton(classType: StorageService)
+    LazySingleton(classType: StorageService),
+    LazySingleton(classType: CartService),
+    LazySingleton(classType: TempdataService),
 
-    // @stacked-service
+// @stacked-service
   ],
   bottomsheets: [
     StackedBottomsheet(classType: NoticeSheet),
-    // @stacked-bottom-sheet
+    StackedBottomsheet(classType: ProductSheet),
+// @stacked-bottom-sheet
   ],
   dialogs: [
     StackedDialog(classType: InfoAlertDialog),

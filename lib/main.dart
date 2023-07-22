@@ -41,9 +41,11 @@ void main() async {
   // ]).then((value) => runApp(const MyApp()));
 
   // runApp(const MyApp());
+  // FlutterNativeSplash.remove();
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: false,
+      backgroundColor: Colors.black,
       builder: (context) => const MyApp(), // Wrap your app
     ),
   );
@@ -56,9 +58,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveSizer(builder: (context, orientation, screenType) {
       return MaterialApp(
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
         title: ksAppTitle,
         debugShowCheckedModeBanner: false,
         theme: Theme.of(context).copyWith(

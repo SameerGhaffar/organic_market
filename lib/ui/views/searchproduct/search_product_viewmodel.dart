@@ -1,18 +1,21 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:organic_market/app/app.bottomsheets.dart';
 import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/services/auth_service.dart';
+import 'package:organic_market/services/cart_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
-import 'package:organic_market/services/manager.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
 
 class SearchProductViewModel extends BaseViewModel {
   final _firestoreService = locator<FireStoreService>();
-  final _storagesevice = locator<StorageService>();
   final _authService = locator<AuthService>();
+  final _cartService = locator<CartService>();
+  final _bottomService = locator<BottomSheetService>();
   TextEditingController searchController = TextEditingController();
   bool show = false;
   final focusNode = FocusNode();
@@ -74,7 +77,7 @@ class SearchProductViewModel extends BaseViewModel {
   }
 
   addToCart(String itemId, String itemName, BuildContext context) {
-    _storagesevice.addToCart(
+    _cartService.addToCart(
         itemId: itemId, quantity: 1, uid: _authService.auth.currentUser!.uid);
 
     Flushbar(
@@ -119,5 +122,11 @@ class SearchProductViewModel extends BaseViewModel {
     ).show(context);
 
     print("itemId = $itemId");
+  }
+
+  openProductSheet(Item item) {
+    _firestoreService.setItem(item);
+    _bottomService.showCustomSheet(variant: BottomSheetType.product);
+    //_navigation.navigateToView(ProductView());
   }
 }

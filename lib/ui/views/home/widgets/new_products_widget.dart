@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:organic_market/ui/common/ui_helpers.dart';
 import 'package:organic_market/ui/views/home/home_viewmodel.dart';
-import 'package:organic_market/ui/views/home/widgets/new_products_card_widget.dart';
-import 'package:organic_market/ui/views/item/item_view.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:stacked/stacked.dart';
 
-import 'category_card_widget.dart';
+import '../../../common widgets/item_card.dart';
 
 class HomeViewNewProductWidget extends ViewModelWidget<HomeViewModel> {
   const HomeViewNewProductWidget({super.key});
@@ -24,18 +22,18 @@ class HomeViewNewProductWidget extends ViewModelWidget<HomeViewModel> {
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
               child: Text(
-                "New Products",
+                "All Products",
                 style: GoogleFonts.lato(
                     textStyle: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black54)),
+                        color: Colors.black)),
               ),
             ),
             const Spacer(),
-            (viewModel.categoryList().length > 9)
+            (viewModel.itemList.length > 9)
                 ? GestureDetector(
-                    onTap: () => null,
+                    onTap: () => viewModel.toProductpage(),
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       alignment: Alignment.centerRight,
@@ -59,7 +57,7 @@ class HomeViewNewProductWidget extends ViewModelWidget<HomeViewModel> {
               borderRadius: BorderRadius.circular(12),
               color: Colors.black12.withOpacity(0.02),
             ),
-            height: 280,
+            height: 300.px,
             child: GridView.builder(
               physics: const ScrollPhysics(),
               shrinkWrap: true,
@@ -71,16 +69,22 @@ class HomeViewNewProductWidget extends ViewModelWidget<HomeViewModel> {
               ),
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.all(2.0),
-                child: Itemcard(
-                  addtocart: () => viewModel.addToCart(
-                      viewModel.itemdata(index).id,
-                      viewModel.itemdata(index).title,
-                      context),
-                  imageUrl: viewModel.itemdata(index).imageUrl,
-                  price: viewModel.itemdata(index).price,
-                  quantity: viewModel.itemdata(index).quantity,
-                  quantitytype: viewModel.itemdata(index).quantityType,
-                  title: viewModel.itemdata(index).title,
+                child: InkWell(
+                  onTap: () =>
+                      viewModel.openProductSheet(viewModel.itemdata(index)),
+                  child: Itemcard(
+                    addtocart: () => viewModel.addToCart(
+                        viewModel.itemdata(index).id,
+                        viewModel.itemdata(index).title,
+                        context),
+                    changedPrice: viewModel.itemdata(index).changedPrice!,
+                    sale: viewModel.itemdata(index).isOnSale!,
+                    imageUrl: viewModel.itemdata(index).imageUrl,
+                    price: viewModel.itemdata(index).price,
+                    quantity: viewModel.itemdata(index).quantity,
+                    quantitytype: viewModel.itemdata(index).quantityType,
+                    title: viewModel.itemdata(index).title,
+                  ),
                 ),
               ),
             ),

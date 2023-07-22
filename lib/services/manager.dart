@@ -1,14 +1,11 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:organic_market/app/app.locator.dart';
 
-import 'package:organic_market/model/cart_model.dart';
 import 'package:organic_market/model/category_model.dart';
 import 'package:organic_market/model/item_model.dart';
-import 'package:organic_market/model/order_model.dart';
 import 'package:organic_market/model/promotion_model.dart';
 import 'package:organic_market/model/slider_model.dart';
 import 'package:organic_market/services/firestore_service.dart';
@@ -50,11 +47,9 @@ class StorageService {
 
   Future<bool> sliderDeleteImage(String imageUrl, String docId) async {
     // Delete image from Firebase Storage
-    await FirebaseStorage.instance.refFromURL(imageUrl).delete();
-
+    await _storage.refFromURL(imageUrl).delete();
     // Delete document from Firestore collection
     await _firestoreService.sliderImagesRef.doc(docId).delete();
-
     return true;
   }
 
@@ -81,7 +76,7 @@ class StorageService {
 
   Future<bool> promotionDeleteImage(String imageUrl, String docId) async {
     // Delete image from Firebase Storage
-    await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+    await _storage.refFromURL(imageUrl).delete();
 
     // Delete document from Firestore collection
     await _firestoreService.promotionImagesRef.doc(docId).delete();
@@ -152,7 +147,12 @@ class StorageService {
 
   Future<bool> categoryDeleteData(String imageUrl, String docId) async {
     // Delete image from Firebase Storage
-    await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+    try {
+      await FirebaseStorage.instance.refFromURL(imageUrl).delete();
+    } catch (e) {
+      print(e.toString());
+    }
+    //await FirebaseStorage.instance.refFromURL(imageUrl).delete();
 
     // Delete document from Firestore collection
     await _firestoreService.productcategorysRef.doc(docId).delete();
@@ -163,7 +163,10 @@ class StorageService {
   // item upload
 
   Future<bool> itemUploadData(
-      {required File image,
+      {required String description,
+      required File image,
+      required int changedPrice,
+      required bool isOnSale,
       required String itemTitle,
       required int quantity,
       required String qType,
@@ -178,10 +181,13 @@ class StorageService {
       final String docId = docRef.id;
       String categoryId = _firestoreService.categoryid;
       final Item dataobj = Item(
+          description: description,
           categoryId: categoryId,
           imageUrl: url,
           id: docId,
           price: price,
+          changedPrice: changedPrice,
+          isOnSale: isOnSale,
           quantity: quantity,
           quantityType: qType,
           title: itemTitle);
@@ -204,11 +210,33 @@ class StorageService {
     return true;
   }
 
+  Future<bool> itemOnSale(
+      {required String id, int? changedPrice, required bool isOnSale}) async {
+    final DocumentReference docRef = _firestoreService.itemRef.doc(id);
+    try {
+      if (isOnSale) {
+        docRef.update({
+          'isOnSale': false,
+        });
+      } else {
+        await docRef.update({
+          'changedPrice': changedPrice,
+          'isOnSale': true,
+        });
+      }
+      return true;
+    } catch (e) {
+      print('item sale date unable to upload + $e');
+      return false;
+    }
+  }
+
   Future<bool> itemUpdateData(
       {required String id,
       required String imageUrl,
       required File? image,
       required String? itemTitle,
+      required String? description,
       required int? quantity,
       required String? qType,
       required int? price}) async {
@@ -248,7 +276,11 @@ class StorageService {
           'price': price,
         });
       }
-
+      if (description != null) {
+        await docRef.update({
+          'description': description,
+        });
+      }
       return true;
     } catch (e) {
       print("item update fail $e");
@@ -256,96 +288,6 @@ class StorageService {
     }
   }
 
-  Future<bool> addToCart({
-    required String uid,
-    required String itemId,
-    required int quantity,
-  }) async {
-    try {
-      final DocumentReference docRef =
-          _firestoreService.users.doc(uid).collection("Cart").doc(itemId);
-
-      docRef.get().then((DocumentSnapshot snapshot) async {
-        if (snapshot.exists) {
-          try {
-            Cart cartitem = Cart.fromMap(
-                snapshot as DocumentSnapshot<Map<String, dynamic>>);
-
-            int q = cartitem.quantity + quantity;
-
-            await docRef.update({
-              'quantity': q,
-            });
-            print("Update");
-          } catch (e) {
-            print(e);
-          }
-        } else {
-          final Cart dataobj = Cart(quantity: quantity, itemId: itemId);
-          await docRef.set(dataobj.toMap());
-          print("Create");
-        }
-      });
-
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  Future<bool> deletFromCart(
-      {required String docId, required String uid}) async {
-    // Delete document from Firestore collection
-
-    await _firestoreService.users
-        .doc(uid)
-        .collection("Cart")
-        .doc(docId)
-        .delete();
-
-    return true;
-  }
-
-  Future<bool> updateCartQuantity(
-      {required String docId, required String uid, required int Q}) async {
-    final DocumentReference docRef =
-        _firestoreService.users.doc(uid).collection("Cart").doc(docId);
-    await docRef.update({
-      'quantity': Q,
-    });
-
-    return true;
-  }
-
   //
   //Order
-  Future<bool> newOrder({
-    required String userId,
-    required int totalAmount,
-    required List<Cart> items,
-  }) async {
-    try {
-      final random = Random();
-      final datatime = DateTime.now();
-      final orderId =
-          '#${datatime.millisecond}${random.nextInt(999999)}${datatime.millisecond}'
-              .padLeft(7, '0');
-      final DocumentReference docRef = _firestoreService.orderRef.doc(orderId);
-      final String docId = docRef.id;
-
-      OrderModel orderObj = OrderModel(
-        id: docId,
-        userId: userId,
-        totalAmount: totalAmount,
-        timestamp: datatime,
-        isCompleted: false,
-        items: items,
-      );
-      await docRef.set(orderObj.toMap());
-
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
 }

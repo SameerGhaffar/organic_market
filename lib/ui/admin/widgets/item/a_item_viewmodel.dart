@@ -15,11 +15,34 @@ class CategoryItemAdminModel extends BaseViewModel {
   final _firestoreService = locator<FireStoreService>();
   final _bottomsheet = locator<BottomSheetService>();
   TextEditingController priceController = TextEditingController();
+  TextEditingController salepriceController = TextEditingController();
   TextEditingController quantityTypeController = TextEditingController();
   TextEditingController quantityController = TextEditingController();
   TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+  final formkey2 = GlobalKey<FormState>();
+
+  bool check = false;
+
+  salePressed({
+    required String id,
+    required bool isOnSale,
+  }) async {
+    if (isOnSale) {
+      if (await _storagesevice.itemOnSale(id: id, isOnSale: isOnSale)) {
+      } else {}
+    } else {
+      if (formkey2.currentState!.validate()) {
+        int changedPrice = int.parse(salepriceController.text.toString());
+        if (await _storagesevice.itemOnSale(
+            id: id, changedPrice: changedPrice, isOnSale: isOnSale)) {
+        } else {}
+      }
+    }
+  }
+//chechk krna hai k kahin new price input di k anahi or isko true krna hai
 
   void additem() {}
 
@@ -64,6 +87,7 @@ class CategoryItemAdminModel extends BaseViewModel {
     rebuildUi();
     if (formKey.currentState!.validate()) {
       String title = titleController.text.toString();
+      String description = descriptionController.text.toString();
       int quantity = int.parse(quantityController.text.toString());
       String type = quantityTypeController.text.toString();
       int price = int.parse(priceController.text.toString());
@@ -72,8 +96,11 @@ class CategoryItemAdminModel extends BaseViewModel {
           image: _image as File,
           itemTitle: title,
           quantity: quantity,
+          isOnSale: false,
+          changedPrice: price,
           qType: type,
-          price: price)) {
+          price: price,
+          description: description)) {
         loading = false;
         titleController.clear();
         quantityController.clear();
@@ -112,6 +139,7 @@ class CategoryItemAdminModel extends BaseViewModel {
 
   Future updateData({required String id, required String imageUrl}) async {
     String title = titleController.text.toString();
+    String description = descriptionController.text.toString();
     String q = quantityController.text.toString();
     int? quantity = q.isEmpty ? null : int.parse(q);
     String type = quantityTypeController.text.toString();
@@ -121,6 +149,7 @@ class CategoryItemAdminModel extends BaseViewModel {
     _dialogservice.showDialog(title: "Uploading");
 
     if (await _storagesevice.itemUpdateData(
+        description: description,
         id: id,
         imageUrl: imageUrl,
         itemTitle: title,
@@ -171,6 +200,14 @@ class CategoryItemAdminModel extends BaseViewModel {
     return null;
   }
 
+  String? descriptionValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Item must has a title";
+    }
+
+    return null;
+  }
+
   String? qunatityValidator(String? value) {
     if (value!.isEmpty) {
       return "Item must has a quantity";
@@ -186,6 +223,13 @@ class CategoryItemAdminModel extends BaseViewModel {
   }
 
   String? priceValidator(String? value) {
+    if (value!.isEmpty) {
+      return "Item Must has a price";
+    }
+    return null;
+  }
+
+  String? changedPriceValidator(String? value) {
     if (value!.isEmpty) {
       return "Item Must has a price";
     }

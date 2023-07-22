@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
+import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/app/app.router.dart';
@@ -16,18 +17,10 @@ class StartupViewModel extends BaseViewModel {
   final _dialog = locator<DialogService>();
   final _firestore = locator<FireStoreService>();
 
-  Future<void> checkEmailVerified() async {
-    User? user;
-    user = _authService.auth.currentUser;
-    await user!.reload();
-    try {
-      if (user.emailVerified) {
-        user.reload();
-      }
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+  final _indexService = locator<NavDrawerindexService>();
+
+  //@override
+  // List<ListenableServiceMixin> get listenableService => [_authService];
 
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
@@ -56,6 +49,7 @@ class StartupViewModel extends BaseViewModel {
           if (isAdmin) {
             _navigationService.replaceWithAdminView();
           } else {
+            _indexService.setIndex = 0;
             _navigationService.replaceWithDrawerView();
           }
         } else {
@@ -72,5 +66,18 @@ class StartupViewModel extends BaseViewModel {
         }
       }
     });
+  }
+
+  Future<void> checkEmailVerified() async {
+    User? user;
+    user = _authService.auth.currentUser;
+    await user!.reload();
+    try {
+      if (user.emailVerified) {
+        user.reload();
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

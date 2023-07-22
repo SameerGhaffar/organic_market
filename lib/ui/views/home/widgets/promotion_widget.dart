@@ -15,7 +15,7 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
       children: [
         Container(
           alignment: Alignment.topLeft,
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: Text(
             "Offers & Promotions",
             style: GoogleFonts.lato(
@@ -26,21 +26,22 @@ class HomeViewPromotion extends ViewModelWidget<HomeViewModel> {
           ),
         ),
         Container(
+            width: screenWidth(context) * 0.98,
             decoration: BoxDecoration(
               color: Theme.of(context).scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(10),
             ),
-            height: screenHeight(context) * 0.35,
+            height: screenHeight(context) * 0.30,
             child: GridView.builder(
               padding: const EdgeInsets.all(2),
               physics: const ScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: viewModel.promtoionlist().length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 4.0,
-                  mainAxisExtent: screenWidth(context) * 0.65),
+                  crossAxisCount: 1,
+                  crossAxisSpacing: 0,
+                  mainAxisSpacing: 4,
+                  mainAxisExtent: screenWidth(context) * 0.48),
               itemBuilder: (context, index) {
                 return Card(
                   shape: RoundedRectangleBorder(

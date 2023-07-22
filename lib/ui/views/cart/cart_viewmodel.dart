@@ -1,23 +1,25 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:organic_market/app/app.bottomsheets.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/model/cart_model.dart';
 import 'package:organic_market/model/item_model.dart';
 import 'package:organic_market/services/auth_service.dart';
+import 'package:organic_market/services/cart_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
-import 'package:organic_market/services/manager.dart';
-import 'package:organic_market/ui/bottom_sheets/notice/notice_sheet.dart';
+import 'package:organic_market/services/tempdata_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class CartViewModel extends BaseViewModel {
   final _firestoreService = locator<FireStoreService>();
   final _authService = locator<AuthService>();
-  final _storageService = locator<StorageService>();
+  final _tempService = locator<TempdataService>();
 
-  final _bottomSheet = locator<BottomSheetService>();
+  final _cartService = locator<CartService>();
+  final _navService = locator<NavigationService>();
+
   bool isLoading = false;
 
   // getting id from cart then finding the item from the list
@@ -71,8 +73,7 @@ class CartViewModel extends BaseViewModel {
 
     for (Cart cartItem in cartCopy) {
       if (!(itemIds.contains(cartItem.itemId))) {
-        _storageService.deletFromCart(
-            docId: cartItem.itemId, uid: uid as String);
+        _cartService.deletFromCart(docId: cartItem.itemId, uid: uid as String);
         print("not in items" + cartItem.itemId);
         // make a delete function
         // delte that
@@ -83,15 +84,14 @@ class CartViewModel extends BaseViewModel {
   void incrementQuantity(String id) {
     int count = cartItemQuantity(id);
     count = count + 1;
-    _storageService.updateCartQuantity(Q: count, docId: id, uid: uid as String);
+    _cartService.updateCartQuantity(Q: count, docId: id, uid: uid as String);
   }
 
   void decrimentQuantity(String id) {
     int count = cartItemQuantity(id);
     count = count - 1;
     if (count >= 1) {
-      _storageService.updateCartQuantity(
-          Q: count, docId: id, uid: uid as String);
+      _cartService.updateCartQuantity(Q: count, docId: id, uid: uid as String);
     }
   }
 
@@ -137,16 +137,21 @@ class CartViewModel extends BaseViewModel {
       backgroundColor: Colors.red,
     ).show(context);
 
-    _storageService.deletFromCart(docId: id, uid: uid as String);
+    _cartService.deletFromCart(docId: id, uid: uid as String);
 
     rebuildUi();
   }
 
   int totalprice() {
     int total = 0;
+    int price = 0;
     if (cartItemList.isNotEmpty) {
       for (int i = 0; i < cartItemList.length; i++) {
-        int price = cartitemData(i).price;
+        if (cartitemData(i).isOnSale!) {
+          price = cartitemData(i).changedPrice!;
+        } else {
+          price = cartitemData(i).price;
+        }
         int quantity = cartItemQuantity(cartitemData(i).id);
         total = total + (price * quantity);
       }
@@ -164,17 +169,44 @@ class CartViewModel extends BaseViewModel {
     print(totalAmount);
     print(itemCount);
     print(cartList.map((e) => e.itemId).toList());
-    // if (await _storageService.newOrder(
+    // if (await _cartService.newOrder(
     //     userId: uid as String, totalAmount: totalAmount, items: cartList)) {
     //   isLoading = false;
     // }
+    List<Cart> temp = [];
+
+    for (int i = 0; i < cartItemList.length; i++) {
+      temp.add(
+        Cart(
+          itemId: cartitemData(i).id,
+          quantity: cartItemQuantity(cartitemData(i).id),
+          name: cartitemData(i).title,
+          price: cartitemData(i).price,
+          imageUrl: cartitemData(i).imageUrl,
+          isOnSale: cartitemData(i).isOnSale,
+        ),
+      );
+      print(temp[i].itemId);
+      print(temp[i].name);
+      print(temp[i].price);
+      print(temp[i].quantity);
+      print(temp[i].imageUrl);
+      print(temp[i].isOnSale);
+    }
+    _tempService.ListOfCartItem.clear();
+
+    _tempService.ListOfCartItem.addAll(temp);
+    _tempService.totalPrice = totalprice();
+
     isLoading = false;
-    rebuildUi();
-    _bottomSheet.showCustomSheet(
-      variant: BottomSheetType.notice,
-      title: "Selected Your Location",
-      description: 'From the Map',
-    );
+    _navService.navigateToCheckoutView();
+    // rebuildUi();
+    // _bottomSheet.showCustomSheet(
+    //   variant: BottomSheetType.notice,
+    //   title: "Selected Your Location",
+    //   description: 'From the Map',
+    // );
+
     // _bottomSheet.showBottomSheet(title: "Set your Address");
     // Order order = Order(
     //     id: id,

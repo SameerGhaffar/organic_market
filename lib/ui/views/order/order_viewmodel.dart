@@ -1,11 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:organic_market/model/order_model.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
-import 'package:organic_market/services/manager.dart';
-import 'package:organic_market/services/nav_drawer_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
 

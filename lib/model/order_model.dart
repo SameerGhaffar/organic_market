@@ -1,8 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'cart_model.dart';
-
 class OrderModel {
   final String id;
   final String userId;
@@ -21,7 +19,7 @@ class OrderModel {
   });
 
   factory OrderModel.fromFirestore(DocumentSnapshot snapshot) {
-    final data = snapshot.data();
+    // final data = snapshot.data();
 
     return OrderModel(
         id: snapshot['id'],

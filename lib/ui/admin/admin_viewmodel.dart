@@ -21,7 +21,7 @@ class AdminViewModel extends BaseViewModel {
 
   Userinfo? user;
   fetchData() async {
-    String uid = await _authService.auth.currentUser!.uid;
+    String uid = _authService.auth.currentUser!.uid;
     user = await _firestoreService.getUser(uid);
     rebuildUi();
 

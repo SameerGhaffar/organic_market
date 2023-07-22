@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:organic_market/ui/views/layout/widgets/navbar_widget.dart';
 import 'package:stacked/stacked.dart';
+
+import 'package:organic_market/ui/views/layout/widgets/navbar_widget.dart';
 
 import 'drawer_viewmodel.dart';
 import 'widgets/drawer_widget.dart';

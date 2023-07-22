@@ -15,17 +15,17 @@ class HomeView extends StackedView<HomeViewModel> {
     HomeViewModel viewModel,
     Widget? child,
   ) {
-    return Scaffold(
+    return const Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(4.0),
+        padding: EdgeInsets.all(2.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(12))),
-                elevation: 2,
+                elevation: 1,
                 child: HomeViewMySlider(),
               ),
               HomeViewCategoryWidget(),
