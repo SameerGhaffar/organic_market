@@ -4,7 +4,7 @@
 // import '../helpers/test_helpers.dart';
 
 // void main() {
-//   group('CheckoutViewModel Tests -', () {
+//   group('OrdercompletedViewModel Tests -', () {
 //     setUp(() => registerServices());
 //     tearDown(() => locator.reset());
 //   });

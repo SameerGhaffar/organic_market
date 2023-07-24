@@ -5,7 +5,7 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i21;
+import 'package:flutter/material.dart' as _i22;
 import 'package:flutter/material.dart';
 import 'package:organic_market/ui/admin/admin_view.dart' as _i8;
 import 'package:organic_market/ui/admin/widgets/category/a_category_view.dart'
@@ -26,13 +26,15 @@ import 'package:organic_market/ui/views/login/login_view.dart' as _i3;
 import 'package:organic_market/ui/views/login/reset_view.dart' as _i6;
 import 'package:organic_market/ui/views/map/map_view.dart' as _i17;
 import 'package:organic_market/ui/views/order/order_view.dart' as _i14;
+import 'package:organic_market/ui/views/ordercompleted/ordercompleted_view.dart'
+    as _i21;
 import 'package:organic_market/ui/views/product/product_view.dart' as _i18;
 import 'package:organic_market/ui/views/searchproduct/search_product_view.dart'
     as _i16;
 import 'package:organic_market/ui/views/signup/signup_view.dart' as _i4;
 import 'package:organic_market/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i22;
+import 'package:stacked_services/stacked_services.dart' as _i23;
 
 class Routes {
   static const startupView = '/startup-view';
@@ -73,6 +75,8 @@ class Routes {
 
   static const checkoutView = '/checkout-view';
 
+  static const ordercompletedView = '/ordercompleted-view';
+
   static const all = <String>{
     startupView,
     loginView,
@@ -93,6 +97,7 @@ class Routes {
     productView,
     chatScreenView,
     checkoutView,
+    ordercompletedView,
   };
 }
 
@@ -174,120 +179,130 @@ class StackedRouter extends _i1.RouterBase {
       Routes.checkoutView,
       page: _i20.CheckoutView,
     ),
+    _i1.RouteDef(
+      Routes.ordercompletedView,
+      page: _i21.OrdercompletedView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.StartupView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.StartupView(),
         settings: data,
       );
     },
     _i3.LoginView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.LoginView(),
         settings: data,
       );
     },
     _i4.SignupView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.SignupView(),
         settings: data,
       );
     },
     _i5.DrawerView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.DrawerView(),
         settings: data,
       );
     },
     _i6.ResetView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.ResetView(),
         settings: data,
       );
     },
     _i7.ItemView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ItemView(),
         settings: data,
       );
     },
     _i8.AdminView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.AdminView(),
         settings: data,
       );
     },
     _i9.SliderAdmin: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i9.SliderAdmin(),
         settings: data,
       );
     },
     _i10.PromotionAdmin: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.PromotionAdmin(),
         settings: data,
       );
     },
     _i11.CategoryAdmin: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i11.CategoryAdmin(),
         settings: data,
       );
     },
     _i12.CategoryItemAdmin: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i12.CategoryItemAdmin(),
         settings: data,
       );
     },
     _i13.AccountView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i13.AccountView(),
         settings: data,
       );
     },
     _i14.OrderView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i14.OrderView(),
         settings: data,
       );
     },
     _i15.HomeView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i15.HomeView(),
         settings: data,
       );
     },
     _i16.SearchProductView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i16.SearchProductView(),
         settings: data,
       );
     },
     _i17.MapView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i17.MapView(),
         settings: data,
       );
     },
     _i18.ProductView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i18.ProductView(),
         settings: data,
       );
     },
     _i19.ChatScreenView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i19.ChatScreenView(),
         settings: data,
       );
     },
     _i20.CheckoutView: (data) {
-      return _i21.MaterialPageRoute<dynamic>(
+      return _i22.MaterialPageRoute<dynamic>(
         builder: (context) => const _i20.CheckoutView(),
+        settings: data,
+      );
+    },
+    _i21.OrdercompletedView: (data) {
+      return _i22.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i21.OrdercompletedView(),
         settings: data,
       );
     },
@@ -299,7 +314,7 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
-extension NavigatorStateExtension on _i22.NavigationService {
+extension NavigatorStateExtension on _i23.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -566,6 +581,20 @@ extension NavigatorStateExtension on _i22.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToOrdercompletedView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.ordercompletedView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -826,6 +855,20 @@ extension NavigatorStateExtension on _i22.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.checkoutView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithOrdercompletedView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.ordercompletedView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

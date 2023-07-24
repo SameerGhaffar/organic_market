@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:organic_market/app/app.locator.dart';
+import 'package:organic_market/app/app.router.dart';
 import 'package:organic_market/model/user.dart';
 import 'package:organic_market/services/auth_service.dart';
 import 'package:organic_market/services/cart_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/tempdata_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 import '../../../model/cart_model.dart';
 
@@ -15,6 +17,7 @@ class CheckoutViewModel extends BaseViewModel {
   final _firestore = locator<FireStoreService>();
   final _auth = locator<AuthService>();
   final _cartService = locator<CartService>();
+  final _navService = locator<NavigationService>();
 
   // controllers
   TextEditingController addressController = TextEditingController();
@@ -90,7 +93,7 @@ class CheckoutViewModel extends BaseViewModel {
     return null;
   }
 
-  confirmOrder() async {
+  confirmOrder(BuildContext context) async {
     isloading = true;
     rebuildUi();
     if (await _cartService.newOrder(
@@ -106,9 +109,14 @@ class CheckoutViewModel extends BaseViewModel {
       await _cartService.deleteCartDocument(uid: uid!)
           ? print('cart deleted')
           : print('Error');
+      _navService.replaceWithOrdercompletedView();
     } else {
       print("order not created");
     }
+  }
+
+  ok() {
+    print('ok pressed');
   }
 
   @override

@@ -175,7 +175,8 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                         MaterialStateProperty.all<Color>(
                                             Colors.green),
                                   ),
-                                  onPressed: () => viewModel.confirmOrder(),
+                                  onPressed: () =>
+                                      viewModel.confirmOrder(context),
                                   child: viewModel.isloading
                                       ? const CircularProgressIndicator(
                                           color: Colors.black,

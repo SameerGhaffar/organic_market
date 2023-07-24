@@ -29,6 +29,7 @@ import 'package:organic_market/ui/views/product/product_view.dart';
 import 'package:organic_market/ui/bottom_sheets/product/product_sheet.dart';
 import 'package:organic_market/ui/views/chat_screen/chat_screen_view.dart';
 import 'package:organic_market/ui/views/checkout/checkout_view.dart';
+import 'package:organic_market/ui/views/ordercompleted/ordercompleted_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -54,6 +55,7 @@ import 'package:organic_market/ui/views/checkout/checkout_view.dart';
     MaterialRoute(page: ProductView),
     MaterialRoute(page: ChatScreenView),
     MaterialRoute(page: CheckoutView),
+    MaterialRoute(page: OrdercompletedView),
 // @stacked-route
   ],
   dependencies: [

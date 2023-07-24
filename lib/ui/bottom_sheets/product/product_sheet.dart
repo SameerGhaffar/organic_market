@@ -41,7 +41,7 @@ class ProductSheet extends StackedView<ProductSheetModel> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                (viewModel.item().price < 300)
+                viewModel.item().isOnSale ?? false
                     ? Align(
                         alignment: Alignment.topLeft,
                         child: Container(

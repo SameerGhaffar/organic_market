@@ -113,10 +113,15 @@ class CartView extends StackedView<CartViewModel> {
                       child: ElevatedButton(
                           style: ButtonStyle(
                             elevation: MaterialStateProperty.all<double>(2.px),
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.green),
+                            backgroundColor: viewModel.cartItemList.isEmpty
+                                ? MaterialStateProperty.all<Color>(
+                                    Colors.green.shade100)
+                                : MaterialStateProperty.all<Color>(
+                                    Colors.green),
                           ),
-                          onPressed: () => viewModel.checkout(),
+                          onPressed: () => viewModel.cartItemList.isEmpty
+                              ? null
+                              : viewModel.checkout(),
                           child: viewModel.isLoading
                               ? const CircularProgressIndicator(
                                   color: Colors.black,

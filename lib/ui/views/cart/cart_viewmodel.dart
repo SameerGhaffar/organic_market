@@ -207,6 +207,7 @@ class CartViewModel extends BaseViewModel {
       _tempService.getinfo = false;
     }
     _navService.navigateToCheckoutView();
+
     // rebuildUi();
     // _bottomSheet.showCustomSheet(
     //   variant: BottomSheetType.notice,
