@@ -31,11 +31,11 @@ class AccountViewModel extends BaseViewModel {
   }
 
   List<String> profileMenu = [
-    "My Subscriptions",
-    "My Account",
-    "Track Your Order",
-    "Order History",
-    "Suggestions & Feedback",
+    "My Orders",
+    //"My Account",
+    //"Track Your Order",
+    //"Order History",
+    //"Suggestions & Feedback",
   ];
   // List<Color> profileMenuColor = [
   //   Colors.amber.shade300,
@@ -49,9 +49,6 @@ class AccountViewModel extends BaseViewModel {
       case 0:
         _navigationService.navigateToOrderView();
         // rebuildUi();
-        break;
-      case 3:
-        _navigationService.navigateToMapView();
         break;
       default:
     }
