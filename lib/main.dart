@@ -45,7 +45,7 @@ void main() async {
   runApp(
     DevicePreview(
       enabled: true,
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       builder: (context) => const MyApp(), // Wrap your app
     ),
   );

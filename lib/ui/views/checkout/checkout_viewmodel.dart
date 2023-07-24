@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:organic_market/app/app.locator.dart';
 import 'package:organic_market/model/user.dart';
 import 'package:organic_market/services/auth_service.dart';
+import 'package:organic_market/services/cart_service.dart';
 import 'package:organic_market/services/firestore_service.dart';
 import 'package:organic_market/services/tempdata_service.dart';
 import 'package:stacked/stacked.dart';
@@ -9,20 +10,24 @@ import 'package:stacked/stacked.dart';
 import '../../../model/cart_model.dart';
 
 class CheckoutViewModel extends BaseViewModel {
+  // service
   final _cartdataService = locator<TempdataService>();
-
   final _firestore = locator<FireStoreService>();
   final _auth = locator<AuthService>();
+  final _cartService = locator<CartService>();
+
+  // controllers
+  TextEditingController addressController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+
+  // key
+  final addressFormKey = GlobalKey<FormState>();
+
+//
 
   bool isloading = false;
   String address = "";
   bool? getInfo;
-
-  TextEditingController addressController = TextEditingController();
-
-  TextEditingController cityController = TextEditingController();
-
-  final addressFormKey = GlobalKey<FormState>();
 
   onChanged() {
     addressFormKey.currentState?.validate();
@@ -39,11 +44,12 @@ class CheckoutViewModel extends BaseViewModel {
   }
 
   Userinfo? user;
+  String? uid;
   Future fetchData() async {
     getInfo = _cartdataService.getinfo;
     cartList = _cartdataService.ListOfCartItem;
-    String uid = await _auth.auth.currentUser!.uid;
-    user = await _firestore.getUser(uid);
+    uid = await _auth.auth.currentUser!.uid;
+    user = await _firestore.getUser(uid!);
     if (user?.address != null) {
       address = user!.address!; // Add the null check using '!'
     }
@@ -82,6 +88,27 @@ class CheckoutViewModel extends BaseViewModel {
       return 'invalid City';
     }
     return null;
+  }
+
+  confirmOrder() async {
+    isloading = true;
+    rebuildUi();
+    if (await _cartService.newOrder(
+      address: address,
+      items: cartList,
+      paymentMethod: "Cash On Delivery",
+      totalAmount: totalprice(),
+      userId: uid!,
+    )) {
+      isloading = false;
+      print('Order placed');
+      rebuildUi();
+      await _cartService.deleteCartDocument(uid: uid!)
+          ? print('cart deleted')
+          : print('Error');
+    } else {
+      print("order not created");
+    }
   }
 
   @override

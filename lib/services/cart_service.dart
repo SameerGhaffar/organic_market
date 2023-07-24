@@ -61,6 +61,8 @@ class CartService {
     required String userId,
     required int totalAmount,
     required List<Cart> items,
+    required String address,
+    required String paymentMethod,
   }) async {
     try {
       final random = Random();
@@ -78,6 +80,8 @@ class CartService {
         timestamp: datatime,
         isCompleted: false,
         items: items,
+        address: address,
+        paymentMethod: paymentMethod,
       );
       await docRef.set(orderObj.toMap());
 
@@ -96,5 +100,25 @@ class CartService {
     });
 
     return true;
+  }
+
+  Future<bool> deleteCartDocument({required String uid}) async {
+    try {
+      CollectionReference cartCollectionRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection("Cart");
+
+      QuerySnapshot cartSnapshot = await cartCollectionRef.get();
+
+      // Delete each document in the Cart subcollection
+      for (DocumentSnapshot docSnapshot in cartSnapshot.docs) {
+        await docSnapshot.reference.delete();
+      }
+      return true;
+    } catch (e) {
+      print('Error deleting cart document: $e');
+      return false;
+    }
   }
 }

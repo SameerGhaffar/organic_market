@@ -182,7 +182,7 @@ class CartViewModel extends BaseViewModel {
           itemId: cartitemData(i).id,
           quantity: cartItemQuantity(cartitemData(i).id),
           name: cartitemData(i).title,
-          price: cartitemData(i).price,
+          price: cartitemData(i).changedPrice,
           imageUrl: cartitemData(i).imageUrl,
           isOnSale: cartitemData(i).isOnSale,
         ),

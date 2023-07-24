@@ -41,11 +41,12 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                             color: Colors.amber,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20))),
-                        height: screenHeight(context) * 0.12,
+                        height: screenHeight(context) * 0.155,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
                                 children: [
@@ -174,7 +175,7 @@ class CheckoutView extends StackedView<CheckoutViewModel> {
                                         MaterialStateProperty.all<Color>(
                                             Colors.green),
                                   ),
-                                  onPressed: () => () {},
+                                  onPressed: () => viewModel.confirmOrder(),
                                   child: viewModel.isloading
                                       ? const CircularProgressIndicator(
                                           color: Colors.black,

@@ -8,6 +8,8 @@ class OrderModel {
   final DateTime timestamp;
   final bool isCompleted;
   final List<dynamic> items;
+  final String address;
+  final String paymentMethod;
 
   OrderModel({
     required this.id,
@@ -16,6 +18,8 @@ class OrderModel {
     required this.timestamp,
     required this.isCompleted,
     required this.items,
+    required this.address,
+    required this.paymentMethod,
   });
 
   factory OrderModel.fromFirestore(DocumentSnapshot snapshot) {
@@ -27,7 +31,9 @@ class OrderModel {
         totalAmount: snapshot['totalAmount'],
         timestamp: (snapshot['timestamp'] as Timestamp).toDate(),
         isCompleted: snapshot['isCompleted'],
-        items: snapshot['items']);
+        items: snapshot['items'],
+        address: snapshot['address'],
+        paymentMethod: snapshot['paymentMethod']);
   }
 
   Map<String, dynamic> toMap() {
@@ -38,6 +44,8 @@ class OrderModel {
       'timestamp': Timestamp.fromDate(timestamp),
       'items': items.map((item) => item.toMap()).toList(),
       'isCompleted': isCompleted,
+      'paymentMethod': paymentMethod,
+      'address': address,
     };
   }
 }
