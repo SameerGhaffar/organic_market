@@ -87,54 +87,57 @@ class AccountView extends StackedView<AccountViewModel> {
               ),
             ),
           ),
-
-          // ListView.builder(
-          //   shrinkWrap: true,
-          //   physics: const NeverScrollableScrollPhysics(),
-          //   itemCount: viewModel.profileMenu.length,
-          //   itemBuilder: (context, index) => Container(
-          //     padding: EdgeInsets.all(3.px),
-          //     alignment: Alignment.center,
-          //     child: InkWell(
-          //       onTap: () => viewModel.onClick(index),
-          //       child: Card(
-          //         elevation: 4.sp,
-          //         color: Colors.white,
-          //         shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(8.px)),
-          //         child: SizedBox(
-          //           height: 35.sp,
-          //           width: 90.w,
-          //           child: Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             children: [
-          //               Container(
-          //                 //    alignment: Alignment.centerLeft,
-          //                 padding: EdgeInsets.symmetric(
-          //                     horizontal: 22.px, vertical: 4.px),
-          //                 child: Text(
-          //                   viewModel.profileMenu[index],
-          //                   style: GoogleFonts.lato(
-          //                       textStyle: TextStyle(
-          //                           letterSpacing: 2.sp,
-          //                           fontSize: 18.sp,
-          //                           fontWeight: FontWeight.bold,
-          //                           color: Colors.black)),
-          //                 ),
-          //               ),
-          //               //const Spacer(),
-          //               Container(
-          //                 padding: EdgeInsets.all(8.px),
-          //                 //   alignment: Alignment.centerRight,
-          //                 child: Icon(Icons.keyboard_arrow_right, size: 25.sp),
-          //               )
-          //             ],
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: viewModel.profileMenu.length,
+            itemBuilder: (context, index) => Container(
+              padding: EdgeInsets.all(3.px),
+              alignment: Alignment.center,
+              child: InkWell(
+                onTap: () => viewModel.onClick(index),
+                child: Card(
+                  elevation: 4.sp,
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.px)),
+                  child: SizedBox(
+                    height: 35.sp,
+                    width: 90.w,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          //    alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 22.px, vertical: 4.px),
+                          child: Text(
+                            viewModel.profileMenu[index],
+                            style: GoogleFonts.lato(
+                                textStyle: TextStyle(
+                                    letterSpacing: 2.sp,
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue)),
+                          ),
+                        ),
+                        //const Spacer(),
+                        Container(
+                          padding: EdgeInsets.all(8.px),
+                          //   alignment: Alignment.centerRight,
+                          child: Icon(
+                            Icons.keyboard_arrow_right,
+                            size: 25.sp,
+                            color: Colors.blue,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ));
     });
