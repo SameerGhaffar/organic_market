@@ -18,7 +18,7 @@ class StorageService {
   FirebaseStorage get storage => _storage;
 
   final Reference sliderimagesRef =
-      FirebaseStorage.instance.ref("SliderImages");
+      FirebaseStorage.instance.ref("SliderImages"); 
   final Reference promotionImageRef =
       FirebaseStorage.instance.ref("PromotionImages");
   final Reference categoryImagesRef =

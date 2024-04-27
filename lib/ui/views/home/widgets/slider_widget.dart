@@ -10,6 +10,7 @@ class HomeViewMySlider extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, viewModel) {
+    
     return Stack(
       children: [
         InkWell(
